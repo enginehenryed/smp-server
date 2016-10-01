@@ -14,4 +14,12 @@
 	
 	<context:component-scan base-package="net.swmaestro.portal" />
 
+	<!-- Logger Interceptor -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/**"/>
+			<beans:bean id="loggerInterceptor" class="net.swmaestro.common.logger.LoggerInterceptor" />
+		</interceptor>
+	</interceptors>
+
 </beans:beans>
