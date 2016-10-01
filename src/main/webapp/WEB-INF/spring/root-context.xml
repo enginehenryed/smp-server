@@ -5,15 +5,6 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
-    
-    <bean id="dataSourceSpied" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://220.149.236.222/soma"/>
-        <property name="username" value="soma_mgr"/>
-        <property name="password" value="smp7"/>
-    </bean>
-    
-    
 	<!-- DB Context -->
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSourceSpied" />
