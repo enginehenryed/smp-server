@@ -1,4 +1,4 @@
-package net.swmaestro.portal.user;
+package net.swmaestro.portal.user.controller;
 
 import io.swagger.annotations.*;
 import net.swmaestro.portal.user.vo.User;

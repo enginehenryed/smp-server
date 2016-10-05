@@ -1,7 +1,8 @@
-package net.swmaestro.portal.user;
+package net.swmaestro.portal.user.controller;
 
 import io.swagger.annotations.*;
 
+import net.swmaestro.portal.user.service.UserService;
 import net.swmaestro.portal.user.vo.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,13 +11,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 
+import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-10-05T11:30:19.659Z")
 
 @Controller
 public class UsersApiController implements UsersApi {
+
+    @Resource(name="userService")
+    private UserService userService;
 
     public ResponseEntity<Void> deleteMe() {
         // do some magic!
@@ -38,12 +45,24 @@ public class UsersApiController implements UsersApi {
     }
 
     public ResponseEntity<User> getUser(
-@ApiParam(value = "User's ID",required=true ) @PathVariable("userId") Integer userId
+@ApiParam(value = "User's ID",required=true ) @PathVariable("user-id") Integer userId
 
 
 ) {
-        // do some magic!
-        return new ResponseEntity<User>(HttpStatus.OK);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("user_id", userId);
+
+        User user;
+
+        try {
+            user = userService.selectUser(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } finally {
+        }
+
+        return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
     public ResponseEntity<List<User>> getUsers(@ApiParam(value = "User's eamil to filter") @RequestParam(value = "userEmail", required = false) String userEmail
@@ -51,7 +70,6 @@ public class UsersApiController implements UsersApi {
 
 
 ) {
-        // do some magic!
         return new ResponseEntity<List<User>>(HttpStatus.OK);
     }
 
