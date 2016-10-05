@@ -1,4 +1,4 @@
-package net.swmaestro.portal.service;
+package net.swmaestro.portal.sample.service;
 
 
 import java.util.List;

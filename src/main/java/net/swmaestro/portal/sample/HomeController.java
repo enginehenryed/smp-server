@@ -1,4 +1,4 @@
-package net.swmaestro.portal;
+package net.swmaestro.portal.sample;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import net.swmaestro.portal.service.SampleService;
+import net.swmaestro.portal.sample.service.SampleService;
 
 /**
  * Handles requests for the application home page.

@@ -12,5 +12,15 @@
 			ORDER BY user_id DESC
 		]]>
 	</select>
+
+	<select id="selectUser" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT
+			    user_name
+			FROM
+			    soma.soma_user
+			ORDER BY user_id DESC
+		]]>
+	</select>
 	
 </mapper>

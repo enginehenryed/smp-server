@@ -1,4 +1,4 @@
-package net.swmaestro.common.dao;
+package net.swmaestro.portal.common.dao;
 
 import java.util.List;
 

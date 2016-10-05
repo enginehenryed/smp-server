@@ -1,4 +1,4 @@
-package net.swmaestro.portal.dao;
+package net.swmaestro.portal.sample.dao;
 
 
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
-import net.swmaestro.common.dao.AbstractDAO;
+import net.swmaestro.portal.common.dao.AbstractDAO;
 
 @Repository("sampleDAO")
 public class SampleDAO extends AbstractDAO{

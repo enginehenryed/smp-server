@@ -1,4 +1,4 @@
-package net.swmaestro.common.logger;
+package net.swmaestro.portal.common.logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
