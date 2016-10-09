@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.util.matcher.AndRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -24,21 +27,17 @@ public class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFil
     private static final Logger logger = LoggerFactory.getLogger(JWTAuthenticationFilter.class);
 
     public JWTAuthenticationFilter(String defaultFilterProcessesUrl) {
-        super(defaultFilterProcessesUrl);
+        // Except Signup api(POST `/users`) from authentication.
+        super(new AndRequestMatcher(
+                new NegatedRequestMatcher(new AntPathRequestMatcher("/users", "POST")),
+                new AntPathRequestMatcher(defaultFilterProcessesUrl)
+        ));
     }
 
     
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         logger.debug("JWTAuthenticationFilter: BEFORE: attemptAuthentication()\n");
-
-        // Signup: Exception
-        if ("POST".equals(request.getMethod())) {
-            String path = request.getRequestURI().substring(request.getContextPath().length());
-            if ("/users".equals(path)) {
-                return null;
-            }
-        }
 
         String authorizationHeader = request.getHeader("Authorization");
 
