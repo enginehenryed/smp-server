@@ -1,6 +1,7 @@
 package net.swmaestro.portal.user.service;
 
 
+import net.swmaestro.portal.user.dao.UserDAO;
 import net.swmaestro.portal.user.vo.User;
 
 import java.util.List;

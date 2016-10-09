@@ -1,11 +1,14 @@
 package net.swmaestro.portal.auth.service;
 
 
-import java.util.List;
+import net.swmaestro.portal.user.vo.User;
+
 import java.util.Map;
 
 public interface AuthService {
 
-	List<Map<String, Object>> getUserByEmail(Map<String, Object> map) throws Exception;
+	User getUserByEmail(Map<String, Object> map) throws Exception;
+
+	String getToken(String email, String password);
 
 }

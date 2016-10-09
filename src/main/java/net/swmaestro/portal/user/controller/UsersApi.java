@@ -86,7 +86,7 @@ public interface UsersApi {
     @RequestMapping(value = "/users",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<User>> getUsers(@ApiParam(value = "User's eamil to filter") @RequestParam(value = "userEmail", required = false) String userEmail
+    ResponseEntity<List<User>> getUsers(@ApiParam(value = "User's eamil to filter", example = "soma@naver.com") @RequestParam(value = "userEmail", required = false) String userEmail
 
 
     );

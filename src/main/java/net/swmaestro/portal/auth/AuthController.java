@@ -24,22 +24,17 @@ public class AuthController {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
-    @Resource(name="sampleService")
-    private SampleService sampleService;
-
     @Resource(name="authService")
     private AuthService authService;
 
-    @RequestMapping(value="/auth/signin")
-    public @ResponseBody Object singin(@RequestParam String email, @RequestParam String password) throws Exception {
+    @RequestMapping(value="/auth/token")
+    public @ResponseBody Object token(@RequestParam String email, @RequestParam String password) throws Exception {
 
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("email", email);
-        params.put("password", password);
+        String token = authService.getToken(email, password);
 
-        List<Map<String,Object>> ret = authService.getUserByEmail(params);
-
-        return ret;
+        Map<String, String> res = new HashMap<>();
+        res.put("token", token);
+        return res;
     }
 
 }

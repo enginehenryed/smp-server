@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+       xmlns:beans="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <context:component-scan base-package="net.swmaestro.portal" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />
+    </context:component-scan>
+
+    <http pattern="/auth/**" security="none" />
+
+    <http pattern="/**"
+          entry-point-ref="restAuthenticationEntryPoint"
+          authentication-manager-ref="authenticationManager"
+          create-session="never">
+
+        <csrf disabled="true" />
+        <custom-filter ref="jwtAuthenticationFilter" position="FORM_LOGIN_FILTER" />
+        <!--<intercept-url pattern="/users" method="POST" access="permitAll" />-->
+        <intercept-url pattern="/**" access="isAuthenticated()" />
+        <!--<logout />-->
+    </http>
+
+    <!--<security:http  pattern="/api/**" entry-point-ref="restAuthenticationEntryPoint" use-expressions="true" auto-config="false" create-session="stateless" >-->
+        <!--<security:custom-filter ref="authenticationTokenProcessingFilter" position="FORM_LOGIN_FILTER"   />-->
+        <!--<security:intercept-url pattern="/spr/api/**" access="isAuthenticated()" />-->
+        <!--<security:logout />-->
+    <!--</security:http>-->
+
+    <beans:bean id="jwtAuthenticationSuccessHandler" class="net.swmaestro.portal.auth.JwtAuthenticationSuccessHandler" />
+    <beans:bean class="net.swmaestro.portal.filter.JWTAuthenticationFilter" id="jwtAuthenticationFilter">
+        <beans:constructor-arg type="java.lang.String">
+            <beans:value>/**</beans:value>
+        </beans:constructor-arg>
+        <beans:property name="authenticationManager" ref="authenticationManager" />
+        <beans:property name="authenticationSuccessHandler" ref="jwtAuthenticationSuccessHandler" />
+    </beans:bean>
+
+    <!--<beans:bean id="userDAO" class="net.swmaestro.portal.user.dao.UserDAO" />-->
+    <!--<beans:bean id="userService" class="net.swmaestro.portal.user.service.UserServiceImpl" >-->
+        <!--<beans:property name="userDAO" ref="userDAO" />-->
+    <!--</beans:bean>-->
+    <beans:bean id="restAuthenticationEntryPoint" class="net.swmaestro.portal.auth.RestAuthenticationEntryPoint" />
+    <beans:bean id="jwtAuthenticationProvider" class="net.swmaestro.portal.auth.JWTAuthenticationProvider" >
+        <!--<beans:property name="userService" ref="userService" />-->
+    </beans:bean>
+
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider ref="jwtAuthenticationProvider" />
+    </authentication-manager>
+
+</beans:beans>
