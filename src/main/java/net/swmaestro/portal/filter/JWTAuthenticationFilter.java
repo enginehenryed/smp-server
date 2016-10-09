@@ -27,9 +27,18 @@ public class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFil
         super(defaultFilterProcessesUrl);
     }
 
+    
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         logger.debug("JWTAuthenticationFilter: BEFORE: attemptAuthentication()\n");
+
+        // Signup: Exception
+        if ("POST".equals(request.getMethod())) {
+            String path = request.getRequestURI().substring(request.getContextPath().length());
+            if ("/users".equals(path)) {
+                return null;
+            }
+        }
 
         String authorizationHeader = request.getHeader("Authorization");
 
