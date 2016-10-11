@@ -30,4 +30,9 @@ public class UserDAO extends AbstractDAO{
 		return (List<User>) selectList("user.selectUser", map);
 	}
 
+	@SuppressWarnings("unchecked")
+	public User insertUser(Map<String, Object> map) throws Exception {
+		return (User) insert("user.insertUser", map);
+	}
+
 }

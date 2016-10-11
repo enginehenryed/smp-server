@@ -3,11 +3,7 @@ package net.swmaestro.portal.user.controller;
 import io.swagger.annotations.*;
 import net.swmaestro.portal.user.vo.User;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -103,16 +99,16 @@ public interface UsersApi {
     ResponseEntity<Void> postUser(
 
 
-            @ApiParam(value = "User's eamil") @RequestPart(value = "userEmail", required = false) String userEmail
+            @ApiParam(value = "User's eamil") @RequestBody(required = false) String userEmail
             ,
 
 
-            @ApiParam(value = "User's name") @RequestPart(value = "userName", required = false) String userName
+            @ApiParam(value = "User's name") @RequestBody(required = false) String userName
             ,
 
 
-            @ApiParam(value = "User's password") @RequestPart(value = "userPassword", required = false) String userPassword
-    );
+            @ApiParam(value = "User's password") @RequestBody(required = false) String userPassword
+    ) throws Exception;
 
 
     @ApiOperation(value = "Edit Me", notes = "Edit my profile.", response = Void.class, authorizations = {
@@ -128,11 +124,11 @@ public interface UsersApi {
     ResponseEntity<Void> putMe(
 
 
-            @ApiParam(value = "User's name") @RequestPart(value = "userName", required = false) String userName
+            @ApiParam(value = "User's name") @RequestBody(required = false) String userName
             ,
 
 
-            @ApiParam(value = "User's password") @RequestPart(value = "userPassword", required = false) String userPassword
+            @ApiParam(value = "User's password") @RequestBody(required = false) String userPassword
     );
 
 
@@ -141,7 +137,7 @@ public interface UsersApi {
             @AuthorizationScope(scope = "manager", description = "Manager")
             })
     }, tags={  })
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Succeed.", response = Void.class) })
     @RequestMapping(value = "/users/{user-id}",
         produces = { "application/json" }, 
@@ -153,11 +149,11 @@ public interface UsersApi {
             ,
 
 
-            @ApiParam(value = "User's name") @RequestPart(value = "userName", required = false) String userName
+            @ApiParam(value = "User's name") @RequestBody(required = false) String userName
             ,
 
 
-            @ApiParam(value = "User's password") @RequestPart(value = "userPassword", required = false) String userPassword
+            @ApiParam(value = "User's password") @RequestBody(required = false) String userPassword
     );
 
 }

@@ -19,6 +19,8 @@ public class User   {
 
   private String userName = null;
 
+  private String userPassword = null;
+
   public User userId(Integer userId) {
     this.userId = userId;
     return this;
@@ -73,6 +75,18 @@ public class User   {
     this.userName = userName;
   }
 
+  /**
+   * User's password.
+   * @return userPassword
+   **/
+  @ApiModelProperty(required = true, value = "User's password.")
+  public String getUserPassword() {
+    return userPassword;
+  }
+
+  public void setUserPassword(String userPassword) {
+    this.userPassword = userPassword;
+  }
 
   @Override
   public boolean equals(Object o) {

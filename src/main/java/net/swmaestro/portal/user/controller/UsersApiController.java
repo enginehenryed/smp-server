@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -73,34 +73,34 @@ public class UsersApiController implements UsersApi {
         return new ResponseEntity<List<User>>(HttpStatus.OK);
     }
 
-    public ResponseEntity<Void> postUser(
+    public ResponseEntity<Void> postUser(@ApiParam(value = "User's eamil" ) @RequestBody(required=false)  String userEmail,
+                                         @ApiParam(value = "User's name" ) @RequestBody(required=false)  String userName,
+                                         @ApiParam(value = "User's password" ) @RequestBody(required=false)  String userPassword
+    ) throws Exception {
+        User user;
+        try {
+            user = userService.insertUser(userEmail, userPassword, userName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } finally { }
 
+        if (user == null) {
+            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
-@ApiParam(value = "User's eamil" ) @RequestPart(value="userEmail", required=false)  String userEmail
-,
-        
-
-
-@ApiParam(value = "User's name" ) @RequestPart(value="userName", required=false)  String userName
-,
-        
-
-
-@ApiParam(value = "User's password" ) @RequestPart(value="userPassword", required=false)  String userPassword
-) {
-        // do some magic!
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     public ResponseEntity<Void> putMe(
 
 
-@ApiParam(value = "User's name" ) @RequestPart(value="userName", required=false)  String userName
+@ApiParam(value = "User's name" ) @RequestBody(required=false)  String userName
 ,
         
 
 
-@ApiParam(value = "User's password" ) @RequestPart(value="userPassword", required=false)  String userPassword
+@ApiParam(value = "User's password" ) @RequestBody(required=false)  String userPassword
 ) {
         // do some magic!
         return new ResponseEntity<Void>(HttpStatus.OK);
@@ -114,12 +114,12 @@ public class UsersApiController implements UsersApi {
         
 
 
-@ApiParam(value = "User's name" ) @RequestPart(value="userName", required=false)  String userName
+@ApiParam(value = "User's name" ) @RequestBody(required=false)  String userName
 ,
         
 
 
-@ApiParam(value = "User's password" ) @RequestPart(value="userPassword", required=false)  String userPassword
+@ApiParam(value = "User's password" ) @RequestBody(required=false)  String userPassword
 ) {
         // do some magic!
         return new ResponseEntity<Void>(HttpStatus.OK);
