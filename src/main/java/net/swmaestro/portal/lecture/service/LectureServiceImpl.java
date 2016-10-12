@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +19,12 @@ public class LectureServiceImpl implements LectureService {
 	private LectureDAO lectureDAO;
 	
 	@Override
-	public Lecture selectLecture(Map<String, Object> map) throws Exception {
+	public Lecture selectLecture(int lectureId) throws Exception {
+		//TODO
+		// 여기서 맵을만들어서 DAO 호출
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("lecture_id", lectureId);
+
 		return lectureDAO.selectLecture(map);
 	}
 

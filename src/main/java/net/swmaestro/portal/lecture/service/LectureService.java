@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface LectureService {
 
-	Lecture selectLecture(Map<String, Object> map) throws Exception;
+	Lecture selectLecture(int lectureId) throws Exception;
 	List selectAllLectures() throws Exception;
 
 }

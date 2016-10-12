@@ -12,19 +12,6 @@ import java.util.List;
 @Api(value = "lectures", description = "the lectures API")
 public interface LecturesApi {
 
-    @ApiOperation(value = "Delete Me", notes = "Deletes Me (Leave).", response = Void.class, authorizations = {
-        @Authorization(value = "smp_auth", scopes = {
-            
-            })
-    }, tags={  })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Succeed.", response = Void.class) })
-    @RequestMapping(value = "/lectures/me",
-        produces = { "application/json" }, 
-        method = RequestMethod.DELETE)
-    ResponseEntity<Void> deleteMe();
-
-
     @ApiOperation(value = "Delete Lecture", notes = "Deletes a Lecture.", response = Void.class, authorizations = {
         @Authorization(value = "smp_auth", scopes = {
             @AuthorizationScope(scope = "manager", description = "Manager")

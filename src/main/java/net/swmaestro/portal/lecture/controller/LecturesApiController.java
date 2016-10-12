@@ -24,11 +24,6 @@ public class LecturesApiController implements LecturesApi {
     @Resource(name="lectureService")
     private LectureService lectureService;
 
-    public ResponseEntity<Void> deleteMe() {
-        // do some magic!
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
-
     public ResponseEntity<Void> deleteLecture(
             @ApiParam(value = "Lecture's ID",required=true ) @PathVariable("lecture-Id") Integer lectureId
 
@@ -48,13 +43,10 @@ public class LecturesApiController implements LecturesApi {
 
 
     ) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("lecture_id", lectureId);
-
         Lecture lecture;
 
         try {
-            lecture = lectureService.selectLecture(map);
+            lecture = lectureService.selectLecture(lectureId);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<Lecture>(HttpStatus.INTERNAL_SERVER_ERROR);
