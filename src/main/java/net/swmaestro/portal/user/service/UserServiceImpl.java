@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 import java.util.Map;
 
 @Service("userService")
@@ -16,7 +15,7 @@ public class UserServiceImpl implements UserService {
 
 	@Resource(name="userDAO")
 	private UserDAO userDAO;
-	
+
 	@Override
 	public User selectUser(Map<String, Object> map) throws Exception {
 		return userDAO.selectUser(map);

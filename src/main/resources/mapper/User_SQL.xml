@@ -15,6 +15,21 @@
 		]]>
     </select>
 
+    <select id="selectUserByEmail" parameterType="hashmap" resultType="net.swmaestro.portal.user.vo.User">
+        <![CDATA[
+			SELECT
+			    user_id AS userId,
+			    user_email AS userEmail,
+			    user_name AS userName,
+			    user_password AS userPassword
+			FROM
+			    soma.soma_user
+			WHERE
+			    user_email = #{user_email}
+			ORDER BY user_id DESC
+		]]>
+    </select>
+
     <select id="selectAllUsers" parameterType="hashmap" resultType="net.swmaestro.portal.user.vo.User">
         <![CDATA[
 			SELECT
