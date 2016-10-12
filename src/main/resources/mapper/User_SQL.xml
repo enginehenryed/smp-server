@@ -44,11 +44,13 @@
         <![CDATA[
             INSERT INTO
                 soma.soma_user (
-                    user_id,
+                    user_email,
                     user_password,
-                    user_name
+                    user_name,
+                    user_created_at,
+                    user_updated_at
                 )
-            VALUES ( #{userId}, #{userPassword}, #{userName} )
+            VALUES ( #{userEmail}, #{userPassword}, #{userName}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP )
         ]]>
     </insert>
 

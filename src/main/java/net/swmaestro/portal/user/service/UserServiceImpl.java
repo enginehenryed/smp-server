@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User insertUser(String email, String password, String name) throws Exception {
+	public int insertUser(String email, String password, String name) throws Exception {
 		// TODO: email UNIQUE Check
 
 		PasswordEncoder encoder = new BCryptPasswordEncoder();

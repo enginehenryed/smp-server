@@ -99,15 +99,15 @@ public interface UsersApi {
     ResponseEntity<Void> postUser(
 
 
-            @ApiParam(value = "User's eamil") @RequestBody(required = false) String userEmail
+            @ApiParam(value = "User's eamil") @RequestParam(required = false) String userEmail
             ,
 
 
-            @ApiParam(value = "User's name") @RequestBody(required = false) String userName
+            @ApiParam(value = "User's name") @RequestParam(required = false) String userName
             ,
 
 
-            @ApiParam(value = "User's password") @RequestBody(required = false) String userPassword
+            @ApiParam(value = "User's password") @RequestParam(required = false) String userPassword
     ) throws Exception;
 
 
