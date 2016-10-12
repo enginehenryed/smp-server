@@ -40,4 +40,18 @@
 		]]>
     </select>
 
+    <insert id="insertUser" parameterType="hashmap">
+        <![CDATA[
+            INSERT INTO
+                soma.soma_user (
+                    user_email,
+                    user_password,
+                    user_name,
+                    user_created_at,
+                    user_updated_at
+                )
+            VALUES ( #{userEmail}, #{userPassword}, #{userName}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP )
+        ]]>
+    </insert>
+
 </mapper>

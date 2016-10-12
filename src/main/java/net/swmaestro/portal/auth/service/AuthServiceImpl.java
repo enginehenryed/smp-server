@@ -7,6 +7,8 @@ import net.swmaestro.portal.sample.dao.SampleDAO;
 import net.swmaestro.portal.user.dao.UserDAO;
 import net.swmaestro.portal.user.vo.User;
 import org.apache.log4j.Logger;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -36,11 +38,15 @@ public class AuthServiceImpl implements AuthService {
 		} finally { }
 
 		if (user == null) {
-			// TODO: Impl - User not exists.
+			// TODO: Impl - User not exists. (Leave)
 			return null;
 		}
 
-		// TODO: Check password is valid.
+		PasswordEncoder encoder = new BCryptPasswordEncoder();
+		if (!encoder.matches(password, user.getUserPassword())) {
+			// Password NOT matching.
+			return null;
+		}
 
 		String token = TokenUtil.generate(user.getUserId());
 

@@ -19,10 +19,9 @@
           authentication-manager-ref="authenticationManager"
           create-session="never">
 
-        <csrf disabled="true" />
         <custom-filter ref="jwtAuthenticationFilter" position="FORM_LOGIN_FILTER" />
         <!--<intercept-url pattern="/users" method="POST" access="permitAll" />-->
-        <intercept-url pattern="/**" access="isAuthenticated()" />
+        <intercept-url pattern="/**" />
         <!--<logout />-->
     </http>
 

@@ -11,4 +11,6 @@ public interface UserService {
 
 	User selectUser(Map<String, Object> map) throws Exception;
 
+	int insertUser(String email, String password, String name) throws Exception;
+
 }
