@@ -29,19 +29,6 @@ public interface LecturesApi {
     );
 
 
-    @ApiOperation(value = "My Profile", notes = "Returns logined lecture's profile.", response = Lecture.class, authorizations = {
-        @Authorization(value = "smp_auth", scopes = {
-            
-            })
-    }, tags={  })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Lecture Response", response = Lecture.class) })
-    @RequestMapping(value = "/lectures/me",
-        produces = { "application/json" }, 
-        method = RequestMethod.GET)
-    ResponseEntity<Lecture> getMe();
-
-
     @ApiOperation(value = "Lecture Profile", notes = "Returns lecture's profile.", response = Lecture.class, authorizations = {
         @Authorization(value = "smp_auth", scopes = {
             
@@ -93,28 +80,6 @@ public interface LecturesApi {
 
             @ApiParam(value = "Lecture's password") @RequestPart(value = "lecturePassword", required = false) String lecturePassword
     );
-
-
-    @ApiOperation(value = "Edit Me", notes = "Edit my profile.", response = Void.class, authorizations = {
-        @Authorization(value = "smp_auth", scopes = {
-            
-            })
-    }, tags={  })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Succeed.", response = Void.class) })
-    @RequestMapping(value = "/lectures/me",
-        produces = { "application/json" }, 
-        method = RequestMethod.PUT)
-    ResponseEntity<Void> putMe(
-
-
-            @ApiParam(value = "Lecture's name") @RequestPart(value = "lectureName", required = false) String lectureName
-            ,
-
-
-            @ApiParam(value = "Lecture's password") @RequestPart(value = "lecturePassword", required = false) String lecturePassword
-    );
-
 
     @ApiOperation(value = "Edit Lecture", notes = "Edit lecture's profile.", response = Void.class, authorizations = {
         @Authorization(value = "smp_auth", scopes = {

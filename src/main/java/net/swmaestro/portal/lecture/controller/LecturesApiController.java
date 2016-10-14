@@ -33,10 +33,6 @@ public class LecturesApiController implements LecturesApi {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    public ResponseEntity<Lecture> getMe() {
-        // do some magic!
-        return new ResponseEntity<Lecture>(HttpStatus.OK);
-    }
 
     public ResponseEntity<Lecture> getLecture(
             @ApiParam(value = "Lecture's ID",required=true ) @PathVariable("lecture-id") Integer lectureId
@@ -73,20 +69,6 @@ public class LecturesApiController implements LecturesApi {
             @ApiParam(value = "Lecture's eamil" ) @RequestPart(value="lectureEmail", required=false)  String lectureEmail
             ,
 
-
-
-            @ApiParam(value = "Lecture's name" ) @RequestPart(value="lectureName", required=false)  String lectureName
-            ,
-
-
-
-            @ApiParam(value = "Lecture's password" ) @RequestPart(value="lecturePassword", required=false)  String lecturePassword
-    ) {
-        // do some magic!
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
-
-    public ResponseEntity<Void> putMe(
 
 
             @ApiParam(value = "Lecture's name" ) @RequestPart(value="lectureName", required=false)  String lectureName
