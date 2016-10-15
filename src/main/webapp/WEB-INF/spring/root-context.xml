@@ -7,7 +7,7 @@
 
 	<!-- DB Context -->
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSourceSpied" />
+		<property name="dataSource" ref="dataSourceSpied"/>
 		<property name="mapperLocations" value="classpath:/mapper/*_SQL.xml" />
 	</bean>
 	

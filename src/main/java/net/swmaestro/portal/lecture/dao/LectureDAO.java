@@ -21,4 +21,19 @@ public class LectureDAO extends AbstractDAO{
 		return (List<Lecture>) selectList("lecture.selectAllLectures");
 	}
 
+	@SuppressWarnings("unchecked")
+	public void insertLecture(Map<String, Object> map) {
+		insert("lecture.insertArticle", map);
+		insert("lecture.insertLecture", map);
+	}
+
+	public void updateLecture(Map<String, Object> map) {
+		update("lecture.updateArticle",map);
+		update("lecture.updateLecture",map);
+	}
+
+	public void removeLecture(Map<String, Object> map) {
+		update("lecture.removeArticle",map);
+		update("lecture.removeLecture",map);
+	}
 }
