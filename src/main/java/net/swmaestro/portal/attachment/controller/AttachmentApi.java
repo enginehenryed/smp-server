@@ -2,6 +2,7 @@ package net.swmaestro.portal.attachment.controller;
 
 import io.swagger.annotations.*;
 import net.swmaestro.portal.attachment.vo.PostAttachmentResponse;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,7 +37,7 @@ public interface AttachmentApi {
             @ApiResponse(code = 200, message = "Download Attachment", response = Void.class) })
     @RequestMapping(value = "/attachments/{attachment-id}",
             method = RequestMethod.GET)
-    ResponseEntity<Void> getAttachment(
+    ResponseEntity<FileSystemResource> getAttachment(
             @ApiParam(value = "Attachment ID", required = true) @PathVariable("attachment-id") int attachmentId
     );
 

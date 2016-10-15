@@ -1,6 +1,7 @@
 package net.swmaestro.portal.attachment.util;
 
 import net.swmaestro.portal.common.util.CommonUtil;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,9 +30,10 @@ public class AttachmentUtil {
         return storedFileName;
     }
 
-    public static String getStoredPath(String storedFileName) {
-        return (new File(filePath, storedFileName)).toString();
+    public static FileSystemResource getFileSystemResource(String fileName) {
+        return new FileSystemResource(new File(filePath, fileName));
     }
+
 
     public static String getFilePath() {
         return filePath;

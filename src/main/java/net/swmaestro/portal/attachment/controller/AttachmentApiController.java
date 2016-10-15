@@ -2,11 +2,17 @@ package net.swmaestro.portal.attachment.controller;
 
 import io.swagger.annotations.ApiParam;
 import net.swmaestro.portal.attachment.service.AttachmentService;
+import net.swmaestro.portal.attachment.util.AttachmentUtil;
 import net.swmaestro.portal.attachment.vo.Attachment;
 import net.swmaestro.portal.attachment.vo.PostAttachmentResponse;
 import net.swmaestro.portal.auth.JWTAuthentication;
+import net.swmaestro.portal.common.exception.NotFoundException;
+import net.swmaestro.portal.common.exception.UnexpectedException;
 import net.swmaestro.portal.user.vo.User;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -15,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.File;
 
 
 @Controller
@@ -40,7 +47,7 @@ public class AttachmentApiController implements AttachmentApi {
     }
 
     @Override
-    public ResponseEntity<Void> getAttachment(
+    public ResponseEntity<FileSystemResource> getAttachment(
             @ApiParam(value = "Attachment ID", required = true) @PathVariable("attachment-id") int attachmentId
     ) {
         Attachment attachment;
@@ -48,14 +55,21 @@ public class AttachmentApiController implements AttachmentApi {
             attachment = attachmentService.getAttachment(attachmentId);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new UnexpectedException();
         }
 
         if (attachment == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new NotFoundException();
         }
 
-        // TODO: Download File
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Content-Disposition", String.format("attachment; filename=\"%s\"", attachment.getAttachmentName()));
+        responseHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+
+        return new ResponseEntity<>(
+                AttachmentUtil.getFileSystemResource(attachment.getAttachmentUrl()),
+                responseHeaders,
+                HttpStatus.OK
+        );
     }
 }
