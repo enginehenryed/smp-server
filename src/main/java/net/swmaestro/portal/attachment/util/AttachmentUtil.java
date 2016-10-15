@@ -32,4 +32,12 @@ public class AttachmentUtil {
     public static String getStoredPath(String storedFileName) {
         return (new File(filePath, storedFileName)).toString();
     }
+
+    public static String getFilePath() {
+        return filePath;
+    }
+
+    public static void setFilePath(String filePath) {
+        AttachmentUtil.filePath = filePath;
+    }
 }
