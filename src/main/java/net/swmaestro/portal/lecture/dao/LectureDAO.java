@@ -27,13 +27,13 @@ public class LectureDAO extends AbstractDAO{
 		insert("lecture.insertLecture", map);
 	}
 
-	public void deleteLecture(Map<String, Object> map) {
-		delete("lecture.deleteLecture", map);
-		delete("lecture.deleteArticle", map);
-	}
-
 	public void updateLecture(Map<String, Object> map) {
 		update("lecture.updateArticle",map);
 		update("lecture.updateLecture",map);
+	}
+
+	public void removeLecture(Map<String, Object> map) {
+		update("lecture.removeArticle",map);
+		update("lecture.removeLecture",map);
 	}
 }

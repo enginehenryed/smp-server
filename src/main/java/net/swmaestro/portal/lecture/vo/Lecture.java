@@ -14,11 +14,13 @@ import java.util.Objects;
 public class Lecture {
     private Integer articleId = null;
 
-    private Integer articldWriterId = null;
+    private Integer articleWriterId = null;
 
-    private Integer articldModifierId = null;
+    private Integer articleModifierId = null;
 
     private Integer articleGenerationId = null;
+
+    private String articleSubject = null;
 
     private String articleContent = null;
 
@@ -54,12 +56,12 @@ public class Lecture {
      * @return articleWriterId
      **/
     @ApiModelProperty(value = "Lecture's writer ID.")
-    public Integer getArticldWriterId() {
-        return articldWriterId;
+    public Integer getArticleWriterId() {
+        return articleWriterId;
     }
 
-    public void setArticldWriterId(Integer articldWriterId) {
-        this.articldWriterId = articldWriterId;
+    public void setArticleWriterId(Integer articleWriterId) {
+        this.articleWriterId = articleWriterId;
     }
 
     /**
@@ -67,12 +69,12 @@ public class Lecture {
      * @return articleModifierId
      **/
     @ApiModelProperty(value = "Lecture's modifier ID.")
-    public Integer getArticldModifierId() {
-        return articldModifierId;
+    public Integer getArticleModifierId() {
+        return articleModifierId;
     }
 
-    public void setArticldModifierId(Integer articldModifierId) {
-        this.articldModifierId = articldModifierId;
+    public void setArticleModifierId(Integer articleModifierId) {
+        this.articleModifierId = articleModifierId;
     }
 
     /**
@@ -86,6 +88,15 @@ public class Lecture {
 
     public void setArticleGenerationId(Integer articleGenerationId) {
         this.articleGenerationId = articleGenerationId;
+    }
+
+
+    public String getArticleSubject() {
+        return articleSubject;
+    }
+
+    public void setArticleSubject(String articleSubject) {
+        this.articleSubject = articleSubject;
     }
 
     /**

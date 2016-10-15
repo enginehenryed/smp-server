@@ -71,9 +71,6 @@ public interface LecturesApi {
         method = RequestMethod.POST)
     ResponseEntity<Void> postLecture(
 
-            @ApiParam(value = "token of who posts Lecture") @RequestHeader(value="Authorization", required = true) String authorizationHeader
-            ,
-
             @ApiParam(value = "Lecture's articleGenerationId") @RequestParam(value = "articleGenerationId", required = true) Integer articleGenerationId
             ,
 
@@ -101,14 +98,11 @@ public interface LecturesApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Succeed.", response = Void.class) })
     @RequestMapping(value = "/lectures/{lecture-id}",
-        produces = { "application/json" }, 
+        produces = { "application/json" },
         method = RequestMethod.PUT)
     ResponseEntity<Void> putLecture(
 
             @ApiParam(value = "Lecture's ID", required = true) @PathVariable("lecture-id") Integer lectureId
-            ,
-
-            @ApiParam(value = "token of who puts Lecture") @RequestHeader(value="Authorization", required = true) String authorizationHeader
             ,
 
             @ApiParam(value = "Lecture's articleGenerationId") @RequestParam(value = "articleGenerationId", required = false) Integer articleGenerationId

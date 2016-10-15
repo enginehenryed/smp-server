@@ -14,7 +14,7 @@ public interface LectureService {
 	void insertLecture(Integer userId, Integer articleGenerationId,
 					   String articleSubject, String articleContent, Integer lectureTeacherId, Date lectureBeginAt, Date lectureEndAt) throws Exception;
 
-	void deleteLecture(Integer lectureId);
+	void removeLecture(Integer userId, Integer lectureId) throws Exception;
 
 	void updateLecture(Integer lectureId, Integer userId, Integer articleGenerationId, String articleSubject, String articleContent, Integer lectureTeacherId, Date lectureBeginAt, Date lectureEndAt);
 }

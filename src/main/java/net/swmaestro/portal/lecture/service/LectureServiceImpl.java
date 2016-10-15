@@ -45,6 +45,7 @@ public class LectureServiceImpl implements LectureService {
 		map.put("article_writer_id", userId);
 		map.put("article_modifier_id", userId);
 		map.put("article_generation_id", articleGenerationId);
+		map.put("article_subject", articleSubject);
 		map.put("article_content", articleContent);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		java.util.Date date = new java.util.Date();
@@ -62,12 +63,18 @@ public class LectureServiceImpl implements LectureService {
 	}
 
 	@Override
-	public void deleteLecture(Integer lectureId) {
+	public void removeLecture(Integer userId, Integer lectureId) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("lecture_id", lectureId);
 
+		Lecture lecture = lectureDAO.selectLecture(map);
 
-		lectureDAO.deleteLecture(map);
+		if(lecture.getArticleWriterId().equals(userId)) {
+			lectureDAO.removeLecture(map);
+		} else {
+			// throw Exception
+			// TODO
+		}
 	}
 
 	@Override
