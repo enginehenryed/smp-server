@@ -18,4 +18,9 @@
         <property name="secret" value="<secretkey>" />
     </bean>
 
+    <!-- AttachmentUtil -->
+    <bean id="attachmentUtil" class="net.swmaestro.portal.attachment.util.AttachmentUtil">
+        <property name="filePath" value="<filepath>" />
+    </bean>
+
 </beans>

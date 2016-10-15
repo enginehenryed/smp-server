@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="attachment">
+
+    <select id="selectAttachment" parameterType="hashmap" resultType="net.swmaestro.portal.attachment.vo.Attachment">
+        <![CDATA[
+			SELECT
+			    attachment_id AS attachmentId,
+                attachment_url AS attachmentUrl,
+                attachment_name AS attachmentName,
+                attachment_extension AS attachmentExtension,
+                attachment_size AS attachmentSize,
+                attachment_type AS attachmentType,
+                attachment_created_at AS attachmentCreatedAt,
+                attachment_updated_at AS attachmentUpdatedAt,
+                attachment_writer_id AS attachmentWriterId,
+                attachment_modifier_id AS attachmentModifierId
+			FROM
+			    soma.soma_attachment
+			WHERE
+			    attachment_id = #{attachmentId}
+			ORDER BY attachment_id DESC
+		]]>
+    </select>
+
+    <insert id="insertAttachment" parameterType="hashmap" useGeneratedKeys="true" keyProperty="attachmentId" keyColumn="attachment_id">
+        <![CDATA[
+            INSERT INTO
+                soma.soma_attachment (
+                    attachment_url,
+                    attachment_name,
+                    attachment_extension,
+                    attachment_size,
+                    attachment_type,
+                    attachment_writer_id,
+                    attachment_modifier_id,
+                    attachment_created_at,
+                    attachment_updated_at
+                )
+            VALUES (
+                #{attachmentUrl},
+                #{attachmentName},
+                #{attachmentExtension},
+                #{attachmentSize},
+                #{attachmentType},
+                #{attachmentWriterId},
+                #{attachmentWriterId},
+                CURRENT_TIMESTAMP,
+                CURRENT_TIMESTAMP
+            )
+        ]]>
+    </insert>
+
+</mapper>
