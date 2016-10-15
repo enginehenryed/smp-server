@@ -2,9 +2,11 @@ package net.swmaestro.portal.lecture.controller;
 
 import io.swagger.annotations.*;
 import net.swmaestro.portal.lecture.vo.Lecture;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-10-05T11:30:19.659Z")
@@ -23,7 +25,7 @@ public interface LecturesApi {
         produces = { "application/json" }, 
         method = RequestMethod.DELETE)
     ResponseEntity<Void> deleteLecture(
-            @ApiParam(value = "Lecture's ID", required = true) @PathVariable("lectureId") Integer lectureId
+            @ApiParam(value = "Lecture's ID", required = true) @PathVariable("lecture-id") Integer lectureId
 
 
     );
@@ -40,7 +42,7 @@ public interface LecturesApi {
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<Lecture> getLecture(
-            @ApiParam(value = "Lecture's ID", required = true) @PathVariable("lectureId") Integer lectureId
+            @ApiParam(value = "Lecture's ID", required = true) @PathVariable("lecture-id") Integer lectureId
 
 
     );
@@ -69,16 +71,26 @@ public interface LecturesApi {
         method = RequestMethod.POST)
     ResponseEntity<Void> postLecture(
 
-
-            @ApiParam(value = "Lecture's eamil") @RequestPart(value = "lectureEmail", required = false) String lectureEmail
+            @ApiParam(value = "token of who posts Lecture") @RequestHeader(value="Authorization", required = true) String authorizationHeader
             ,
 
-
-            @ApiParam(value = "Lecture's name") @RequestPart(value = "lectureName", required = false) String lectureName
+            @ApiParam(value = "Lecture's articleGenerationId") @RequestParam(value = "articleGenerationId", required = true) Integer articleGenerationId
             ,
 
+            @ApiParam(value = "Lecture's articleSubject") @RequestParam(value = "articleSubject", required = true) String articleSubject
+            ,
 
-            @ApiParam(value = "Lecture's password") @RequestPart(value = "lecturePassword", required = false) String lecturePassword
+            @ApiParam(value = "Lecture's articleContent") @RequestParam(value = "articleContent", required = true) String articleContent
+            ,
+
+            @ApiParam(value = "Lecture's articleTeacherId") @RequestParam(value = "lectureTeacherId", required = true) Integer lectureTeacherId
+            ,
+
+            @ApiParam(value = "Lecture's articleBeginAt") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") @RequestParam(value = "lectureBeginAt", required = true) Date lectureBeginAt
+            ,
+
+            @ApiParam(value = "Lecture's articleEndAt") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")  @RequestParam(value = "lectureEndAt", required = true) Date lectureEndAt
+
     );
 
     @ApiOperation(value = "Edit Lecture", notes = "Edit lecture's profile.", response = Void.class, authorizations = {
@@ -97,12 +109,11 @@ public interface LecturesApi {
 
             ,
 
-
-            @ApiParam(value = "Lecture's name") @RequestPart(value = "lectureName", required = false) String lectureName
+            @ApiParam(value = "Lecture's name") @RequestParam(value = "lectureName", required = false) String lectureName
             ,
 
 
-            @ApiParam(value = "Lecture's password") @RequestPart(value = "lecturePassword", required = false) String lecturePassword
+            @ApiParam(value = "Lecture's password") @RequestParam(value = "lecturePassword", required = false) String lecturePassword
     );
 
 }

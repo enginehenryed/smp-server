@@ -57,4 +57,34 @@
 		]]>
     </select>
 
+    <insert id="insertArticle" parameterType="hashmap" useGeneratedKeys="true" keyProperty="article_id">
+        <![CDATA[
+                 INSERT INTO soma.soma_article (article_writer_id, article_modifier_id, article_generation_id, article_content,
+                 article_created_at, article_updated_at, article_type, article_status)
+                 VALUES (#{article_writer_id}, #{article_modifier_id}, #{article_generation_id}, #{article_content},
+                 #{article_created_at}, #{article_updated_at}, #{article_type}, #{article_status});
+        ]]>
+    </insert>
+
+    <insert id="insertLecture" parameterType="hashmap">
+        <![CDATA[
+                 INSERT INTO soma.soma_lecture (article_id, lecture_teacher_id, lecture_begin_at, lecture_end_at)
+                 VALUES (#{article_id}, #{lecture_teacher_id}, #{lecture_begin_at}, #{lecture_end_at});
+        ]]>
+    </insert>
+
+    <insert id="deleteArticle" parameterType="hashmap">
+        <![CDATA[
+                 DELETE FROM soma.soma_article where soma_article.article_id = #{lecture_id}
+        ]]>
+    </insert>
+
+    <insert id="deleteLecture" parameterType="hashmap">
+        <![CDATA[
+                 DELETE FROM soma.soma_lecture where soma_lecture.article_id = #{lecture_id}
+        ]]>
+    </insert>
+
+
+
 </mapper>
