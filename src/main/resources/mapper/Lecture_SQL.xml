@@ -73,17 +73,41 @@
         ]]>
     </insert>
 
-    <insert id="deleteArticle" parameterType="hashmap">
+    <delete id="deleteArticle" parameterType="hashmap">
         <![CDATA[
                  DELETE FROM soma.soma_article where soma_article.article_id = #{lecture_id}
         ]]>
-    </insert>
+    </delete>
 
-    <insert id="deleteLecture" parameterType="hashmap">
+    <delete id="deleteLecture" parameterType="hashmap">
         <![CDATA[
                  DELETE FROM soma.soma_lecture where soma_lecture.article_id = #{lecture_id}
         ]]>
-    </insert>
+    </delete>
+
+    <update id="updateArticle" parameterType="hashmap">
+        <![CDATA[
+                 UPDATE soma.soma_article
+                 SET
+                    article_updated_at = #{article_updated_at},
+                    article_modifier_id = #{article_modifier_id},
+                    article_generation_id = COALESCE(#{article_generation_id}, article_generation_id),
+                    article_content = COALESCE(#{article_content}, article_content)
+                 WHERE article_id = #{lecture_id}
+        ]]>
+    </update>
+
+    <update id="updateLecture" parameterType="hashmap">
+        <![CDATA[
+                 UPDATE soma.soma_lecture
+                 SET
+                    lecture_teacher_id = COALESCE(#{lecture_teacher_id}, lecture_teacher_id),
+                    lecture_begin_at = COALESCE(#{lecture_begin_at}, lecture_begin_at),
+                    lecture_end_at = COALESCE(#{lecture_end_at}, lecture_end_at)
+                 WHERE article_id = #{lecture_id}
+
+        ]]>
+    </update>
 
 
 

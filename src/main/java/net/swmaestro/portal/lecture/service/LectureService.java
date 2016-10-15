@@ -11,8 +11,10 @@ public interface LectureService {
 	Lecture selectLecture(int lectureId) throws Exception;
 	List selectAllLectures() throws Exception;
 
-	void insertLecture(String token, Integer articleGenerationId,
+	void insertLecture(Integer userId, Integer articleGenerationId,
 					   String articleSubject, String articleContent, Integer lectureTeacherId, Date lectureBeginAt, Date lectureEndAt) throws Exception;
 
 	void deleteLecture(Integer lectureId);
+
+	void updateLecture(Integer lectureId, Integer userId, Integer articleGenerationId, String articleSubject, String articleContent, Integer lectureTeacherId, Date lectureBeginAt, Date lectureEndAt);
 }

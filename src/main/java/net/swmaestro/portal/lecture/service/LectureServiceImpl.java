@@ -1,11 +1,9 @@
 package net.swmaestro.portal.lecture.service;
 
 
-import net.swmaestro.portal.auth.TokenUtil;
 import net.swmaestro.portal.lecture.dao.LectureDAO;
 import net.swmaestro.portal.lecture.vo.Lecture;
 import net.swmaestro.portal.user.dao.UserDAO;
-import net.swmaestro.portal.user.vo.User;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -39,19 +37,14 @@ public class LectureServiceImpl implements LectureService {
 	}
 
 	@Override
-	public void insertLecture(String token, Integer articleGenerationId,
+	public void insertLecture(Integer userId, Integer articleGenerationId,
 							  String articleSubject, String articleContent, Integer lectureTeacherId, Date lectureBeginAt, Date lectureEndAt) throws Exception {
 
-		int userId = TokenUtil.parse(token);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("user_id", userId);
-		User user = userDAO.selectUser(map);
 
-
-		map = new HashMap<String, Object>();
-		map.put("article_writer_id", user.getUserId());
-		map.put("article_modifier_id", user.getUserId());
-		map.put("article_generation_id", "7");
+		map.put("article_writer_id", userId);
+		map.put("article_modifier_id", userId);
+		map.put("article_generation_id", articleGenerationId);
 		map.put("article_content", articleContent);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		java.util.Date date = new java.util.Date();
@@ -75,6 +68,44 @@ public class LectureServiceImpl implements LectureService {
 
 
 		lectureDAO.deleteLecture(map);
+	}
+
+	@Override
+	public void updateLecture(Integer lectureId, Integer userId, Integer articleGenerationId, String articleSubject, String articleContent, Integer lectureTeacherId, Date lectureBeginAt, Date lectureEndAt) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("lecture_id", lectureId);
+
+		if(userId != null) {
+			map.put("article_modifier_id", userId);
+		}
+		if(articleGenerationId != null) {
+			map.put("article_generation_id", articleGenerationId);
+		}
+		if(articleSubject != null) {
+			map.put("article_subject", articleSubject);
+		}
+		if(articleContent != null) {
+			map.put("article_content", articleContent);
+		}
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		java.util.Date date = new java.util.Date();
+		map.put("article_updated_at", dateFormat.format(date));
+		/*
+		TODO
+		map.put("article_status", "0");
+		*/
+		if(lectureTeacherId != null) {
+			map.put("lecture_teacher_id", lectureTeacherId);
+		}
+		if(lectureBeginAt != null) {
+			map.put("lecture_begin_at", lectureBeginAt);
+		}
+		if(lectureEndAt != null) {
+			map.put("lecture_end_at", lectureEndAt);
+		}
+
+		lectureDAO.updateLecture(map);
 	}
 
 }

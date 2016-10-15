@@ -80,7 +80,7 @@ public class LecturesApiController implements LecturesApi {
         try {
             String token = authorizationHeader.substring(7);
             Integer userId = TokenUtil.parse(token);
-            lectureService.insertLecture(token, articleGenerationId, articleSubject, articleContent,
+            lectureService.insertLecture(userId, articleGenerationId, articleSubject, articleContent,
                     lectureTeacherId, lectureBeginAt, lectureEndAt);
         } catch (Exception e) {
             e.printStackTrace();
@@ -90,20 +90,18 @@ public class LecturesApiController implements LecturesApi {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    public ResponseEntity<Void> putLecture(
-            @ApiParam(value = "Lecture's ID", required = true) @PathVariable("lectureId") Integer lectureId
-
-
-            ,
-
-
-            @ApiParam(value = "Lecture's name") @RequestParam(value = "lectureName", required = false) String lectureName
-            ,
-
-
-            @ApiParam(value = "Lecture's password") @RequestParam(value = "lecturePassword", required = false) String LlcturePassword
-    ) {
-        // do some magic!
+    @Override
+    public ResponseEntity<Void> putLecture(@ApiParam(value = "Lecture's ID", required = true) @PathVariable("lecture-id") Integer lectureId, @ApiParam(value = "token of who puts Lecture") @RequestHeader(value = "Authorization", required = true) String authorizationHeader, @ApiParam(value = "Lecture's articleGenerationId") @RequestParam(value = "articleGenerationId", required = false) Integer articleGenerationId, @ApiParam(value = "Lecture's articleSubject") @RequestParam(value = "articleSubject", required = false) String articleSubject, @ApiParam(value = "Lecture's articleContent") @RequestParam(value = "articleContent", required = false) String articleContent, @ApiParam(value = "Lecture's articleTeacherId") @RequestParam(value = "lectureTeacherId", required = false) Integer lectureTeacherId, @ApiParam(value = "Lecture's articleBeginAt") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") @RequestParam(value = "lectureBeginAt", required = false) Date lectureBeginAt, @ApiParam(value = "Lecture's articleEndAt") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") @RequestParam(value = "lectureEndAt", required = false) Date lectureEndAt) {
+        try {
+            String token = authorizationHeader.substring(7);
+            Integer userId = TokenUtil.parse(token);
+            lectureService.updateLecture(lectureId, userId, articleGenerationId, articleSubject, articleContent,
+                    lectureTeacherId, lectureBeginAt, lectureEndAt);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } finally {
+        }
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }

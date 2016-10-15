@@ -104,16 +104,30 @@ public interface LecturesApi {
         produces = { "application/json" }, 
         method = RequestMethod.PUT)
     ResponseEntity<Void> putLecture(
-            @ApiParam(value = "Lecture's ID", required = true) @PathVariable("lectureId") Integer lectureId
 
-
+            @ApiParam(value = "Lecture's ID", required = true) @PathVariable("lecture-id") Integer lectureId
             ,
 
-            @ApiParam(value = "Lecture's name") @RequestParam(value = "lectureName", required = false) String lectureName
+            @ApiParam(value = "token of who puts Lecture") @RequestHeader(value="Authorization", required = true) String authorizationHeader
             ,
 
+            @ApiParam(value = "Lecture's articleGenerationId") @RequestParam(value = "articleGenerationId", required = false) Integer articleGenerationId
+            ,
 
-            @ApiParam(value = "Lecture's password") @RequestParam(value = "lecturePassword", required = false) String lecturePassword
+            @ApiParam(value = "Lecture's articleSubject") @RequestParam(value = "articleSubject", required = false) String articleSubject
+            ,
+
+            @ApiParam(value = "Lecture's articleContent") @RequestParam(value = "articleContent", required = false) String articleContent
+            ,
+
+            @ApiParam(value = "Lecture's articleTeacherId") @RequestParam(value = "lectureTeacherId", required = false) Integer lectureTeacherId
+            ,
+
+            @ApiParam(value = "Lecture's articleBeginAt") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") @RequestParam(value = "lectureBeginAt", required = false) Date lectureBeginAt
+            ,
+
+            @ApiParam(value = "Lecture's articleEndAt") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")  @RequestParam(value = "lectureEndAt", required = false) Date lectureEndAt
+
     );
 
 }
