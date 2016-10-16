@@ -71,22 +71,7 @@ public interface LecturesApi {
         method = RequestMethod.POST)
     ResponseEntity<Void> postLecture(
 
-            @ApiParam(value = "Lecture's articleGenerationId") @RequestParam(value = "articleGenerationId", required = true) Integer articleGenerationId
-            ,
-
-            @ApiParam(value = "Lecture's articleSubject") @RequestParam(value = "articleSubject", required = true) String articleSubject
-            ,
-
-            @ApiParam(value = "Lecture's articleContent") @RequestParam(value = "articleContent", required = true) String articleContent
-            ,
-
-            @ApiParam(value = "Lecture's articleTeacherId") @RequestParam(value = "lectureTeacherId", required = true) Integer lectureTeacherId
-            ,
-
-            @ApiParam(value = "Lecture's articleBeginAt") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") @RequestParam(value = "lectureBeginAt", required = true) Date lectureBeginAt
-            ,
-
-            @ApiParam(value = "Lecture's articleEndAt") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")  @RequestParam(value = "lectureEndAt", required = true) Date lectureEndAt
+            @ApiParam(value = "Lecture's articleGenerationId") @RequestBody(required = true) Lecture lecture
 
     );
 
@@ -105,23 +90,7 @@ public interface LecturesApi {
             @ApiParam(value = "Lecture's ID", required = true) @PathVariable("lecture-id") Integer lectureId
             ,
 
-            @ApiParam(value = "Lecture's articleGenerationId") @RequestParam(value = "articleGenerationId", required = false) Integer articleGenerationId
-            ,
-
-            @ApiParam(value = "Lecture's articleSubject") @RequestParam(value = "articleSubject", required = false) String articleSubject
-            ,
-
-            @ApiParam(value = "Lecture's articleContent") @RequestParam(value = "articleContent", required = false) String articleContent
-            ,
-
-            @ApiParam(value = "Lecture's articleTeacherId") @RequestParam(value = "lectureTeacherId", required = false) Integer lectureTeacherId
-            ,
-
-            @ApiParam(value = "Lecture's articleBeginAt") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") @RequestParam(value = "lectureBeginAt", required = false) Date lectureBeginAt
-            ,
-
-            @ApiParam(value = "Lecture's articleEndAt") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")  @RequestParam(value = "lectureEndAt", required = false) Date lectureEndAt
-
+            @ApiParam(value = "Lecture's VO") @RequestBody(required = true) Lecture lecture
     );
 
 }
