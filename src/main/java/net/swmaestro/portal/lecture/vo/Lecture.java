@@ -13,6 +13,10 @@ import java.util.Objects;
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-10-05T11:30:19.659Z")
 
 public class Lecture {
+
+    private static final String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
+    private static final String TIME_ZONE = "Asia/Seoul";
+
     private Integer articleId = null;
 
     private Integer articleWriterId = null;
@@ -25,8 +29,10 @@ public class Lecture {
 
     private String articleContent = null;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern=DATE_PATTERN, timezone = TIME_ZONE)
     private Date articleCreatedAt = null;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern=DATE_PATTERN, timezone = TIME_ZONE)
     private Date articleUpdatedAt = null;
 
     private String articleType = null;
@@ -35,10 +41,10 @@ public class Lecture {
 
     private Integer lectureTeacherId = null;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern=DATE_PATTERN, timezone = TIME_ZONE)
     private Date lectureBeginAt = null;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern=DATE_PATTERN, timezone = TIME_ZONE)
     private Date lectureEndAt = null;
 
     /**
