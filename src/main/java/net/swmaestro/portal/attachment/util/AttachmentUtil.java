@@ -15,6 +15,20 @@ import java.io.IOException;
 public class AttachmentUtil {
     private static String filePath = "";
 
+
+    public static String storeFile(MultipartFile multipartFile, String fileExtension) throws IOException {
+        String storedFileName = CommonUtil.getRandomString();
+
+        if (fileExtension != null && fileExtension.length() > 0) {
+            storedFileName = String.join(".", storedFileName, fileExtension);
+        }
+
+        File file = new File(filePath, storedFileName);
+        multipartFile.transferTo(file);
+
+        return storedFileName;
+    }
+
     public static String storeFile(MultipartFile multipartFile) throws IOException {
         String fileName = multipartFile.getOriginalFilename();
         String storedFileName = CommonUtil.getRandomString();

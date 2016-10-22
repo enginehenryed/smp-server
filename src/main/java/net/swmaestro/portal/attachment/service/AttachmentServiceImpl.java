@@ -41,7 +41,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 
 		// Store file.
 		try {
-			storedFileName = AttachmentUtil.storeFile(file);
+			storedFileName = AttachmentUtil.storeFile(file, fileExtension);
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw e;
