@@ -29,6 +29,7 @@ public class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFil
     public JWTAuthenticationFilter(String defaultFilterProcessesUrl) {
         // Except Signup api(POST `/users`) from authentication.
         super(new AndRequestMatcher(
+                new NegatedRequestMatcher(new AntPathRequestMatcher("/**", "OPTIONS")),
                 new NegatedRequestMatcher(new AntPathRequestMatcher("/users", "POST")),
                 new AntPathRequestMatcher(defaultFilterProcessesUrl)
         ));
