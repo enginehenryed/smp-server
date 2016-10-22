@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="assignment">
+
+    <select id="selectAssignment" parameterType="hashmap" resultType="net.swmaestro.portal.assignment.vo.Assignment">
+        <![CDATA[
+			SELECT
+			    soma_article.article_id as articleId,
+					article_writer_id as articleWriterId,
+					article_modifier_id as articleModifierId,
+					article_generation_id as articleGenerationId,
+					article_subject as articleSubject,
+					article_content as articleContent,
+					article_created_at as articleCreatedAt,
+					article_updated_at as articleUpdatedAt,
+					article_type as articleType,
+					article_status as articleStatus,
+					assignment_end_at as assignmentEndAt
+
+			FROM
+			    soma.soma_assignment
+			inner join
+					soma.soma_article
+			on
+					soma.soma_assignment.article_id =soma.soma_article.article_id
+		    where soma_article.article_id = #{assignment_id}
+			ORDER BY soma_article.article_id DESC
+		]]>
+    </select>
+
+    <select id="selectAllAssignments" parameterType="hashmap" resultType="net.swmaestro.portal.assignment.vo.Assignment">
+        <![CDATA[
+				SELECT
+			    soma_article.article_id as articleId,
+					article_writer_id as articleWriterId,
+					article_modifier_id as articleModifierId,
+					article_generation_id as articleGenerationId,
+					article_content as articleContent,
+					article_subject as articleSubject,
+					article_created_at as articleCreatedAt,
+					article_updated_at as articleUpdatedAt,
+					article_type as articleType,
+					article_status as articleStatus,
+					assignment_end_at as assignmentEndAt
+
+			FROM
+			    soma.soma_assignment
+			inner join
+					soma.soma_article
+			on
+					soma.soma_assignment.article_id =soma.soma_article.article_id
+			ORDER BY soma_article.article_id DESC
+
+		]]>
+    </select>
+
+    <insert id="insertAssignment" parameterType="hashmap">
+        <![CDATA[
+                 INSERT INTO soma.soma_article (article_writer_id, article_modifier_id, article_generation_id, article_subject, article_content,
+                 article_created_at, article_updated_at, article_type, article_status)
+                 VALUES (#{article_writer_id}, #{article_modifier_id}, #{article_generation_id}, #{article_subject}, #{article_content},
+                 #{article_created_at}, #{article_updated_at}, #{article_type}, #{article_status});
+
+                 INSERT INTO soma.soma_assignment (article_id, assignment_end_at)
+                 VALUES (LAST_INSERT_ID(), #{assignment_end_at});
+     ]]>
+    </insert>
+
+    <delete id="removeAssignment" parameterType="hashmap">
+        <![CDATA[
+                 UPDATE soma.soma_article SET article_status = 'DEL' where soma_article.article_id = #{assignment_id}
+        ]]>
+    </delete>
+
+
+    <update id="updateAssignment" parameterType="hashmap">
+        <![CDATA[
+                 UPDATE soma.soma_article
+                 SET
+                    article_updated_at = #{article_updated_at},
+                    article_modifier_id = #{article_modifier_id},
+                    article_generation_id = COALESCE(#{article_generation_id}, article_generation_id),
+                    article_subject = COALESCE(#{article_subject}, article_subject),
+                    article_content = COALESCE(#{article_content}, article_content)
+                 WHERE article_id = #{assignment_id};
+                 UPDATE soma.soma_assignment
+                 SET
+                     assignment_end_at = COALESCE(#{assignment_end_at}, assignment_end_at)
+                 WHERE article_id = #{assignment_id}
+
+        ]]>
+    </update>
+
+
+
+</mapper>
