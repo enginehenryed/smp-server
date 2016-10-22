@@ -1,8 +1,9 @@
 package net.swmaestro.portal.lecture.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.Objects;
 
 
@@ -34,8 +35,10 @@ public class Lecture {
 
     private Integer lectureTeacherId = null;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date lectureBeginAt = null;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date lectureEndAt = null;
 
     /**

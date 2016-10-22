@@ -59,35 +59,25 @@
 		]]>
     </select>
 
-    <insert id="insertArticle" parameterType="hashmap" useGeneratedKeys="true" keyProperty="article_id">
+    <insert id="insertLecture" parameterType="hashmap">
         <![CDATA[
                  INSERT INTO soma.soma_article (article_writer_id, article_modifier_id, article_generation_id, article_subject, article_content,
                  article_created_at, article_updated_at, article_type, article_status)
                  VALUES (#{article_writer_id}, #{article_modifier_id}, #{article_generation_id}, #{article_subject}, #{article_content},
                  #{article_created_at}, #{article_updated_at}, #{article_type}, #{article_status});
-        ]]>
-    </insert>
 
-    <insert id="insertLecture" parameterType="hashmap">
-        <![CDATA[
                  INSERT INTO soma.soma_lecture (article_id, lecture_teacher_id, lecture_begin_at, lecture_end_at)
-                 VALUES (#{article_id}, #{lecture_teacher_id}, #{lecture_begin_at}, #{lecture_end_at});
-        ]]>
+                 VALUES (LAST_INSERT_ID(), #{lecture_teacher_id}, #{lecture_begin_at}, #{lecture_end_at});
+     ]]>
     </insert>
-
-    <update id="removeArticle" parameterType="hashmap">
-        <![CDATA[
-                 UPDATE soma.soma_article SET article_status = 'DEL' where soma_article.article_id = #{lecture_id}
-        ]]>
-    </update>
 
     <delete id="removeLecture" parameterType="hashmap">
         <![CDATA[
-                 UPDATE soma.soma_lecture SET article_status = 'DEL' where soma_lecture.article_id = #{lecture_id}
+                 UPDATE soma.soma_article SET article_status = 'DEL' where soma_article.article_id = #{lecture_id}
         ]]>
     </delete>
 
-    <update id="updateArticle" parameterType="hashmap">
+    <update id="updateLecture" parameterType="hashmap">
         <![CDATA[
                  UPDATE soma.soma_article
                  SET
@@ -96,12 +86,7 @@
                     article_generation_id = COALESCE(#{article_generation_id}, article_generation_id),
                     article_subject = COALESCE(#{article_subject}, article_subject),
                     article_content = COALESCE(#{article_content}, article_content)
-                 WHERE article_id = #{lecture_id}
-        ]]>
-    </update>
-
-    <update id="updateLecture" parameterType="hashmap">
-        <![CDATA[
+                 WHERE article_id = #{lecture_id};
                  UPDATE soma.soma_lecture
                  SET
                     lecture_teacher_id = COALESCE(#{lecture_teacher_id}, lecture_teacher_id),

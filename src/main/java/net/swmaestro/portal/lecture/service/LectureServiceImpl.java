@@ -37,26 +37,25 @@ public class LectureServiceImpl implements LectureService {
 	}
 
 	@Override
-	public void insertLecture(Integer userId, Integer articleGenerationId,
-							  String articleSubject, String articleContent, Integer lectureTeacherId, Date lectureBeginAt, Date lectureEndAt) throws Exception {
+	public void insertLecture(Integer userId, Lecture lecture) throws Exception {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		map.put("article_writer_id", userId);
 		map.put("article_modifier_id", userId);
-		map.put("article_generation_id", articleGenerationId);
-		map.put("article_subject", articleSubject);
-		map.put("article_content", articleContent);
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		map.put("article_generation_id", lecture.getArticleGenerationId());
+		map.put("article_subject", lecture.getArticleSubject());
+		map.put("article_content", lecture.getArticleContent());
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		java.util.Date date = new java.util.Date();
 		map.put("article_created_at", dateFormat.format(date));
 		map.put("article_updated_at", dateFormat.format(date));
 		map.put("article_type", "0");
 		map.put("article_status", "0");
 
-		map.put("lecture_teacher_id", lectureTeacherId);
-		map.put("lecture_begin_at", lectureBeginAt);
-		map.put("lecture_end_at", lectureEndAt);
+		map.put("lecture_teacher_id", lecture.getLectureTeacherId());
+		map.put("lecture_begin_at", lecture.getLectureBeginAt());
+		map.put("lecture_end_at", lecture.getLectureEndAt());
 
 		lectureDAO.insertLecture(map);
 
@@ -67,49 +66,42 @@ public class LectureServiceImpl implements LectureService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("lecture_id", lectureId);
 
-		Lecture lecture = lectureDAO.selectLecture(map);
+		lectureDAO.removeLecture(map);
 
-		if(lecture.getArticleWriterId().equals(userId)) {
-			lectureDAO.removeLecture(map);
-		} else {
-			// throw Exception
-			// TODO
-		}
 	}
 
 	@Override
-	public void updateLecture(Integer lectureId, Integer userId, Integer articleGenerationId, String articleSubject, String articleContent, Integer lectureTeacherId, Date lectureBeginAt, Date lectureEndAt) {
-
+	public void updateLecture(Integer lectureId, Integer userId, Lecture lecture) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("lecture_id", lectureId);
 
 		if(userId != null) {
 			map.put("article_modifier_id", userId);
 		}
-		if(articleGenerationId != null) {
-			map.put("article_generation_id", articleGenerationId);
+		if(lecture.getArticleGenerationId() != null) {
+			map.put("article_generation_id", lecture.getArticleGenerationId());
 		}
-		if(articleSubject != null) {
-			map.put("article_subject", articleSubject);
+		if(lecture.getArticleSubject() != null) {
+			map.put("article_subject", lecture.getArticleSubject());
 		}
-		if(articleContent != null) {
-			map.put("article_content", articleContent);
+		if(lecture.getArticleContent() != null) {
+			map.put("article_content", lecture.getArticleContent());
 		}
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		java.util.Date date = new java.util.Date();
 		map.put("article_updated_at", dateFormat.format(date));
 		/*
 		TODO
 		map.put("article_status", "0");
 		*/
-		if(lectureTeacherId != null) {
-			map.put("lecture_teacher_id", lectureTeacherId);
+		if(lecture.getLectureTeacherId() != null) {
+			map.put("lecture_teacher_id", lecture.getLectureTeacherId());
 		}
-		if(lectureBeginAt != null) {
-			map.put("lecture_begin_at", lectureBeginAt);
+		if(lecture.getLectureBeginAt() != null) {
+			map.put("lecture_begin_at", lecture.getLectureBeginAt());
 		}
-		if(lectureEndAt != null) {
-			map.put("lecture_end_at", lectureEndAt);
+		if(lecture.getLectureEndAt() != null) {
+			map.put("lecture_end_at", lecture.getLectureEndAt());
 		}
 
 		lectureDAO.updateLecture(map);
