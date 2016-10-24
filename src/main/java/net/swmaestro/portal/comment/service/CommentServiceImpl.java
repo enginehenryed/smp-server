@@ -3,14 +3,10 @@ package net.swmaestro.portal.comment.service;
 
 import net.swmaestro.portal.comment.dao.CommentDAO;
 import net.swmaestro.portal.comment.vo.Comment;
-import net.swmaestro.portal.user.dao.UserDAO;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,5 +36,25 @@ public class CommentServiceImpl implements CommentService {
 		map.put("article_id", articleId);
 
 		commentDAO.insertCommentInArticle(map);
+	}
+
+	@Override
+	public void removeComment(Integer userId, Integer commentId) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("comment_id", commentId);
+
+		commentDAO.removeComment(map);
+	}
+
+	@Override
+	public void updateComment(Integer commentId, Integer userId, Comment comment) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("comment_id", commentId);
+
+		if(comment.getCommentContent() != null) {
+			map.put("comment_content", comment.getCommentContent());
+		}
+
+		commentDAO.updateComment(map);
 	}
 }

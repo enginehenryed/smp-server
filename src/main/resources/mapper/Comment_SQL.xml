@@ -23,28 +23,20 @@ ORDER BY soma_comment.comment_id DESC
      ]]>
     </insert>
 
-    <delete id="removeAssignment" parameterType="hashmap">
+    <delete id="removeComment" parameterType="hashmap">
         <![CDATA[
-                 UPDATE soma.soma_article SET article_status = 'DEL' where soma_article.article_id = #{assignment_id}
+                 UPDATE soma.soma_comment SET comment_status = 'D' where soma_comment.comment_id = #{comment_id}
         ]]>
     </delete>
 
 
-    <update id="updateAssignment" parameterType="hashmap">
+    <update id="updateComment" parameterType="hashmap">
         <![CDATA[
-                 UPDATE soma.soma_article
+                 UPDATE soma.soma_comment
                  SET
-                    article_updated_at = #{article_updated_at},
-                    article_modifier_id = #{article_modifier_id},
-                    article_generation_id = COALESCE(#{article_generation_id}, article_generation_id),
-                    article_subject = COALESCE(#{article_subject}, article_subject),
-                    article_content = COALESCE(#{article_content}, article_content)
-                 WHERE article_id = #{assignment_id};
-                 UPDATE soma.soma_assignment
-                 SET
-                     assignment_end_at = COALESCE(#{assignment_end_at}, assignment_end_at)
-                 WHERE article_id = #{assignment_id}
-
+                    comment_updated_at = NOW(),
+                    comment_content = COALESCE(#{comment_content}, comment_content)
+                 WHERE comment_id = #{comment_id};
         ]]>
     </update>
 

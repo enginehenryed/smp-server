@@ -9,6 +9,8 @@ public interface CommentService {
 
 	List selectCommentsByArticleId(int articleId) throws Exception;
 	void insertCommentInArticle(int articleId, Integer userId, Comment comment) throws Exception;
+	void removeComment(Integer userId, Integer commentId) throws Exception;
+	void updateComment(Integer commentId, Integer userId, Comment comment) throws Exception;
 //	List selectCommentsByUserId(int userId) throws Exception;
 //	Comment selectComment() throws Exception;
 /*
@@ -16,5 +18,5 @@ public interface CommentService {
 
 	void removeLecture(Integer userId, Integer lectureId) throws Exception;
 
-	void updateLecture(Integer lectureId, Integer userId, Comment comment);*/
+	void updateComment(Integer lectureId, Integer userId, Comment comment);*/
 }

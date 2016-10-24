@@ -29,11 +29,11 @@ public class CommentDAO extends AbstractDAO{
 		insert("comment.insertCommentInArticle", map);
 	}
 
-	public void updateLecture(Map<String, Object> map) {
-		update("lecture.updateLecture",map);
+	public void updateComment(Map<String, Object> map) {
+		update("comment.updateComment",map);
 	}
 
-	public void removeLecture(Map<String, Object> map) {
-		update("lecture.removeLecture",map);
+	public void removeComment(Map<String, Object> map) {
+		update("comment.removeComment",map);
 	}
 }

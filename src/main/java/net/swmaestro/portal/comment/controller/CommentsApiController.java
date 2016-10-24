@@ -19,90 +19,40 @@ import java.util.List;
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-10-05T11:30:19.659Z")
 
 @Controller
-public class CommentsApiController {//implements CommentsApi {
+public class CommentsApiController implements CommentsApi {
 
     @Resource(name = "commentService")
     private CommentService commentService;
+
+    @Override
+    public ResponseEntity<Void> deleteLecture(@ApiParam(value = "Comment's ID", required = true) @PathVariable("comment-id") Integer commentId) {
+        try {
+            JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
+            User user = authentication.getUser();
+            Integer userId = user.getUserId();
+            commentService.removeComment(userId, commentId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } finally {
+        }
+
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Void> putComment(@ApiParam(value = "Comment's ID", required = true) @PathVariable("comment-id") Integer commentId, @ApiParam(value = "Comment's VO") @RequestBody(required = true) Comment comment) {
+
+        try {
+            JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
+            User user = authentication.getUser();
+            Integer userId = user.getUserId();
+            commentService.updateComment(commentId, userId, comment);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } finally {
+        }
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 }
-/*
-    public ResponseEntity<Void> deleteLecture(
-            @ApiParam(value = "Comment's ID", required = true) @PathVariable("lecture-id") Integer lectureId
-
-
-    ) {
-        try {
-            JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-            User user = authentication.getUser();
-            Integer userId = user.getUserId();
-            commentService.removeLecture(userId, lectureId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
-        } finally {
-        }
-
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
-
-
-    public ResponseEntity<Comment> getLecture(
-            @ApiParam(value = "Comment's ID", required = true) @PathVariable("lecture-id") Integer lectureId
-
-
-    ) {
-        Comment comment;
-
-        try {
-            comment = commentService.selectLecture(lectureId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<Comment>(HttpStatus.INTERNAL_SERVER_ERROR);
-        } finally {
-        }
-
-        return new ResponseEntity<Comment>(comment, HttpStatus.OK);
-    }
-
-    public ResponseEntity<List<Comment>> getLectures() {
-        List<Comment> comments;
-        try {
-            comments = commentService.selectAllLectures();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<List<Comment>>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return new ResponseEntity<List<Comment>>(comments, HttpStatus.OK);
-    }
-
-    @Override
-    public ResponseEntity<Void> postLecture(@ApiParam(value = "Comment's articleGenerationId") @RequestBody(required = true) Comment comment) {
-        try {
-            JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-            User user = authentication.getUser();
-            Integer userId = user.getUserId();
-            commentService.insertLecture(userId, comment);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
-        } finally {
-        }
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
-
-    @Override
-    public ResponseEntity<Void> putLecture(@ApiParam(value = "Comment's ID", required = true) @PathVariable("lecture-id") Integer lectureId,
-                                           @ApiParam(value = "Comment's VO") @RequestBody(required = true) Comment comment) {
-
-        try {
-            JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-            User user = authentication.getUser();
-            Integer userId = user.getUserId();
-            commentService.updateLecture(lectureId, userId, comment);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
-        } finally {
-        }
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
-}*/
