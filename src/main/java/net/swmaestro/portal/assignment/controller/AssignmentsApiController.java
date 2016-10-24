@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiParam;
 import net.swmaestro.portal.assignment.service.AssignmentService;
 import net.swmaestro.portal.assignment.vo.Assignment;
 import net.swmaestro.portal.auth.JWTAuthentication;
+import net.swmaestro.portal.comment.service.CommentService;
+import net.swmaestro.portal.comment.vo.Comment;
 import net.swmaestro.portal.user.vo.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,10 @@ public class AssignmentsApiController implements AssignmentsApi {
 
     @Resource(name = "assignmentService")
     private AssignmentService assignmentService;
+    
+    @Resource(name = "commentService")
+    private CommentService commentService;
+
 
     public ResponseEntity<Void> deleteAssignment(
             @ApiParam(value = "Assignment's ID", required = true) @PathVariable("assignment-id") Integer assignmentId
@@ -97,6 +103,34 @@ public class AssignmentsApiController implements AssignmentsApi {
             User user = authentication.getUser();
             Integer userId = user.getUserId();
             assignmentService.updateAssignment(assignmentId, userId, assignment);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } finally {
+        }
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+
+    @Override
+    public ResponseEntity<List<Comment>> getCommentsByAssignmentId(@ApiParam(value = "Assignment's ID", required = true) @PathVariable("assignment-id") Integer assignmentId) {
+        List<Comment> comments;
+        try {
+            comments = commentService.selectCommentsByArticleId(assignmentId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<Comment>>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<List<Comment>>(comments, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Void> postCommentInAssignment(@ApiParam(value = "Assignment's ID", required = true) @PathVariable("assignment-id") Integer assignmentId, @ApiParam(value = "Comment") @RequestBody(required = true) Comment comment) {
+        try {
+            JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
+            User user = authentication.getUser();
+            Integer userId = user.getUserId();
+            commentService.insertCommentInArticle(assignmentId, userId, comment);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);

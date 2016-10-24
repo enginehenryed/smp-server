@@ -25,7 +25,7 @@ public class CommentsApiController implements CommentsApi {
     private CommentService commentService;
 
     @Override
-    public ResponseEntity<Void> deleteLecture(@ApiParam(value = "Comment's ID", required = true) @PathVariable("comment-id") Integer commentId) {
+    public ResponseEntity<Void> deleteComment(@ApiParam(value = "Comment's ID", required = true) @PathVariable("comment-id") Integer commentId) {
         try {
             JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
             User user = authentication.getUser();

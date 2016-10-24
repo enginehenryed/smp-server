@@ -25,7 +25,7 @@ public interface CommentsApi {
     @RequestMapping(value = "/comments/{comment-id}",
         produces = { "application/json" }, 
         method = RequestMethod.DELETE)
-    ResponseEntity<Void> deleteLecture(
+    ResponseEntity<Void> deleteComment(
             @ApiParam(value = "Comment's ID", required = true) @PathVariable("comment-id") Integer commentId
 
 
