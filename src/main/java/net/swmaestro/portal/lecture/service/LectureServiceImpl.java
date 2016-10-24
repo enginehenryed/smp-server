@@ -46,12 +46,6 @@ public class LectureServiceImpl implements LectureService {
 		map.put("article_generation_id", lecture.getArticleGenerationId());
 		map.put("article_subject", lecture.getArticleSubject());
 		map.put("article_content", lecture.getArticleContent());
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		java.util.Date date = new java.util.Date();
-		map.put("article_created_at", dateFormat.format(date));
-		map.put("article_updated_at", dateFormat.format(date));
-		map.put("article_type", "0");
-		map.put("article_status", "0");
 
 		map.put("lecture_teacher_id", lecture.getLectureTeacherId());
 		map.put("lecture_begin_at", lecture.getLectureBeginAt());
@@ -87,13 +81,7 @@ public class LectureServiceImpl implements LectureService {
 		if(lecture.getArticleContent() != null) {
 			map.put("article_content", lecture.getArticleContent());
 		}
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		java.util.Date date = new java.util.Date();
-		map.put("article_updated_at", dateFormat.format(date));
-		/*
-		TODO
-		map.put("article_status", "0");
-		*/
+
 		if(lecture.getLectureTeacherId() != null) {
 			map.put("lecture_teacher_id", lecture.getLectureTeacherId());
 		}
