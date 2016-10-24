@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="comment">
+
+    <select id="selectCommentsByArticleId" parameterType="hashmap" resultType="net.swmaestro.portal.comment.vo.Comment">
+        <![CDATA[
+			SELECT soma.soma_comment.comment_id as commentId, comment_content as commentContent, comment_writer_id as commentWriterId,
+  comment_parent_id as commentParentId, comment_created_at as commentCreatedAt, comment_updated_at as commentUpdatedAt, comment_status as commentStatus
+FROM soma.soma_comment inner join soma_article_comment on soma.soma_comment.comment_id = soma.soma_article_comment.comment_id
+WHERE soma_article_comment.article_id = #{article_id}
+ORDER BY soma_comment.comment_id DESC
+		]]>
+    </select>
+
+    <insert id="insertCommentInArticle" parameterType="hashmap">
+        <![CDATA[
+       INSERT INTO soma.soma_comment (comment_content, comment_writer_id, comment_parent_id, comment_created_at,
+                 comment_updated_at, comment_status)
+                 VALUES (#{comment_content}, #{comment_writer_id}, #{comment_parent_id}, NOW(),  NOW(), 'A');
+     INSERT INTO soma.soma_article_comment (article_id, comment_id)
+                 VALUES (#{article_id}, LAST_INSERT_ID());
+     ]]>
+    </insert>
+
+    <delete id="removeAssignment" parameterType="hashmap">
+        <![CDATA[
+                 UPDATE soma.soma_article SET article_status = 'DEL' where soma_article.article_id = #{assignment_id}
+        ]]>
+    </delete>
+
+
+    <update id="updateAssignment" parameterType="hashmap">
+        <![CDATA[
+                 UPDATE soma.soma_article
+                 SET
+                    article_updated_at = #{article_updated_at},
+                    article_modifier_id = #{article_modifier_id},
+                    article_generation_id = COALESCE(#{article_generation_id}, article_generation_id),
+                    article_subject = COALESCE(#{article_subject}, article_subject),
+                    article_content = COALESCE(#{article_content}, article_content)
+                 WHERE article_id = #{assignment_id};
+                 UPDATE soma.soma_assignment
+                 SET
+                     assignment_end_at = COALESCE(#{assignment_end_at}, assignment_end_at)
+                 WHERE article_id = #{assignment_id}
+
+        ]]>
+    </update>
+
+
+
+</mapper>
