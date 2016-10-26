@@ -8,9 +8,14 @@
     <!-- DataSource -->
     <bean id="dataSourceSpied" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://<host>/<dbname>"/>
+        <property name="url" value="jdbc:mysql://<host>/<dbname>?allowMultiQueries=true"/>
         <property name="username" value="<username>"/>
         <property name="password" value="<password>"/>
+    </bean>
+
+    <!-- TokenUtil -->
+    <bean id="tokenUtil" class="net.swmaestro.portal.auth.TokenUtil">
+        <property name="secret" value="<secretkey>" />
     </bean>
 
 </beans>
