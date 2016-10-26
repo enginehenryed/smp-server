@@ -64,7 +64,7 @@
                  INSERT INTO soma.soma_article (article_writer_id, article_modifier_id, article_generation_id, article_subject, article_content,
                  article_created_at, article_updated_at, article_type, article_status)
                  VALUES (#{article_writer_id}, #{article_modifier_id}, #{article_generation_id}, #{article_subject}, #{article_content},
-                 #{article_created_at}, #{article_updated_at}, #{article_type}, #{article_status});
+                 NOW(), NOW(), 'L', 'A');
 
                  INSERT INTO soma.soma_lecture (article_id, lecture_teacher_id, lecture_begin_at, lecture_end_at)
                  VALUES (LAST_INSERT_ID(), #{lecture_teacher_id}, #{lecture_begin_at}, #{lecture_end_at});
@@ -73,7 +73,7 @@
 
     <delete id="removeLecture" parameterType="hashmap">
         <![CDATA[
-                 UPDATE soma.soma_article SET article_status = 'DEL' where soma_article.article_id = #{lecture_id}
+                 UPDATE soma.soma_article SET article_status = 'D' where soma_article.article_id = #{lecture_id}
         ]]>
     </delete>
 
@@ -81,7 +81,7 @@
         <![CDATA[
                  UPDATE soma.soma_article
                  SET
-                    article_updated_at = #{article_updated_at},
+                    article_updated_at = NOW(),
                     article_modifier_id = #{article_modifier_id},
                     article_generation_id = COALESCE(#{article_generation_id}, article_generation_id),
                     article_subject = COALESCE(#{article_subject}, article_subject),

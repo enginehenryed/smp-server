@@ -49,12 +49,6 @@ public class AssignmentServiceImpl implements AssignmentService {
 		map.put("article_generation_id", assignment.getArticleGenerationId());
 		map.put("article_subject", assignment.getArticleSubject());
 		map.put("article_content", assignment.getArticleContent());
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date date = new Date();
-		map.put("article_created_at", dateFormat.format(date));
-		map.put("article_updated_at", dateFormat.format(date));
-		map.put("article_type", "0");
-		map.put("article_status", "0");
 
 		map.put("assignment_end_at", assignment.getAssignmentEndAt());
 
@@ -88,13 +82,6 @@ public class AssignmentServiceImpl implements AssignmentService {
 		if(assignment.getArticleContent() != null) {
 			map.put("article_content", assignment.getArticleContent());
 		}
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date date = new Date();
-		map.put("article_updated_at", dateFormat.format(date));
-		/*
-		TODO
-		map.put("article_status", "0");
-		*/
 		if(assignment.getAssignmentEndAt() != null) {
 			map.put("assignment_end_at", assignment.getAssignmentEndAt());
 		}
