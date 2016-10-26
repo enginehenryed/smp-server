@@ -10,7 +10,7 @@
 			FROM
 			    soma.soma_user
 			WHERE
-			    user_id = #{user_id}
+			    user_id = #{userId}
 			ORDER BY user_id DESC
 		]]>
     </select>
@@ -25,7 +25,7 @@
 			FROM
 			    soma.soma_user
 			WHERE
-			    user_email = #{user_email}
+			    user_email = #{userEmail}
 			ORDER BY user_id DESC
 		]]>
     </select>

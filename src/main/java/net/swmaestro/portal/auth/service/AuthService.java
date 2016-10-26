@@ -7,8 +7,6 @@ import java.util.Map;
 
 public interface AuthService {
 
-	User getUserByEmail(Map<String, Object> map) throws Exception;
-
 	String getToken(String email, String password);
 
 }
