@@ -20,21 +20,24 @@ public class UserServiceImpl implements UserService {
 	private UserDAO userDAO;
 
 	@Override
-	public User selectUser(Map<String, Object> map) throws Exception {
+	public User selectUser(int userId) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("userId", userId);
+		
 		return userDAO.selectUser(map);
 	}
 
 	@Override
-	public int insertUser(String email, String password, String name) throws Exception {
+	public int insertUser(User user) throws Exception {
 		// TODO: email UNIQUE Check
 
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
-		String encryptedPassword = encoder.encode(password);
+		String encryptedPassword = encoder.encode(user.getUserPassword());
 
 		Map<String, Object> map = new HashMap<>();
-		map.put("userEmail", email);
+		map.put("userEmail", user.getUserEmail());
 		map.put("userPassword", encryptedPassword);
-		map.put("userName", name);
+		map.put("userName", user.getUserName());
 
 		return userDAO.insertUser(map);
 	}
