@@ -1,6 +1,7 @@
 package net.swmaestro.portal.lecture.controller;
 
 import io.swagger.annotations.*;
+import net.swmaestro.portal.comment.vo.Comment;
 import net.swmaestro.portal.lecture.vo.Lecture;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +27,6 @@ public interface LecturesApi {
         method = RequestMethod.DELETE)
     ResponseEntity<Void> deleteLecture(
             @ApiParam(value = "Lecture's ID", required = true) @PathVariable("lecture-id") Integer lectureId
-
-
     );
 
 
@@ -91,6 +90,34 @@ public interface LecturesApi {
             ,
 
             @ApiParam(value = "Lecture's VO") @RequestBody(required = true) Lecture lecture
+    );
+
+
+
+    @ApiOperation(value = "comments List by lectureId", notes = "Returns list of comments by lectureId.", response = Comment.class, responseContainer = "List", authorizations = {
+            @Authorization(value = "smp_auth", scopes = {
+                    @AuthorizationScope(scope = "manager", description = "Manager")
+            })
+    }, tags={  })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "comments List", response = Lecture.class) })
+    @RequestMapping(value = "/lectures/{lecture-id}/comments",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<List<Comment>> getCommentsByLectureId(  @ApiParam(value = "Lecture's ID", required = true) @PathVariable("lecture-id") Integer lectureId
+    );
+
+    @ApiOperation(value = "Create Comment By Lecture Id", notes = "Create Comment By Lecture Id.", response = Void.class, tags={  })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Succeed.", response = Void.class),
+            @ApiResponse(code = 400, message = "Bad request.", response = Void.class),
+            @ApiResponse(code = 409, message = "Conflict.", response = Void.class) })
+    @RequestMapping(value = "/lectures/{lecture-id}/comments",
+            produces = { "application/json" },
+            method = RequestMethod.POST)
+    ResponseEntity<Void> postCommentInLecture(
+            @ApiParam(value = "Lecture's ID", required = true) @PathVariable("lecture-id") Integer lectureId,
+            @ApiParam(value = "Comment") @RequestBody(required = true) Comment comment
     );
 
 }
