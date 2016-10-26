@@ -16,7 +16,7 @@ import java.util.List;
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-10-05T11:30:19.659Z")
 
 @Controller
-public class UsersApiController implements UsersApi {
+public class UserApiController implements UserApi {
 
     @Resource(name="userService")
     private UserService userService;

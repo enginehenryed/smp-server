@@ -1,7 +1,7 @@
-package net.swmaestro.portal.filter;
+package net.swmaestro.portal.common.filter;
 
 import net.swmaestro.portal.auth.JWTAuthentication;
-import net.swmaestro.portal.exception.MissingTokenException;
+import net.swmaestro.portal.auth.exception.MissingTokenException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;

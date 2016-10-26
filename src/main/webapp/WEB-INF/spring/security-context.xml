@@ -32,7 +32,7 @@
     <!--</security:http>-->
 
     <beans:bean id="jwtAuthenticationSuccessHandler" class="net.swmaestro.portal.auth.JwtAuthenticationSuccessHandler" />
-    <beans:bean class="net.swmaestro.portal.filter.JWTAuthenticationFilter" id="jwtAuthenticationFilter">
+    <beans:bean class="net.swmaestro.portal.common.filter.JWTAuthenticationFilter" id="jwtAuthenticationFilter">
         <beans:constructor-arg type="java.lang.String">
             <beans:value>/**</beans:value>
         </beans:constructor-arg>
