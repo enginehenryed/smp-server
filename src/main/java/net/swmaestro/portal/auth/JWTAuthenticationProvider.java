@@ -5,9 +5,8 @@ import com.auth0.jwt.JWTVerifyException;
 import net.swmaestro.portal.exception.ExpiredTokenException;
 import net.swmaestro.portal.exception.InvalidTokenException;
 import net.swmaestro.portal.exception.UnexpectedException;
-import net.swmaestro.portal.user.service.UserService;
+import net.swmaestro.portal.user.handler.UserHandler;
 import net.swmaestro.portal.user.vo.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -27,8 +26,8 @@ import java.util.Map;
 @Component("jwtAuthenticationProvider")
 public class JWTAuthenticationProvider implements AuthenticationProvider {
 
-    @Resource(name="userService")
-    private UserService userService;
+    @Resource(name="userHandler")
+    private UserHandler userHandler;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -49,12 +48,9 @@ public class JWTAuthenticationProvider implements AuthenticationProvider {
             throw new UnexpectedException("Unexpected server exception");
         } finally { }
 
-        Map<String, Object> userFilter = new HashMap<>();
-        userFilter.put("user_id", userId);
-
         User user;
         try {
-            user = userService.selectUser(userFilter);
+            user = userHandler.selectUser(userId);
         } catch (Exception e) {
             e.printStackTrace();
             throw new UnexpectedException("Unexpected server exception.");

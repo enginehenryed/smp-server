@@ -18,10 +18,7 @@ public class UserDAO extends AbstractDAO{
 	}
 
 	@SuppressWarnings("unchecked")
-	public User selectUserByEmail(String email) throws Exception{
-		Map<String, Object> map = new HashMap<>();
-		map.put("user_email", email);
-
+	public User selectUserByEmail(Map<String, Object> map) throws Exception{
 		return (User) selectOne("user.selectUserByEmail", map);
 	}
 

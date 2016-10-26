@@ -94,41 +94,25 @@ public interface UsersApi {
         @ApiResponse(code = 400, message = "Bad request.", response = Void.class),
         @ApiResponse(code = 409, message = "Conflict.", response = Void.class) })
     @RequestMapping(value = "/users",
+        consumes = { "application/json" },
         produces = { "application/json" }, 
         method = RequestMethod.POST)
     ResponseEntity<Void> postUser(
-
-
-            @ApiParam(value = "User's eamil") @RequestParam(required = false) String userEmail
-            ,
-
-
-            @ApiParam(value = "User's name") @RequestParam(required = false) String userName
-            ,
-
-
-            @ApiParam(value = "User's password") @RequestParam(required = false) String userPassword
+            @RequestBody(required = true) User user
     ) throws Exception;
 
 
     @ApiOperation(value = "Edit Me", notes = "Edit my profile.", response = Void.class, authorizations = {
-        @Authorization(value = "smp_auth", scopes = {
-            
-            })
-    }, tags={  })
+        @Authorization(value = "smp_auth", scopes = {})
+    }, tags={})
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Succeed.", response = Void.class) })
     @RequestMapping(value = "/users/me",
+        consumes = { "application/json" },
         produces = { "application/json" }, 
         method = RequestMethod.PUT)
     ResponseEntity<Void> putMe(
-
-
-            @ApiParam(value = "User's name") @RequestBody(required = false) String userName
-            ,
-
-
-            @ApiParam(value = "User's password") @RequestBody(required = false) String userPassword
+            @RequestBody(required = false) User user
     );
 
 
@@ -140,20 +124,13 @@ public interface UsersApi {
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Succeed.", response = Void.class) })
     @RequestMapping(value = "/users/{user-id}",
+        consumes = { "application/json" },
         produces = { "application/json" }, 
         method = RequestMethod.PUT)
     ResponseEntity<Void> putUser(
-            @ApiParam(value = "User's ID", required = true) @PathVariable("userId") Integer userId
+            @ApiParam(value = "User's ID", required = true) @PathVariable("userId") Integer userId,
 
-
-            ,
-
-
-            @ApiParam(value = "User's name") @RequestBody(required = false) String userName
-            ,
-
-
-            @ApiParam(value = "User's password") @RequestBody(required = false) String userPassword
+            @RequestBody(required = true) User user
     );
 
 }
