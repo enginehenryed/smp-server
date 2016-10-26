@@ -1,4 +1,4 @@
-package net.swmaestro.portal.filter;
+package net.swmaestro.portal.common.filter;
 
 import org.springframework.web.filter.OncePerRequestFilter;
 

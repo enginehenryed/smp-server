@@ -2,12 +2,11 @@ package net.swmaestro.portal.auth;
 
 import com.auth0.jwt.JWTExpiredException;
 import com.auth0.jwt.JWTVerifyException;
-import net.swmaestro.portal.exception.ExpiredTokenException;
-import net.swmaestro.portal.exception.InvalidTokenException;
-import net.swmaestro.portal.exception.UnexpectedException;
+import net.swmaestro.portal.auth.exception.ExpiredTokenException;
+import net.swmaestro.portal.auth.exception.InvalidTokenException;
+import net.swmaestro.portal.auth.exception.UnexpectedException;
 import net.swmaestro.portal.user.service.UserService;
 import net.swmaestro.portal.user.vo.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;

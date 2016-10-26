@@ -10,7 +10,7 @@ import java.util.List;
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-10-05T11:30:19.659Z")
 
 @Api(value = "users", description = "the users API")
-public interface UsersApi {
+public interface UserApi {
 
     @ApiOperation(value = "Delete Me", notes = "Deletes Me (Leave).", response = Void.class, authorizations = {
         @Authorization(value = "smp_auth", scopes = {

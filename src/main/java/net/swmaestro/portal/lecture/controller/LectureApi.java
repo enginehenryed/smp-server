@@ -12,7 +12,7 @@ import java.util.List;
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-10-05T11:30:19.659Z")
 
 @Api(value = "lectures", description = "the lectures API")
-public interface LecturesApi {
+public interface LectureApi {
 
     @ApiOperation(value = "Delete Lecture", notes = "Deletes a Lecture.", response = Void.class, authorizations = {
         @Authorization(value = "smp_auth", scopes = {

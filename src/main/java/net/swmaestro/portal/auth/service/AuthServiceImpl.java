@@ -2,8 +2,6 @@ package net.swmaestro.portal.auth.service;
 
 
 import net.swmaestro.portal.auth.TokenUtil;
-import net.swmaestro.portal.auth.dao.AuthDAO;
-import net.swmaestro.portal.sample.dao.SampleDAO;
 import net.swmaestro.portal.user.dao.UserDAO;
 import net.swmaestro.portal.user.vo.User;
 import org.apache.log4j.Logger;
@@ -12,8 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service("authService")

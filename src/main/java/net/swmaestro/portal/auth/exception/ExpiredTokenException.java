@@ -1,4 +1,4 @@
-package net.swmaestro.portal.exception;
+package net.swmaestro.portal.auth.exception;
 
 import org.springframework.security.core.AuthenticationException;
 

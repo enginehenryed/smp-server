@@ -37,7 +37,7 @@
 	<!-- CORS Filter -->
 	<filter>
 		<filter-name>cors</filter-name>
-		<filter-class>net.swmaestro.portal.filter.CorsFilter</filter-class>
+		<filter-class>net.swmaestro.portal.common.filter.CorsFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>cors</filter-name>
