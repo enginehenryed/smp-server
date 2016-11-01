@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-10-05T11:30:19.659Z")
 
 @Controller
-public class CommentsApiController implements CommentsApi {
+public class CommentApiController implements CommentApi {
 
     @Resource(name = "commentService")
     private CommentService commentService;

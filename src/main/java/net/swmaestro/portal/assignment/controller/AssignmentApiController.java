@@ -21,7 +21,7 @@ import java.util.List;
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-10-05T11:30:19.659Z")
 
 @Controller
-public class AssignmentsApiController implements AssignmentsApi {
+public class AssignmentApiController implements AssignmentApi {
 
     @Resource(name = "assignmentService")
     private AssignmentService assignmentService;
@@ -131,6 +131,38 @@ public class AssignmentsApiController implements AssignmentsApi {
             User user = authentication.getUser();
             Integer userId = user.getUserId();
             commentService.insertCommentInArticle(assignmentId, userId, comment);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } finally {
+        }
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteComment(@ApiParam(value = "Comment's ID", required = true) @PathVariable("comment-id") Integer commentId) {
+        try {
+            JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
+            User user = authentication.getUser();
+            Integer userId = user.getUserId();
+            commentService.removeComment(userId, commentId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } finally {
+        }
+
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Void> putComment(@ApiParam(value = "Comment's ID", required = true) @PathVariable("comment-id") Integer commentId, @ApiParam(value = "Comment's VO") @RequestBody(required = true) Comment comment) {
+
+        try {
+            JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
+            User user = authentication.getUser();
+            Integer userId = user.getUserId();
+            commentService.updateComment(commentId, userId, comment);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
