@@ -8,8 +8,6 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service("lectureService")
@@ -32,8 +30,29 @@ public class LectureServiceImpl implements LectureService {
 	}
 
 	@Override
-	public List selectAllLectures() throws Exception {
-		return lectureDAO.selectAllLectures();
+	public List selectAllLectures(Integer month, Integer year) throws Exception {
+		List<Lecture> lectures = lectureDAO.selectAllLectures();
+		if (month == null && year == null) {
+			return lectures;
+		}
+		List<Lecture> selectedLectures = new ArrayList<>();
+		Calendar calendar = Calendar.getInstance();
+		for (Lecture lecture : lectures) {
+			Date beginAt = lecture.getLectureBeginAt();
+			Date endAt = lecture.getLectureEndAt();
+			calendar.setTime(beginAt);
+			int beginYear = calendar.get(Calendar.YEAR);
+			int beginMonth = calendar.get(Calendar.MONTH) + 1;
+			calendar.setTime(endAt);
+			int endYear = calendar.get(Calendar.YEAR);
+			int endMonth = calendar.get(Calendar.MONTH) + 1;
+			if (year == beginYear || year == endYear) {
+				if (month == beginMonth || month == endMonth) {
+					selectedLectures.add(lecture);
+				}
+			}
+		}
+		return selectedLectures;
 	}
 
 	@Override
@@ -93,6 +112,14 @@ public class LectureServiceImpl implements LectureService {
 		}
 
 		lectureDAO.updateLecture(map);
+	}
+
+	@Override
+	public List<Lecture> selectLecturesByUserId(Integer user) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("user_id", user);
+
+		return lectureDAO.selectLecturesByUserId(map);
 	}
 
 }

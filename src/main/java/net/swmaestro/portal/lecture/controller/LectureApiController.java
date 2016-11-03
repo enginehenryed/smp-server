@@ -67,10 +67,17 @@ public class LectureApiController implements LectureApi {
         return new ResponseEntity<Lecture>(lecture, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<Lecture>> getLectures() {
+    public ResponseEntity<List<Lecture>> getLectures(
+            @RequestParam(value="user", required=false) Integer user,
+            @RequestParam(value="year", required=false) Integer year,
+            @RequestParam(value="month", required=false) Integer month) {
         List<Lecture> lectures;
         try {
-            lectures = lectureService.selectAllLectures();
+            if(user != null) {
+                lectures = lectureService.selectLecturesByUserId(user);
+            } else {
+                lectures = lectureService.selectAllLectures(month, year);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<List<Lecture>>(HttpStatus.INTERNAL_SERVER_ERROR);

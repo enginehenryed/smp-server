@@ -57,7 +57,10 @@ public interface LectureApi {
     @RequestMapping(value = "/lectures",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<Lecture>> getLectures();
+    ResponseEntity<List<Lecture>> getLectures(
+            @RequestParam(value="user", required=false) Integer user,
+            @RequestParam(value="year", required=false) Integer year,
+            @RequestParam(value="month", required=false) Integer month);
 
 
     @ApiOperation(value = "Create Lecture", notes = "Creates a new lecture (Sign Up).", response = Void.class, tags={  })
