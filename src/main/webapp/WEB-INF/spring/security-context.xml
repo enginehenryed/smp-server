@@ -53,4 +53,8 @@
         <authentication-provider ref="jwtAuthenticationProvider" />
     </authentication-manager>
 
+    <!-- enable support for Expression-based annotations in Spring Security -->
+    <global-method-security pre-post-annotations="enabled">
+    </global-method-security>
+
 </beans:beans>
