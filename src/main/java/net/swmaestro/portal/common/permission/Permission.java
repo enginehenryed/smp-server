@@ -1,6 +1,5 @@
 package net.swmaestro.portal.common.permission;
 
-import net.swmaestro.portal.auth.JWTAuthentication;
 
 import java.io.Serializable;
 
