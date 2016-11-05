@@ -1,6 +1,5 @@
 package net.swmaestro.portal.lecture.permission;
 
-import net.swmaestro.portal.auth.JWTAuthentication;
 import net.swmaestro.portal.common.permission.Permission;
 import net.swmaestro.portal.lecture.handler.LectureHandler;
 import net.swmaestro.portal.lecture.vo.Lecture;
