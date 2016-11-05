@@ -5,10 +5,7 @@ import net.swmaestro.portal.assignment.vo.Assignment;
 import net.swmaestro.portal.comment.vo.Comment;
 import net.swmaestro.portal.lecture.vo.Lecture;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -61,7 +58,10 @@ public interface AssignmentApi {
     @RequestMapping(value = "/assignments",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<Assignment>> getAssignments();
+    ResponseEntity<List<Assignment>> getAssignments(
+            @RequestParam(value="user", required=false) Integer user,
+            @RequestParam(value="year", required=false) Integer year,
+            @RequestParam(value="month", required=false) Integer month);
 
 
     @ApiOperation(value = "Create Assignment", notes = "Creates a new assignment (Sign Up).", response = Void.class, tags={  })

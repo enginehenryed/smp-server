@@ -24,7 +24,36 @@
 					soma.soma_article
 			on
 					soma.soma_assignment.article_id =soma.soma_article.article_id
-		    where soma_article.article_id = #{assignment_id}
+		    where soma_article.article_id = #{assignment_id} and soma_article.article_type = 'A'
+			ORDER BY soma_article.article_id DESC
+		]]>
+    </select>
+
+
+    <select id="selectAssignmentsByUserId" parameterType="hashmap" resultType="net.swmaestro.portal.assignment.vo.Assignment">
+        <![CDATA[
+
+				SELECT
+			    soma_article.article_id as articleId,
+					article_writer_id as articleWriterId,
+					article_modifier_id as articleModifierId,
+					article_generation_id as articleGenerationId,
+					article_content as articleContent,
+					article_subject as articleSubject,
+					article_created_at as articleCreatedAt,
+					article_updated_at as articleUpdatedAt,
+					article_type as articleType,
+					article_status as articleStatus,
+					assignment_end_at as assignmentEndAt
+
+			FROM
+			    soma.soma_assignment
+			inner join
+					soma.soma_article
+			on
+					soma.soma_assignment.article_id =soma.soma_article.article_id
+			where soma_article.article_status <> 'D' and soma_article.article_type = 'A'
+			 and soma_article.article_writer_id = #{user_id}
 			ORDER BY soma_article.article_id DESC
 		]]>
     </select>
@@ -50,6 +79,7 @@
 					soma.soma_article
 			on
 					soma.soma_assignment.article_id =soma.soma_article.article_id
+			where soma_article.article_status <> 'D' and soma_article.article_type = 'A'
 			ORDER BY soma_article.article_id DESC
 
 		]]>

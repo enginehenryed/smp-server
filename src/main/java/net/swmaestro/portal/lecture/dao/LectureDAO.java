@@ -33,4 +33,8 @@ public class LectureDAO extends AbstractDAO{
 	public void removeLecture(Map<String, Object> map) {
 		update("lecture.removeLecture",map);
 	}
+
+	public List<Lecture> selectLecturesByUserId(Map<String, Object> map) throws Exception{
+		return (List<Lecture>) selectList("lecture.selectLecturesByUserId", map);
+	}
 }
