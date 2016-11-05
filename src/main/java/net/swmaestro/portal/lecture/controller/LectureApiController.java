@@ -9,6 +9,7 @@ import net.swmaestro.portal.lecture.vo.Lecture;
 import net.swmaestro.portal.user.vo.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,7 @@ public class LectureApiController implements LectureApi {
     @Resource(name = "commentService")
     private CommentService commentService;
 
+    @PreAuthorize("hasPermission(#lecture-id, 'Lecture', 'OWNER') OR hasPermission(null, 'ADMIN')")
     public ResponseEntity<Void> deleteLecture(
             @ApiParam(value = "Lecture's ID", required = true) @PathVariable("lecture-id") Integer lectureId
 
@@ -79,6 +81,7 @@ public class LectureApiController implements LectureApi {
     }
 
     @Override
+    @PreAuthorize("hasPermission(null, 'MENTOR') OR hasPermission(null, 'ADMIN')")
     public ResponseEntity<Void> postLecture(@ApiParam(value = "Lecture's articleGenerationId") @RequestBody(required = true) Lecture lecture) {
         try {
             JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
@@ -94,6 +97,7 @@ public class LectureApiController implements LectureApi {
     }
 
     @Override
+    @PreAuthorize("hasPermission(#lectureId, 'Lecture', 'OWNER') OR hasPermission(null, 'ADMIN')")
     public ResponseEntity<Void> putLecture(@ApiParam(value = "Lecture's ID", required = true) @PathVariable("lecture-id") Integer lectureId,
                                            @ApiParam(value = "Lecture's VO") @RequestBody(required = true) Lecture lecture) {
 
