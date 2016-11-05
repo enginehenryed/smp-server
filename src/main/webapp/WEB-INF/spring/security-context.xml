@@ -62,6 +62,12 @@
         <beans:property name="permissionEvaluator" ref="permissionEvaluator" />
     </beans:bean>
 
-    <beans:bean id="permissionEvaluator" class="net.swmaestro.portal.common.permission.PortalPermissionEvaluator" />
+    <beans:bean id="permissionEvaluator" class="net.swmaestro.portal.common.permission.PortalPermissionEvaluator">
+        <beans:constructor-arg index="0">
+            <beans:map key-type="java.lang.String"
+                 value-type="net.swmaestro.portal.common.permission.Permission">
+            </beans:map>
+        </beans:constructor-arg>
+    </beans:bean>
 
 </beans:beans>
