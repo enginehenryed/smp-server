@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="notification">
+
+    <select id="selectNotificationsByUserId" parameterType="hashmap" resultType="net.swmaestro.portal.notification.vo.Notification">
+        <![CDATA[
+	select notification_id as notificationId, notification_message as notificationMessage,
+  notification_url as notificationUrl, notification_target_user_id as notificationTargetUserId,
+  notifiaction_created_at as notificationCreatedAt, notification_is_read as notificationIsRead
+   from soma_notification
+   where notification_target_user_id = #{user_id}
+   ORDER BY notificationId DESC
+		]]>
+    </select>
+
+
+
+</mapper>
