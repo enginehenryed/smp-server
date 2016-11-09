@@ -32,4 +32,9 @@ public class UserDAO extends AbstractDAO{
 		return (int) insert("user.insertUser", map);
 	}
 
+	@SuppressWarnings("unchecked")
+	public int countUserGroupsByGroupCode(Map<String, Object> map) throws Exception {
+		return (int) selectOne("user.countUserGroupsByGroupCode", map);
+	}
+
 }
