@@ -64,16 +64,8 @@ public class AttachmentApiController implements AttachmentApi {
             throw new NotFoundException();
         }
 
-        String depositeFilename;
         HttpHeaders responseHeaders = new HttpHeaders();
-        try {
-            depositeFilename = URLEncoder.encode(attachment.getAttachmentName(), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            depositeFilename = String.format("%s.%s",
-                    attachment.getAttachmentId(), attachment.getAttachmentExtension());
-        }
-        responseHeaders.set("Content-Disposition", String.format("attachment; filename=\"%s\"", depositeFilename));
+        responseHeaders.set("Content-Disposition", "attachment; filename*=''" + attachment.getAttachmentName());
         responseHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 
         return new ResponseEntity<>(
