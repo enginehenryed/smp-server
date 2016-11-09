@@ -22,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 
 @Controller
@@ -62,8 +64,16 @@ public class AttachmentApiController implements AttachmentApi {
             throw new NotFoundException();
         }
 
+        String depositeFilename;
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Content-Disposition", String.format("attachment; filename=\"%s\"", attachment.getAttachmentName()));
+        try {
+            depositeFilename = URLEncoder.encode(attachment.getAttachmentName(), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            depositeFilename = String.format("%s.%s",
+                    attachment.getAttachmentId(), attachment.getAttachmentExtension());
+        }
+        responseHeaders.set("Content-Disposition", String.format("attachment; filename=\"%s\"", depositeFilename));
         responseHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 
         return new ResponseEntity<>(
