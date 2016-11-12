@@ -82,10 +82,12 @@
                     user_email,
                     user_password,
                     user_name,
+                    user_gender,
+                    user_phone,
                     user_created_at,
                     user_updated_at
                 )
-            VALUES ( #{userEmail}, #{userPassword}, #{userName}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP )
+            VALUES ( #{userEmail}, #{userPassword}, #{userName}, #{userGender}, #{userPhone}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP );
         ]]>
     </insert>
 
