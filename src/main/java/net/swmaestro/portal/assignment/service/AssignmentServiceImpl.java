@@ -3,6 +3,7 @@ package net.swmaestro.portal.assignment.service;
 
 import net.swmaestro.portal.assignment.dao.AssignmentDAO;
 import net.swmaestro.portal.assignment.vo.Assignment;
+import net.swmaestro.portal.lecture.vo.Lecture;
 import net.swmaestro.portal.user.dao.UserDAO;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -10,10 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service("assignmentService")
 public class AssignmentServiceImpl implements AssignmentService {
@@ -35,8 +33,23 @@ public class AssignmentServiceImpl implements AssignmentService {
 	}
 
 	@Override
-	public List selectAllAssignments() throws Exception {
-		return assignmentDAO.selectAllAssignments();
+	public List selectAllAssignments(Integer month, Integer year) throws Exception {
+		List<Assignment> assignments = assignmentDAO.selectAllAssignments();
+		if (month == null && year == null) {
+			return assignments;
+		}
+		List<Assignment> selectedAssignments = new ArrayList<>();
+		Calendar calendar = Calendar.getInstance();
+		for (Assignment assignment : assignments) {
+			Date endAt = assignment.getAssignmentEndAt();
+			calendar.setTime(endAt);
+			int endYear = calendar.get(Calendar.YEAR);
+			int endMonth = calendar.get(Calendar.MONTH) + 1;
+			if (year == endYear && month == endMonth) {
+				selectedAssignments.add(assignment);
+			}
+		}
+		return selectedAssignments;
 	}
 
 	@Override
@@ -87,6 +100,15 @@ public class AssignmentServiceImpl implements AssignmentService {
 		}
 
 		assignmentDAO.updateAssignment(map);
+	}
+
+
+	@Override
+	public List<Assignment> selectAssignmentsByUserId(Integer user) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("user_id", user);
+
+		return assignmentDAO.selectAssignmentsByUserId(map);
 	}
 
 }

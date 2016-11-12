@@ -54,6 +54,37 @@
 					soma.soma_article
 			on
 					soma.soma_lecture.article_id =soma.soma_article.article_id
+			where soma_article.article_status <> 'D' and soma_article.article_type = 'L'
+			ORDER BY soma_article.article_id DESC
+
+		]]>
+    </select>
+
+    <select id="selectLecturesByUserId" parameterType="hashmap" resultType="net.swmaestro.portal.lecture.vo.Lecture">
+        <![CDATA[
+				SELECT
+			    soma_article.article_id as articleId,
+					article_writer_id as articleWriterId,
+					article_modifier_id as articleModifierId,
+					article_generation_id as articleGenerationId,
+					article_content as articleContent,
+					article_subject as articleSubject,
+					article_created_at as articleCreatedAt,
+					article_updated_at as articleUpdatedAt,
+					article_type as articleType,
+					article_status as articleStatus,
+					lecture_teacher_id as lectureTeacherId,
+					lecture_begin_at as lectureBeginAt,
+					lecture_end_at as lectureEndAt
+
+			FROM
+			    soma.soma_lecture
+			inner join
+					soma.soma_article
+			on
+					soma.soma_lecture.article_id =soma.soma_article.article_id
+			where soma_article.article_status <> 'D' and soma_article.article_writer_id = #{user_id}
+			and soma_article.article_type = 'L'
 			ORDER BY soma_article.article_id DESC
 
 		]]>
