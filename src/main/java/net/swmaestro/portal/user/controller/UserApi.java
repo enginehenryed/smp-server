@@ -32,7 +32,7 @@ public interface UserApi {
     @RequestMapping(value = "/users/me",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<User> getMe();
+    ResponseEntity<User> getMe() throws Exception;
 
 
     @RequestMapping(value = "/users/{user-id}",
@@ -64,7 +64,7 @@ public interface UserApi {
         method = RequestMethod.PUT)
     ResponseEntity<Void> putMe(
             @RequestBody(required = false) User user
-    );
+    ) throws Exception;
 
 
     @RequestMapping(value = "/users/{user-id}",

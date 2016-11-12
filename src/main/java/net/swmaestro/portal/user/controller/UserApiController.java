@@ -7,6 +7,7 @@ import net.swmaestro.portal.comment.service.CommentService;
 import net.swmaestro.portal.comment.vo.Comment;
 import net.swmaestro.portal.lecture.service.LectureService;
 import net.swmaestro.portal.lecture.vo.Lecture;
+import net.swmaestro.portal.auth.JWTAuthentication;
 import net.swmaestro.portal.user.service.UserService;
 import net.swmaestro.portal.user.vo.User;
 import org.springframework.http.HttpStatus;
@@ -52,9 +53,11 @@ public class UserApiController implements UserApi {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    public ResponseEntity<User> getMe() {
-        // do some magic!
-        return new ResponseEntity<User>(HttpStatus.OK);
+    public ResponseEntity<User> getMe() throws Exception {
+        JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        User user = authentication.getUser();
+
+        return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
     public ResponseEntity<User> getUser(
@@ -93,8 +96,13 @@ public class UserApiController implements UserApi {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    public ResponseEntity<Void> putMe(@RequestBody(required = true) User user) {
-        // do some magic!
+    public ResponseEntity<Void> putMe(@RequestBody(required = true) User user) throws Exception {
+        JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        User authenticatedUser = authentication.getUser();
+
+        user.setUserId(authenticatedUser.getUserId());
+        userService.updateUser(user);
+
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
