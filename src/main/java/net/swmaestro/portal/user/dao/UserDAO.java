@@ -24,7 +24,7 @@ public class UserDAO extends AbstractDAO{
 
 	@SuppressWarnings("unchecked")
 	public List<User> selectAllUsers(Map<String, Object> map) throws Exception{
-		return (List<User>) selectList("user.selectUser", map);
+		return (List<User>) selectList("user.selectAllUsers", map);
 	}
 
 	@SuppressWarnings("unchecked")

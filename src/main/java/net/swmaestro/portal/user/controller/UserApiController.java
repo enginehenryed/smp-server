@@ -74,10 +74,11 @@ public class UserApiController implements UserApi {
     }
 
     @PreAuthorize("hasPermission(null, 'ADMIN')")
-    public ResponseEntity<List<User>> getUsers(
-            @RequestParam(value = "userEmail", required = false) String userEmail
-    ) {
-        return new ResponseEntity<List<User>>(HttpStatus.OK);
+    public ResponseEntity<List<User>> getUsers() throws Exception {
+        List<User> users;
+        users = userService.selectAllUsers();
+
+        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
 
     public ResponseEntity<Void> postUser(@RequestBody(required = true) User user) throws Exception {

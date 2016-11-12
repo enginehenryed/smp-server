@@ -44,11 +44,9 @@ public interface UserApi {
 
 
     @RequestMapping(value = "/users",
-        produces = { "application/json" }, 
+        produces = { "application/json" },
         method = RequestMethod.GET)
-    ResponseEntity<List<User>> getUsers(
-            @RequestParam(value = "userEmail", required = false) String userEmail
-    );
+    ResponseEntity<List<User>> getUsers() throws Exception;
 
 
     @RequestMapping(value = "/users",

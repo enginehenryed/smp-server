@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service("userService")
@@ -27,7 +28,12 @@ public class UserServiceImpl implements UserService {
 		return userDAO.selectUser(map);
 	}
 
-	@Override
+    @Override
+    public List<User> selectAllUsers() throws Exception {
+        return userDAO.selectAllUsers(new HashMap<String, Object>());
+    }
+
+    @Override
 	public int insertUser(User user) throws Exception {
 		// TODO: email UNIQUE Check
 
