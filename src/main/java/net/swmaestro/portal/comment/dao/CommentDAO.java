@@ -36,4 +36,8 @@ public class CommentDAO extends AbstractDAO{
 	public void removeComment(Map<String, Object> map) {
 		update("comment.removeComment",map);
 	}
+
+    public List<Comment> selectCommentsByUserId(Map<String, Object> map) {
+		return (List<Comment>) selectList("comment.selectCommentsByUserId", map);
+    }
 }

@@ -57,4 +57,12 @@ public class CommentServiceImpl implements CommentService {
 
 		commentDAO.updateComment(map);
 	}
+
+	@Override
+	public List<Comment> selectCommentsByUserId(Integer userId) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("user_id", userId);
+
+		return commentDAO.selectCommentsByUserId(map);
+	}
 }
