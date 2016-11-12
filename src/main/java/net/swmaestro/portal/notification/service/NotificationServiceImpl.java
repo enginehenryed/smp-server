@@ -27,4 +27,12 @@ public class NotificationServiceImpl implements NotificationService {
 
         return notificationDAO.selectNotificationsByUserId(map);
     }
+
+    @Override
+    public void readNotification(Integer userId, Integer notificationId) throws Exception {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("notification_id", notificationId);
+        notificationDAO.updateNotificationToBeRead(map);
+
+    }
 }
