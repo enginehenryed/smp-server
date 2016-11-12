@@ -104,6 +104,7 @@ public class UserApiController implements UserApi {
         User authenticatedUser = authentication.getUser();
 
         user.setUserId(authenticatedUser.getUserId());
+        user.setUserGroups(null);
         userService.updateUser(user);
 
         return new ResponseEntity<Void>(HttpStatus.OK);

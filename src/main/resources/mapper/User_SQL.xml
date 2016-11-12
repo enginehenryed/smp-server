@@ -137,4 +137,31 @@
         ]]>
     </select>
 
+    <insert id="insertGroupsList" parameterType="java.util.List">
+        <![CDATA[
+            INSERT INTO
+                soma.soma_group (
+                    user_id,
+                    generation_id,
+                    group_code
+                )
+            VALUES
+        ]]>
+        <foreach collection="list" item="item" index="index" separator=", " >
+        <![CDATA[
+            (#{item.userId}, #{item.generationId}, #{item.groupCode})
+        ]]>
+        </foreach>
+    </insert>
+
+    <delete id="deleteGroupsByUser" parameterType="hashmap">
+        <![CDATA[
+            DELETE
+            FROM
+                soma.soma_group
+            WHERE
+                user_id = #{userId}
+        ]]>
+    </delete>
+
 </mapper>

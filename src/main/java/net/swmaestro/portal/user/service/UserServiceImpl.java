@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,6 +69,26 @@ public class UserServiceImpl implements UserService {
         }
         if (user.getUserGender() != null) {
             map.put("userGender", user.getUserGender());
+        }
+
+        List<Group> groups = user.getUserGroups();
+        if (groups != null) {
+            Map<String, Object> deleteGroupsMap = new HashMap<>();
+            deleteGroupsMap.put("userId", user.getUserId());
+            userDAO.deleteGroupsByUser(deleteGroupsMap);
+
+            List<Map<String, Object>> groupMapList = new ArrayList<>();
+            for (Group group : groups) {
+                Map<String, Object> groupMap = new HashMap<>();
+                groupMap.put("userId", user.getUserId());
+                groupMap.put("generationId", group.getGenerationId());
+                groupMap.put("groupCode", group.getGroupCode());
+
+                groupMapList.add(groupMap);
+            }
+            if (groupMapList.size() > 0) {
+                userDAO.insertGroupsList(groupMapList);
+            }
         }
 
         userDAO.updateUser(map);

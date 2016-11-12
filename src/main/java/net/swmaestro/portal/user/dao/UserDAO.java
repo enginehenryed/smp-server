@@ -44,4 +44,12 @@ public class UserDAO extends AbstractDAO{
 	public void removeUser(Map<String, Object> map) throws Exception {
 		update("user.removeUser", map);
 	}
+
+	public void deleteGroupsByUser(Map<String, Object> map) throws Exception {
+		delete("user.deleteGroupsByUser", map);
+	}
+
+	public void insertGroupsList(List<Map<String, Object>> mapList) throws Exception {
+		insert("user.insertGroupsList", mapList);
+	}
 }
