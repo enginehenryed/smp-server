@@ -1,17 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="user">
+    
+    <resultMap id="userResultMap" type="net.swmaestro.portal.user.vo.User">
+        <id property="userId" column="user_id" />
+        <result property="userEmail" column="user_email" />
+        <result property="userName" column="user_name" />
+        <result property="userGender" column="user_gender" />
+        <result property="userPhone" column="user_phone" />
+        <result property="userCreatedAt" column="user_created_at" />
+        <result property="userUpdatedAt" column="user_updated_at" />
+        <collection property="userGroups" javaType="java.util.ArrayList" ofType="net.swmaestro.portal.user.vo.Group">
+            <id property="groupId" column="group_id" />
+            <result property="userId" column="user_id" />
+            <result property="generationId" column="generation_id" />
+            <result property="groupCode" column="group_code" />
+        </collection>
+    </resultMap>
 
-    <select id="selectUser" parameterType="hashmap" resultType="net.swmaestro.portal.user.vo.User">
+    <select id="selectUser" parameterType="hashmap" resultMap="userResultMap">
         <![CDATA[
 			SELECT
-			    user_id AS userId, user_email AS userEmail, user_name AS userName
+			    u.user_id,
+			    u.user_email,
+			    u.user_name,
+			    u.user_gender,
+			    u.user_phone,
+			    u.user_created_at,
+			    u.user_updated_at,
+			    g.group_id,
+			    g.generation_id,
+			    g.group_code
 			FROM
-			    soma.soma_user
+			    soma.soma_user u
+			    LEFT OUTER JOIN soma.soma_group g ON u.user_id = g.user_id
 			WHERE
-			    user_id = #{userId}
-			ORDER BY user_id DESC
+			    u.user_id = #{userId}
+			ORDER BY u.user_id DESC
 		]]>
     </select>
 
