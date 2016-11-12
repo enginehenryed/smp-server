@@ -13,4 +13,5 @@ public interface UserService {
 
 	int insertUser(User user) throws Exception;
 
+	void updateUser(User user) throws Exception;
 }

@@ -91,6 +91,19 @@
         ]]>
     </insert>
 
+    <update id="updateUser" parameterType="hashmap">
+        <![CDATA[
+            UPDATE soma.soma_user
+            SET
+              user_updated_at = CURRENT_TIMESTAMP,
+              user_name = COALESCE(#{userName}, user_name),
+              user_password = COALESCE(#{userPassword}, user_password),
+              user_phone = COALESCE(#{userPhone}, user_phone),
+              user_gender = COALESCE(#{userGender}, user_gender)
+            WHERE user_id = #{userId}
+        ]]>
+    </update>
+
     <select id="countUserGroupsByGroupCode" parameterType="hashmap" resultType="int">
         <![CDATA[
             SELECT

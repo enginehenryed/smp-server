@@ -37,4 +37,7 @@ public class UserDAO extends AbstractDAO{
 		return (int) selectOne("user.countUserGroupsByGroupCode", map);
 	}
 
+	public void updateUser(Map<String, Object> map) throws Exception {
+		update("user.updateUser", map);
+	}
 }

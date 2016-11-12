@@ -2,6 +2,7 @@ package net.swmaestro.portal.user.service;
 
 
 import net.swmaestro.portal.user.dao.UserDAO;
+import net.swmaestro.portal.user.vo.Group;
 import net.swmaestro.portal.user.vo.User;
 import org.apache.log4j.Logger;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -48,4 +49,27 @@ public class UserServiceImpl implements UserService {
         map.put("userPhone", user.getUserPhone());
         return userDAO.insertUser(map);
 	}
+
+    @Override
+    public void updateUser(User user) throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", user.getUserId());
+
+        if (user.getUserName() != null) {
+            map.put("userName", user.getUserName());
+        }
+        if (user.getUserPassword() != null) {
+            PasswordEncoder encoder = new BCryptPasswordEncoder();
+            String encryptedPassword = encoder.encode(user.getUserPassword());
+            map.put("userPassword", encryptedPassword);
+        }
+        if (user.getUserPhone() != null) {
+            map.put("userPhone", user.getUserPhone());
+        }
+        if (user.getUserGender() != null) {
+            map.put("userGender", user.getUserGender());
+        }
+
+        userDAO.updateUser(map);
+    }
 }

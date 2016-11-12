@@ -100,10 +100,12 @@ public class UserApiController implements UserApi {
 
     @PreAuthorize("hasPermission(null, 'ADMIN')")
     public ResponseEntity<Void> putUser(
-            @PathVariable("userId") Integer userId,
+            @PathVariable("user-id") Integer userId,
             @RequestBody(required = true) User user
-    ) {
-        // do some magic!
+    ) throws Exception {
+        user.setUserId(userId);
+        userService.updateUser(user);
+
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 

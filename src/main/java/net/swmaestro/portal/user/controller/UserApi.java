@@ -72,9 +72,9 @@ public interface UserApi {
         produces = { "application/json" }, 
         method = RequestMethod.PUT)
     ResponseEntity<Void> putUser(
-            @PathVariable("userId") Integer userId,
+            @PathVariable("user-id") Integer userId,
             @RequestBody(required = true) User user
-    );
+    ) throws Exception;
 
     @RequestMapping(value = "/users/me/lecture",
             produces = { "application/json" },
