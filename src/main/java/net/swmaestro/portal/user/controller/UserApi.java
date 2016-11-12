@@ -1,6 +1,9 @@
 package net.swmaestro.portal.user.controller;
 
 import io.swagger.annotations.*;
+import net.swmaestro.portal.assignment.vo.Assignment;
+import net.swmaestro.portal.comment.vo.Comment;
+import net.swmaestro.portal.lecture.vo.Lecture;
 import net.swmaestro.portal.user.vo.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -132,5 +135,20 @@ public interface UserApi {
 
             @RequestBody(required = true) User user
     );
+
+    @RequestMapping(value = "/users/me/lecture",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<List<Lecture>> getMyLectures();
+
+    @RequestMapping(value = "/users/me/assignment",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<List<Assignment>> getMyAssignments();
+
+    @RequestMapping(value = "/users/me/comment",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<List<Comment>> getMyComments();
 
 }

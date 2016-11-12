@@ -40,6 +40,16 @@ ORDER BY soma_comment.comment_id DESC
         ]]>
     </update>
 
+    <select id="selectCommentsByUserId" parameterType="hashmap" resultType="net.swmaestro.portal.comment.vo.Comment">
+        <![CDATA[
+			 SELECT soma.soma_comment.comment_id as commentId, comment_content as commentContent, comment_writer_id as commentWriterId,
+    comment_parent_id as commentParentId, comment_created_at as commentCreatedAt, comment_updated_at as commentUpdatedAt, comment_status as commentStatus
+    FROM soma.soma_comment inner join soma_article_comment on soma.soma_comment.comment_id = soma.soma_article_comment.comment_id
+    WHERE soma_comment.comment_writer_id = #{user_id}
+    ORDER BY soma_comment.comment_id DESC
+		]]>
+    </select>
+
 
 
 </mapper>

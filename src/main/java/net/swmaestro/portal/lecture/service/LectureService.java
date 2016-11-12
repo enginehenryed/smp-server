@@ -17,4 +17,5 @@ public interface LectureService {
 	void updateLecture(Integer lectureId, Integer userId, Lecture lecture);
 
     List<Lecture> selectLecturesByUserId(Integer user) throws Exception;
+
 }
