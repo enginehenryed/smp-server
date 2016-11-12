@@ -22,4 +22,8 @@ public class NotificationDAO extends AbstractDAO {
     public void updateNotificationToBeRead(Map<String, Object> map) {
         update("notification.updateNotificationToBeRead",map);
     }
+
+    public void insertNotification(Map<String, Object> map) {
+        insert("notification.insertNotification", map);
+    }
 }
