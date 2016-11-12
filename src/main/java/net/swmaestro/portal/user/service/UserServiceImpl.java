@@ -44,7 +44,8 @@ public class UserServiceImpl implements UserService {
 		map.put("userEmail", user.getUserEmail());
 		map.put("userPassword", encryptedPassword);
 		map.put("userName", user.getUserName());
-
-		return userDAO.insertUser(map);
+        map.put("userGender", user.getUserGender());
+        map.put("userPhone", user.getUserPhone());
+        return userDAO.insertUser(map);
 	}
 }
