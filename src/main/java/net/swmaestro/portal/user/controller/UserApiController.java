@@ -40,16 +40,19 @@ public class UserApiController implements UserApi {
     @Resource(name="commentService")
     private CommentService commentService;
 
-    public ResponseEntity<Void> deleteMe() {
-        // do some magic!
+    public ResponseEntity<Void> deleteMe() throws Exception {
+        JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        User user = authentication.getUser();
+
+        userService.deleteUser(user.getUserId());
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @PreAuthorize("hasPermission(null, 'ADMIN')")
     public ResponseEntity<Void> deleteUser(
-        @PathVariable("userId") Integer userId
-    ) {
-        // do some magic!
+        @PathVariable("user-id") Integer userId
+    ) throws Exception {
+        userService.deleteUser(userId);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 

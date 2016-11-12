@@ -110,6 +110,21 @@
         ]]>
     </update>
 
+    <update id="removeUser" parameterType="hashmap">
+        <![CDATA[
+            UPDATE soma.soma_user
+            SET
+              user_email = NULL,
+              user_name = NULL,
+              user_password = NULL,
+              user_phone = NULL,
+              user_gender = NULL,
+              user_status = 'D',
+              user_updated_at = CURRENT_TIMESTAMP
+            WHERE user_id = #{userId}
+        ]]>
+    </update>
+
     <select id="countUserGroupsByGroupCode" parameterType="hashmap" resultType="int">
         <![CDATA[
             SELECT

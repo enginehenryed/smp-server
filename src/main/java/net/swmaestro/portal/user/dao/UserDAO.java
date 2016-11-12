@@ -40,4 +40,8 @@ public class UserDAO extends AbstractDAO{
 	public void updateUser(Map<String, Object> map) throws Exception {
 		update("user.updateUser", map);
 	}
+
+	public void removeUser(Map<String, Object> map) throws Exception {
+		update("user.removeUser", map);
+	}
 }

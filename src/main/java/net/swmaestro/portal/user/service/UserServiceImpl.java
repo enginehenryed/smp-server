@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> selectAllUsers() throws Exception {
-        return userDAO.selectAllUsers(new HashMap<String, Object>());
+        return userDAO.selectAllUsers(new HashMap<>());
     }
 
     @Override
@@ -71,5 +71,13 @@ public class UserServiceImpl implements UserService {
         }
 
         userDAO.updateUser(map);
+    }
+
+    @Override
+    public void deleteUser(Integer userId) throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", userId);
+
+        userDAO.removeUser(map);
     }
 }

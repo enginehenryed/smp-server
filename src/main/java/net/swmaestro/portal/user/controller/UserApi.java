@@ -18,15 +18,15 @@ public interface UserApi {
     @RequestMapping(value = "/users/me",
         produces = { "application/json" }, 
         method = RequestMethod.DELETE)
-    ResponseEntity<Void> deleteMe();
+    ResponseEntity<Void> deleteMe() throws Exception;
 
 
     @RequestMapping(value = "/users/{user-id}",
         produces = { "application/json" }, 
         method = RequestMethod.DELETE)
     ResponseEntity<Void> deleteUser(
-            @PathVariable("userId") Integer userId
-    );
+            @PathVariable("user-id") Integer userId
+    ) throws Exception;
 
 
     @RequestMapping(value = "/users/me",
