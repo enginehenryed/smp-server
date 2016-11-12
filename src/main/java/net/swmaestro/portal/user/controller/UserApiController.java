@@ -7,7 +7,6 @@ import net.swmaestro.portal.comment.service.CommentService;
 import net.swmaestro.portal.comment.vo.Comment;
 import net.swmaestro.portal.lecture.service.LectureService;
 import net.swmaestro.portal.lecture.vo.Lecture;
-import net.swmaestro.portal.auth.JWTAuthentication;
 import net.swmaestro.portal.user.service.UserService;
 import net.swmaestro.portal.user.vo.User;
 import org.springframework.http.HttpStatus;
@@ -17,13 +16,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.annotation.Resource;
 import java.util.List;
 
-
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-10-05T11:30:19.659Z")
 
 @Controller
 public class UserApiController implements UserApi {
