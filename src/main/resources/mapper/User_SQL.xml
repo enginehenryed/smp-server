@@ -55,13 +55,23 @@
 		]]>
     </select>
 
-    <select id="selectAllUsers" parameterType="hashmap" resultType="net.swmaestro.portal.user.vo.User">
+    <select id="selectAllUsers" parameterType="hashmap" resultMap="userResultMap">
         <![CDATA[
 			SELECT
-			    *
+			    u.user_id,
+			    u.user_email,
+			    u.user_name,
+			    u.user_gender,
+			    u.user_phone,
+			    u.user_created_at,
+			    u.user_updated_at,
+			    g.group_id,
+			    g.generation_id,
+			    g.group_code
 			FROM
-			    soma.soma_user
-			ORDER BY user_id DESC
+			    soma.soma_user u
+			    LEFT OUTER JOIN soma.soma_group g ON u.user_id = g.user_id
+			ORDER BY u.user_id DESC
 		]]>
     </select>
 
