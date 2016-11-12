@@ -15,87 +15,42 @@ import java.util.List;
 @Api(value = "users", description = "the users API")
 public interface UserApi {
 
-    @ApiOperation(value = "Delete Me", notes = "Deletes Me (Leave).", response = Void.class, authorizations = {
-        @Authorization(value = "smp_auth", scopes = {
-            
-            })
-    }, tags={  })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Succeed.", response = Void.class) })
     @RequestMapping(value = "/users/me",
         produces = { "application/json" }, 
         method = RequestMethod.DELETE)
     ResponseEntity<Void> deleteMe();
 
 
-    @ApiOperation(value = "Delete User", notes = "Deletes a User.", response = Void.class, authorizations = {
-        @Authorization(value = "smp_auth", scopes = {
-            @AuthorizationScope(scope = "manager", description = "Manager")
-            })
-    }, tags={  })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Succeed.", response = Void.class) })
     @RequestMapping(value = "/users/{user-id}",
         produces = { "application/json" }, 
         method = RequestMethod.DELETE)
     ResponseEntity<Void> deleteUser(
-            @ApiParam(value = "User's ID", required = true) @PathVariable("userId") Integer userId
-
-
+            @PathVariable("userId") Integer userId
     );
 
 
-    @ApiOperation(value = "My Profile", notes = "Returns logined user's profile.", response = User.class, authorizations = {
-        @Authorization(value = "smp_auth", scopes = {
-            
-            })
-    }, tags={  })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "User Response", response = User.class) })
     @RequestMapping(value = "/users/me",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<User> getMe();
 
 
-    @ApiOperation(value = "User Profile", notes = "Returns user's profile.", response = User.class, authorizations = {
-        @Authorization(value = "smp_auth", scopes = {
-            
-            })
-    }, tags={  })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "User Profile", response = User.class) })
     @RequestMapping(value = "/users/{user-id}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<User> getUser(
-            @ApiParam(value = "User's ID", required = true) @PathVariable("userId") Integer userId
-
-
+            @PathVariable("userId") Integer userId
     );
 
 
-    @ApiOperation(value = "Users List", notes = "Returns list of users.", response = User.class, responseContainer = "List", authorizations = {
-        @Authorization(value = "smp_auth", scopes = {
-            @AuthorizationScope(scope = "manager", description = "Manager")
-            })
-    }, tags={  })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Users List", response = User.class) })
     @RequestMapping(value = "/users",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<User>> getUsers(@ApiParam(value = "User's eamil to filter", example = "soma@naver.com") @RequestParam(value = "userEmail", required = false) String userEmail
-
-
+    ResponseEntity<List<User>> getUsers(
+            @RequestParam(value = "userEmail", required = false) String userEmail
     );
 
 
-    @ApiOperation(value = "Create User", notes = "Creates a new user (Sign Up).", response = Void.class, tags={  })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Succeed.", response = Void.class),
-        @ApiResponse(code = 400, message = "Bad request.", response = Void.class),
-        @ApiResponse(code = 409, message = "Conflict.", response = Void.class) })
     @RequestMapping(value = "/users",
         consumes = { "application/json" },
         produces = { "application/json" }, 
@@ -105,11 +60,6 @@ public interface UserApi {
     ) throws Exception;
 
 
-    @ApiOperation(value = "Edit Me", notes = "Edit my profile.", response = Void.class, authorizations = {
-        @Authorization(value = "smp_auth", scopes = {})
-    }, tags={})
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Succeed.", response = Void.class) })
     @RequestMapping(value = "/users/me",
         consumes = { "application/json" },
         produces = { "application/json" }, 
@@ -119,20 +69,12 @@ public interface UserApi {
     );
 
 
-    @ApiOperation(value = "Edit User", notes = "Edit user's profile.", response = Void.class, authorizations = {
-        @Authorization(value = "smp_auth", scopes = {
-            @AuthorizationScope(scope = "manager", description = "Manager")
-            })
-    }, tags={  })
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Succeed.", response = Void.class) })
     @RequestMapping(value = "/users/{user-id}",
         consumes = { "application/json" },
         produces = { "application/json" }, 
         method = RequestMethod.PUT)
     ResponseEntity<Void> putUser(
-            @ApiParam(value = "User's ID", required = true) @PathVariable("userId") Integer userId,
-
+            @PathVariable("userId") Integer userId,
             @RequestBody(required = true) User user
     );
 
