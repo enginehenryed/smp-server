@@ -10,6 +10,7 @@
         <result property="userPhone" column="user_phone" />
         <result property="userCreatedAt" column="user_created_at" />
         <result property="userUpdatedAt" column="user_updated_at" />
+        <result property="userStatus" column="user_status" />
         <collection property="userGroups" javaType="java.util.ArrayList" ofType="net.swmaestro.portal.user.vo.Group">
             <id property="groupId" column="group_id" />
             <result property="userId" column="user_id" />
@@ -28,6 +29,7 @@
 			    u.user_phone,
 			    u.user_created_at,
 			    u.user_updated_at,
+			    u.user_status,
 			    g.group_id,
 			    g.generation_id,
 			    g.group_code
@@ -46,7 +48,8 @@
 			    user_id AS userId,
 			    user_email AS userEmail,
 			    user_name AS userName,
-			    user_password AS userPassword
+			    user_password AS userPassword,
+			    user_status AS userStatus
 			FROM
 			    soma.soma_user
 			WHERE
@@ -65,6 +68,7 @@
 			    u.user_phone,
 			    u.user_created_at,
 			    u.user_updated_at,
+			    u.user_status,
 			    g.group_id,
 			    g.generation_id,
 			    g.group_code
@@ -85,9 +89,10 @@
                     user_gender,
                     user_phone,
                     user_created_at,
-                    user_updated_at
+                    user_updated_at,
+                    user_status
                 )
-            VALUES ( #{userEmail}, #{userPassword}, #{userName}, #{userGender}, #{userPhone}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP );
+            VALUES ( #{userEmail}, #{userPassword}, #{userName}, #{userGender}, #{userPhone}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'R' );
         ]]>
     </insert>
 
@@ -99,7 +104,8 @@
               user_name = COALESCE(#{userName}, user_name),
               user_password = COALESCE(#{userPassword}, user_password),
               user_phone = COALESCE(#{userPhone}, user_phone),
-              user_gender = COALESCE(#{userGender}, user_gender)
+              user_gender = COALESCE(#{userGender}, user_gender),
+              user_status = COALESCE(#{userStatus}, user_status)
             WHERE user_id = #{userId}
         ]]>
     </update>

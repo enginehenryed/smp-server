@@ -37,6 +37,8 @@ public class User   {
 
     private List<Group> userGroups = null;
 
+    private String userStatus = null;
+
     public User userId(Integer userId) {
         this.userId = userId;
         return this;
@@ -156,6 +158,14 @@ public class User   {
         return Objects.equals(this.userId, user.userId) &&
                 Objects.equals(this.userEmail, user.userEmail) &&
                 Objects.equals(this.userName, user.userName);
+    }
+
+    public String getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(String userStatus) {
+        this.userStatus = userStatus;
     }
 
     @Override

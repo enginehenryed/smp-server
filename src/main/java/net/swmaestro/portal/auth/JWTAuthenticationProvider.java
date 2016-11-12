@@ -60,6 +60,11 @@ public class JWTAuthenticationProvider implements AuthenticationProvider {
             throw new InvalidTokenException("Token is invalid.");
         }
 
+        if (!user.getUserStatus().equals("A")) {
+            // User's status is NOT AVAILABLE
+            throw new InvalidTokenException("Owner user of token is not valid.");
+        }
+
         // Authenticate Succeed
         jwtAuthentication.setUser(user);
         jwtAuthentication.setAuthenticated(true);
