@@ -14,6 +14,24 @@
 		]]>
     </select>
 
+    <update id="updateNotificationToBeRead" parameterType="hashmap">
+        <![CDATA[
+                 UPDATE soma.soma_notification
+                 SET
+                    notification_is_read = 1
+                 WHERE notification_id = #{notification_id};
+
+        ]]>
+    </update>
+
+    <insert id="insertNotification" parameterType="hashmap">
+        <![CDATA[
+                 INSERT INTO soma.soma_notification (notification_message, notification_url, notification_target_user_id,
+                                     notifiaction_created_at, notification_is_read)
+                 VALUES (#{notification_message}, #{notification_url}, #{notification_target_user_id}, NOW(), 0)
+
+     ]]>
+    </insert>
 
 
 </mapper>

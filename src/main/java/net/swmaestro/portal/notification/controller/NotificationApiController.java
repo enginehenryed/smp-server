@@ -41,4 +41,20 @@ public class NotificationApiController implements NotificationApi{
 
         return new ResponseEntity<List<Notification>>(notifications, HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<Void> readNotification(@ApiParam(value = "Notification's ID", required = true)
+                                                     @PathVariable("notification-id") Integer notificationId) {
+        try {
+            JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
+            User user = authentication.getUser();
+            Integer userId = user.getUserId();
+            notificationService.readNotification(userId, notificationId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } finally {
+        }
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 }
