@@ -4,6 +4,7 @@ import net.swmaestro.portal.user.service.UserService;
 import net.swmaestro.portal.user.vo.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +27,7 @@ public class UserApiController implements UserApi {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
+    @PreAuthorize("hasPermission(null, 'ADMIN')")
     public ResponseEntity<Void> deleteUser(
         @PathVariable("userId") Integer userId
     ) {
@@ -54,6 +56,7 @@ public class UserApiController implements UserApi {
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasPermission(null, 'ADMIN')")
     public ResponseEntity<List<User>> getUsers(
             @RequestParam(value = "userEmail", required = false) String userEmail
     ) {
@@ -77,6 +80,7 @@ public class UserApiController implements UserApi {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
+    @PreAuthorize("hasPermission(null, 'ADMIN')")
     public ResponseEntity<Void> putUser(
             @PathVariable("userId") Integer userId,
             @RequestBody(required = true) User user

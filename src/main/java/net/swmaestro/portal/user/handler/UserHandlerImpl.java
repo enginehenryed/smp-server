@@ -33,4 +33,22 @@ public class UserHandlerImpl implements UserHandler {
 		return userDAO.selectUserByEmail(map);
 	}
 
+	@Override
+	public boolean checkIsAdmin(int userId) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("userId", userId);
+		map.put("groupCode", "2");
+
+		return userDAO.countUserGroupsByGroupCode(map) > 0;
+	}
+
+	@Override
+	public boolean checkIsMentor(int userId) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("userId", userId);
+		map.put("groupCode", "1");
+
+		return userDAO.countUserGroupsByGroupCode(map) > 0;
+	}
+
 }

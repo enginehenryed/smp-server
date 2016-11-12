@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-10-05T11:30:19.659Z")
 
 @Controller
-public class AssignmentsApiController implements AssignmentsApi {
+public class AssignmentApiController implements AssignmentApi {
 
     @Resource(name = "assignmentService")
     private AssignmentService assignmentService;
@@ -68,10 +69,18 @@ public class AssignmentsApiController implements AssignmentsApi {
         return new ResponseEntity<Assignment>(assignment, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<Assignment>> getAssignments() {
+    public ResponseEntity<List<Assignment>> getAssignments(
+            @RequestParam(value="user", required=false) Integer user,
+            @RequestParam(value="year", required=false) Integer year,
+            @RequestParam(value="month", required=false) Integer month
+    ) {
         List<Assignment> assignments;
         try {
-            assignments = assignmentService.selectAllAssignments();
+            if(user != null) {
+                assignments = assignmentService.selectAssignmentsByUserId(user);
+            } else {
+                assignments = assignmentService.selectAllAssignments(month, year);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<List<Assignment>>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -131,6 +140,38 @@ public class AssignmentsApiController implements AssignmentsApi {
             User user = authentication.getUser();
             Integer userId = user.getUserId();
             commentService.insertCommentInArticle(assignmentId, userId, comment);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } finally {
+        }
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteComment(@ApiParam(value = "Comment's ID", required = true) @PathVariable("comment-id") Integer commentId) {
+        try {
+            JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
+            User user = authentication.getUser();
+            Integer userId = user.getUserId();
+            commentService.removeComment(userId, commentId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } finally {
+        }
+
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Void> putComment(@ApiParam(value = "Comment's ID", required = true) @PathVariable("comment-id") Integer commentId, @ApiParam(value = "Comment's VO") @RequestBody(required = true) Comment comment) {
+
+        try {
+            JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
+            User user = authentication.getUser();
+            Integer userId = user.getUserId();
+            commentService.updateComment(commentId, userId, comment);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -5,17 +5,14 @@ import net.swmaestro.portal.assignment.vo.Assignment;
 import net.swmaestro.portal.comment.vo.Comment;
 import net.swmaestro.portal.lecture.vo.Lecture;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-10-05T11:30:19.659Z")
 
 @Api(value = "assignments", description = "the assignments API")
-public interface AssignmentsApi {
+public interface AssignmentApi {
 
     @ApiOperation(value = "Delete Assignment", notes = "Deletes a Assignment.", response = Void.class, authorizations = {
         @Authorization(value = "smp_auth", scopes = {
@@ -61,7 +58,10 @@ public interface AssignmentsApi {
     @RequestMapping(value = "/assignments",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<Assignment>> getAssignments();
+    ResponseEntity<List<Assignment>> getAssignments(
+            @RequestParam(value="user", required=false) Integer user,
+            @RequestParam(value="year", required=false) Integer year,
+            @RequestParam(value="month", required=false) Integer month);
 
 
     @ApiOperation(value = "Create Assignment", notes = "Creates a new assignment (Sign Up).", response = Void.class, tags={  })
@@ -121,6 +121,39 @@ public interface AssignmentsApi {
     ResponseEntity<Void> postCommentInAssignment(
             @ApiParam(value = "Assignment's ID", required = true) @PathVariable("assignment-id") Integer assignmentId,
             @ApiParam(value = "Comment") @RequestBody(required = true) Comment comment
+    );
+
+    @ApiOperation(value = "Delete Comment", notes = "Deletes a Comment.", response = Void.class, authorizations = {
+            @Authorization(value = "smp_auth", scopes = {
+                    @AuthorizationScope(scope = "manager", description = "Manager")
+            })
+    }, tags={  })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Succeed.", response = Void.class) })
+    @RequestMapping(value = "/assignments/{assignment-id}/comments/{comment-id}",
+            produces = { "application/json" },
+            method = RequestMethod.DELETE)
+    ResponseEntity<Void> deleteComment(
+            @ApiParam(value = "Comment's ID", required = true) @PathVariable("comment-id") Integer commentId
+
+
+    );
+
+    @ApiOperation(value = "Edit Comment", notes = "Edit comment's profile.", response = Void.class, authorizations = {
+            @Authorization(value = "smp_auth", scopes = {
+                    @AuthorizationScope(scope = "manager", description = "Manager")
+            })
+    }, tags={  })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Succeed.", response = Void.class) })
+    @RequestMapping(value = "/assignments/{assignment-id}/comments/{comment-id}",
+            produces = { "application/json" },
+            method = RequestMethod.PUT)
+    ResponseEntity<Void> putComment(
+
+            @ApiParam(value = "Comment's ID", required = true) @PathVariable("comment-id") Integer commentId
+            ,
+            @ApiParam(value = "Comment's VO") @RequestBody(required = true) Comment comment
     );
 
 }

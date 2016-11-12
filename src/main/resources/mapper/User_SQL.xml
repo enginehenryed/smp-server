@@ -54,4 +54,16 @@
         ]]>
     </insert>
 
+    <select id="countUserGroupsByGroupCode" parameterType="hashmap" resultType="int">
+        <![CDATA[
+            SELECT
+                count(*)
+            FROM
+                soma.soma_group
+            WHERE
+                user_id = #{userId} AND
+                group_code = #{groupCode}
+        ]]>
+    </select>
+
 </mapper>
