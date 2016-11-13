@@ -127,6 +127,17 @@
         ]]>
     </update>
 
+    <select id="countUserByEmail" parameterType="hashmap" resultType="int">
+        <![CDATA[
+            SELECT
+                count(*)
+            FROM
+                soma.soma_user
+            WHERE
+                user_email = #{userEmail}
+        ]]>
+    </select>
+
     <select id="countUserGroupsByGroupCode" parameterType="hashmap" resultType="int">
         <![CDATA[
             SELECT
