@@ -26,4 +26,8 @@ public class NotificationDAO extends AbstractDAO {
     public void insertNotification(Map<String, Object> map) {
         insert("notification.insertNotification", map);
     }
+
+    public Notification selectNotification(Map<String, Object> map) {
+        return (Notification) selectOne("notification.selectNotification", map);
+    }
 }

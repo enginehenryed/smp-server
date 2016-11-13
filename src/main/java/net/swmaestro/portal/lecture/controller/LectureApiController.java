@@ -30,7 +30,7 @@ public class LectureApiController implements LectureApi {
     @Resource(name = "commentService")
     private CommentService commentService;
 
-    @PreAuthorize("hasPermission(#lecture-id, 'Lecture', 'OWNER') OR hasPermission(null, 'ADMIN')")
+    @PreAuthorize("hasPermission(#lectureId, 'Lecture', 'OWNER') OR hasPermission(null, 'ADMIN')")
     public ResponseEntity<Void> deleteLecture(
             @ApiParam(value = "Lecture's ID", required = true) @PathVariable("lecture-id") Integer lectureId
 
@@ -150,6 +150,7 @@ public class LectureApiController implements LectureApi {
     }
 
     @Override
+    @PreAuthorize("hasPermission(#commentId, 'Comment', 'OWNER') OR hasPermission(null, 'ADMIN')")
     public ResponseEntity<Void> deleteComment(@ApiParam(value = "Comment's ID", required = true) @PathVariable("comment-id") Integer commentId) {
         try {
             JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
@@ -166,6 +167,7 @@ public class LectureApiController implements LectureApi {
     }
 
     @Override
+    @PreAuthorize("hasPermission(#commentId, 'Comment', 'OWNER') OR hasPermission(null, 'ADMIN')")
     public ResponseEntity<Void> putComment(@ApiParam(value = "Comment's ID", required = true) @PathVariable("comment-id") Integer commentId, @ApiParam(value = "Comment's VO") @RequestBody(required = true) Comment comment) {
 
         try {

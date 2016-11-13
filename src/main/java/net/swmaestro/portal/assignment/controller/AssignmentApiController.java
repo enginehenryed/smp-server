@@ -9,6 +9,7 @@ import net.swmaestro.portal.comment.vo.Comment;
 import net.swmaestro.portal.user.vo.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +31,7 @@ public class AssignmentApiController implements AssignmentApi {
     @Resource(name = "commentService")
     private CommentService commentService;
 
-
+    @PreAuthorize("hasPermission(#assignmentId, 'Assignment', 'OWNER') OR hasPermission(null, 'ADMIN')")
     public ResponseEntity<Void> deleteAssignment(
             @ApiParam(value = "Assignment's ID", required = true) @PathVariable("assignment-id") Integer assignmentId
 
@@ -89,6 +90,7 @@ public class AssignmentApiController implements AssignmentApi {
     }
 
     @Override
+    @PreAuthorize("hasPermission(null, 'MENTOR') OR hasPermission(null, 'ADMIN')")
     public ResponseEntity<Void> postAssignment(@ApiParam(value = "Assignment's articleGenerationId") @RequestBody(required = true) Assignment assignment) {
         try {
             JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
@@ -104,6 +106,7 @@ public class AssignmentApiController implements AssignmentApi {
     }
 
     @Override
+    @PreAuthorize("hasPermission(#aissgnmentId, 'Assignment', 'OWNER') OR hasPermission(null, 'ADMIN')")
     public ResponseEntity<Void> putAssignment(@ApiParam(value = "Assignment's ID", required = true) @PathVariable("assignment-id") Integer assignmentId,
                                            @ApiParam(value = "Assignment's VO") @RequestBody(required = true) Assignment assignment) {
 
@@ -149,6 +152,7 @@ public class AssignmentApiController implements AssignmentApi {
     }
 
     @Override
+    @PreAuthorize("hasPermission(#commentId, 'Comment', 'OWNER') OR hasPermission(null, 'ADMIN')")
     public ResponseEntity<Void> deleteComment(@ApiParam(value = "Comment's ID", required = true) @PathVariable("comment-id") Integer commentId) {
         try {
             JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
@@ -165,6 +169,7 @@ public class AssignmentApiController implements AssignmentApi {
     }
 
     @Override
+    @PreAuthorize("hasPermission(#commentId, 'Comment', 'OWNER') OR hasPermission(null, 'ADMIN')")
     public ResponseEntity<Void> putComment(@ApiParam(value = "Comment's ID", required = true) @PathVariable("comment-id") Integer commentId, @ApiParam(value = "Comment's VO") @RequestBody(required = true) Comment comment) {
 
         try {

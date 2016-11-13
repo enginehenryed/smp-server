@@ -14,6 +14,16 @@
 		]]>
     </select>
 
+    <select id="selectNotification" parameterType="hashmap" resultType="net.swmaestro.portal.notification.vo.Notification">
+        <![CDATA[
+	select notification_id as notificationId, notification_message as notificationMessage,
+  notification_url as notificationUrl, notification_target_user_id as notificationTargetUserId,
+  notifiaction_created_at as notificationCreatedAt, notification_is_read as notificationIsRead
+   from soma_notification
+   where notification_id = #{notification_id}
+		]]>
+    </select>
+
     <update id="updateNotificationToBeRead" parameterType="hashmap">
         <![CDATA[
                  UPDATE soma.soma_notification

@@ -7,6 +7,7 @@ import net.swmaestro.portal.comment.vo.Comment;
 import net.swmaestro.portal.user.vo.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ public class CommentApiController implements CommentApi {
     private CommentService commentService;
 
     @Override
+    @PreAuthorize("hasPermission(#commentId, 'Comment', 'OWNER') OR hasPermission(null, 'ADMIN')")
     public ResponseEntity<Void> deleteComment(@ApiParam(value = "Comment's ID", required = true) @PathVariable("comment-id") Integer commentId) {
         try {
             JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
@@ -40,6 +42,7 @@ public class CommentApiController implements CommentApi {
     }
 
     @Override
+    @PreAuthorize("hasPermission(#commentId, 'Comment', 'OWNER') OR hasPermission(null, 'ADMIN')")
     public ResponseEntity<Void> putComment(@ApiParam(value = "Comment's ID", required = true) @PathVariable("comment-id") Integer commentId, @ApiParam(value = "Comment's VO") @RequestBody(required = true) Comment comment) {
 
         try {
