@@ -30,13 +30,18 @@ public class AuthServiceImpl implements AuthService {
 		} finally { }
 
 		if (user == null) {
-			// TODO: Impl - User not exists. (Leave)
+			// TODO: Impl - User not exists.
 			return null;
 		}
 
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		if (!encoder.matches(password, user.getUserPassword())) {
 			// Password NOT matching.
+			return null;
+		}
+
+		if (!user.getUserStatus().equals("A")) {
+			// User status is NOT AVAILABLE
 			return null;
 		}
 

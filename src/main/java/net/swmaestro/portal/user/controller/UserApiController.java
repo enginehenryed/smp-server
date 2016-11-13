@@ -16,13 +16,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.annotation.Resource;
 import java.util.List;
 
-
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-10-05T11:30:19.659Z")
 
 @Controller
 public class UserApiController implements UserApi {
@@ -39,22 +35,27 @@ public class UserApiController implements UserApi {
     @Resource(name="commentService")
     private CommentService commentService;
 
-    public ResponseEntity<Void> deleteMe() {
-        // do some magic!
+    public ResponseEntity<Void> deleteMe() throws Exception {
+        JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        User user = authentication.getUser();
+
+        userService.deleteUser(user.getUserId());
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @PreAuthorize("hasPermission(null, 'ADMIN')")
     public ResponseEntity<Void> deleteUser(
-        @PathVariable("userId") Integer userId
-    ) {
-        // do some magic!
+        @PathVariable("user-id") Integer userId
+    ) throws Exception {
+        userService.deleteUser(userId);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    public ResponseEntity<User> getMe() {
-        // do some magic!
-        return new ResponseEntity<User>(HttpStatus.OK);
+    public ResponseEntity<User> getMe() throws Exception {
+        JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        User user = authentication.getUser();
+
+        return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
     public ResponseEntity<User> getUser(
@@ -74,10 +75,11 @@ public class UserApiController implements UserApi {
     }
 
     @PreAuthorize("hasPermission(null, 'ADMIN')")
-    public ResponseEntity<List<User>> getUsers(
-            @RequestParam(value = "userEmail", required = false) String userEmail
-    ) {
-        return new ResponseEntity<List<User>>(HttpStatus.OK);
+    public ResponseEntity<List<User>> getUsers() throws Exception {
+        List<User> users;
+        users = userService.selectAllUsers();
+
+        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
 
     public ResponseEntity<Void> postUser(@RequestBody(required = true) User user) throws Exception {
@@ -92,17 +94,25 @@ public class UserApiController implements UserApi {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    public ResponseEntity<Void> putMe(@RequestBody(required = true) User user) {
-        // do some magic!
+    public ResponseEntity<Void> putMe(@RequestBody(required = true) User user) throws Exception {
+        JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        User authenticatedUser = authentication.getUser();
+
+        user.setUserId(authenticatedUser.getUserId());
+        user.setUserGroups(null);
+        userService.updateUser(user);
+
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @PreAuthorize("hasPermission(null, 'ADMIN')")
     public ResponseEntity<Void> putUser(
-            @PathVariable("userId") Integer userId,
+            @PathVariable("user-id") Integer userId,
             @RequestBody(required = true) User user
-    ) {
-        // do some magic!
+    ) throws Exception {
+        user.setUserId(userId);
+        userService.updateUser(user);
+
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 

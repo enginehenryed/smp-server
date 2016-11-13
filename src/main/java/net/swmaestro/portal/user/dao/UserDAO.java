@@ -24,7 +24,7 @@ public class UserDAO extends AbstractDAO{
 
 	@SuppressWarnings("unchecked")
 	public List<User> selectAllUsers(Map<String, Object> map) throws Exception{
-		return (List<User>) selectList("user.selectUser", map);
+		return (List<User>) selectList("user.selectAllUsers", map);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -37,4 +37,19 @@ public class UserDAO extends AbstractDAO{
 		return (int) selectOne("user.countUserGroupsByGroupCode", map);
 	}
 
+	public void updateUser(Map<String, Object> map) throws Exception {
+		update("user.updateUser", map);
+	}
+
+	public void removeUser(Map<String, Object> map) throws Exception {
+		update("user.removeUser", map);
+	}
+
+	public void deleteGroupsByUser(Map<String, Object> map) throws Exception {
+		delete("user.deleteGroupsByUser", map);
+	}
+
+	public void insertGroupsList(List<Map<String, Object>> mapList) throws Exception {
+		insert("user.insertGroupsList", mapList);
+	}
 }
