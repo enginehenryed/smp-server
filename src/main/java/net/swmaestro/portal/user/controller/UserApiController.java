@@ -82,16 +82,9 @@ public class UserApiController implements UserApi {
         return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
 
-    public ResponseEntity<Void> postUser(@RequestBody(required = true) User user) throws Exception {
-        int user_id;
-        try {
-            user_id = userService.insertUser(user);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
-        } finally { }
-
-        return new ResponseEntity<Void>(HttpStatus.OK);
+    public ResponseEntity<Void> postUser(@RequestBody User user) throws Exception {
+        userService.insertUser(user);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     public ResponseEntity<Void> putMe(@RequestBody(required = true) User user) throws Exception {

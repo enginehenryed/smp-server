@@ -33,6 +33,11 @@ public class UserDAO extends AbstractDAO{
 	}
 
 	@SuppressWarnings("unchecked")
+	public int countUserByEmail(Map<String, Object> map) throws Exception {
+		return (int) selectOne("user.countUserByEmail", map);
+	}
+
+	@SuppressWarnings("unchecked")
 	public int countUserGroupsByGroupCode(Map<String, Object> map) throws Exception {
 		return (int) selectOne("user.countUserGroupsByGroupCode", map);
 	}

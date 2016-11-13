@@ -1,6 +1,8 @@
 package net.swmaestro.portal.user.service;
 
 
+import net.swmaestro.portal.common.exception.BadRequestException;
+import net.swmaestro.portal.common.util.EmailValidator;
 import net.swmaestro.portal.user.dao.UserDAO;
 import net.swmaestro.portal.user.vo.Group;
 import net.swmaestro.portal.user.vo.User;
@@ -37,7 +39,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
 	public int insertUser(User user) throws Exception {
-		// TODO: email UNIQUE Check
+        Map<String, Object> emailCheckMap = new HashMap<>();
+        emailCheckMap.put("userEmail", user.getUserEmail());
+        if (userDAO.countUserByEmail(emailCheckMap) > 0) {
+            throw new BadRequestException("Email already exists");
+        }
+
+        if (!EmailValidator.isValid(user.getUserEmail())) {
+            throw new BadRequestException("Email is not valid");
+        }
 
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		String encryptedPassword = encoder.encode(user.getUserPassword());
