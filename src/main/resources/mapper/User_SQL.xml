@@ -12,10 +12,10 @@
         <result property="userUpdatedAt" column="user_updated_at" />
         <result property="userStatus" column="user_status" />
         <collection property="userGroups" javaType="java.util.ArrayList" ofType="net.swmaestro.portal.user.vo.Group">
-            <id property="groupId" column="group_id" />
-            <result property="userId" column="user_id" />
-            <result property="generationId" column="generation_id" />
-            <result property="groupCode" column="group_code" />
+            <id property="groupId" column="group_group_id" />
+            <result property="userId" column="group_user_id" />
+            <result property="generationId" column="group_generation_id" />
+            <result property="groupCode" column="group_group_code" />
         </collection>
     </resultMap>
 
@@ -30,9 +30,10 @@
 			    u.user_created_at,
 			    u.user_updated_at,
 			    u.user_status,
-			    g.group_id,
-			    g.generation_id,
-			    g.group_code
+			    g.group_id AS group_group_id,
+			    g.user_id AS group_user_id,
+			    g.generation_id AS group_generation_id,
+			    g.group_code AS group_group_code
 			FROM
 			    soma.soma_user u
 			    LEFT OUTER JOIN soma.soma_group g ON u.user_id = g.user_id
@@ -69,9 +70,10 @@
 			    u.user_created_at,
 			    u.user_updated_at,
 			    u.user_status,
-			    g.group_id,
-			    g.generation_id,
-			    g.group_code
+			    g.group_id AS group_group_id,
+			    g.user_id AS group_user_id,
+			    g.generation_id AS group_generation_id,
+			    g.group_code AS group_group_code
 			FROM
 			    soma.soma_user u
 			    LEFT OUTER JOIN soma.soma_group g ON u.user_id = g.user_id
