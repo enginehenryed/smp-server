@@ -66,7 +66,6 @@ public class UserApiController implements UserApi {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasPermission(null, 'ADMIN')")
     public ResponseEntity<List<User>> getUsers() throws Exception {
         List<User> users;
         users = userService.selectAllUsers();
