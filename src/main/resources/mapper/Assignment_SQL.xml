@@ -3,84 +3,133 @@
 
 <mapper namespace="assignment">
 
-    <select id="selectAssignment" parameterType="hashmap" resultType="net.swmaestro.portal.assignment.vo.Assignment">
+    <resultMap id="assignmentResultMap" type="net.swmaestro.portal.assignment.vo.AssignmentResult">
+        <id property="articleId" column="article_id" />
+
+        <result property="articleGenerationId" column="article_generation_id" />
+        <result property="articleSubject" column="article_subject" />
+        <result property="articleContent" column="article_content" />
+        <result property="articleCreatedAt" column="article_created_at" />
+        <result property="articleUpdatedAt" column="article_updated_at" />
+        <result property="articleType" column="article_type" />
+        <result property="articleStatus" column="article_status" />
+
+        <result property="assignmentEndAt" column="assignment_end_at" />
+
+        <association property="articleWriter" resultMap="user.simpleUserResultMap" columnPrefix="writer_" />
+        <association property="articleModifier" resultMap="user.simpleUserResultMap" columnPrefix="modifier_" />
+    </resultMap>
+
+    <select id="selectAssignment" parameterType="hashmap" resultMap="assignmentResultMap">
         <![CDATA[
 			SELECT
-			    soma_article.article_id as articleId,
-					article_writer_id as articleWriterId,
-					article_modifier_id as articleModifierId,
-					article_generation_id as articleGenerationId,
-					article_subject as articleSubject,
-					article_content as articleContent,
-					article_created_at as articleCreatedAt,
-					article_updated_at as articleUpdatedAt,
-					article_type as articleType,
-					article_status as articleStatus,
-					assignment_end_at as assignmentEndAt
-
+			    a.article_id AS article_id,
+                a.article_writer_id AS article_writer_id,
+                a.article_modifier_id AS article_modifier_id,
+                a.article_generation_id AS article_generation_id,
+                a.article_subject AS article_subject,
+                a.article_content AS article_content,
+                a.article_created_at AS article_created_at,
+                a.article_updated_at AS article_updated_at,
+                a.article_type AS article_type,
+                a.article_status AS article_status,
+                l.assignment_end_at AS assignment_end_at,
+                writer.user_id AS writer_user_id,
+                writer.user_name AS writer_user_name,
+                modifier.user_id AS modifier_user_id,
+                modifier.user_name AS modifier_user_name
 			FROM
-			    soma.soma_assignment
-			inner join
-					soma.soma_article
-			on
-					soma.soma_assignment.article_id =soma.soma_article.article_id
-		    where soma_article.article_id = #{assignment_id} and soma_article.article_type = 'A'
-			ORDER BY soma_article.article_id DESC
+			    soma.soma_assignment l
+			INNER JOIN
+				soma.soma_article a
+			    ON l.article_id = a.article_id
+			JOIN
+			    soma.soma_user writer
+			    ON a.article_writer_id = writer.user_id
+			JOIN
+			    soma.soma_user modifier
+			    ON a.article_modifier_id = modifier.user_id
+		    WHERE
+		        a.article_id = #{assignment_id} AND
+		        a.article_type = 'A'
+			ORDER BY
+			    a.article_id DESC
 		]]>
     </select>
 
 
-    <select id="selectAssignmentsByUserId" parameterType="hashmap" resultType="net.swmaestro.portal.assignment.vo.Assignment">
+    <select id="selectAssignmentsByUserId" parameterType="hashmap" resultMap="assignmentResultMap">
         <![CDATA[
-
-				SELECT
-			    soma_article.article_id as articleId,
-					article_writer_id as articleWriterId,
-					article_modifier_id as articleModifierId,
-					article_generation_id as articleGenerationId,
-					article_content as articleContent,
-					article_subject as articleSubject,
-					article_created_at as articleCreatedAt,
-					article_updated_at as articleUpdatedAt,
-					article_type as articleType,
-					article_status as articleStatus,
-					assignment_end_at as assignmentEndAt
-
+			SELECT
+			    a.article_id AS article_id,
+                a.article_writer_id AS article_writer_id,
+                a.article_modifier_id AS article_modifier_id,
+                a.article_generation_id AS article_generation_id,
+                a.article_subject AS article_subject,
+                a.article_content AS article_content,
+                a.article_created_at AS article_created_at,
+                a.article_updated_at AS article_updated_at,
+                a.article_type AS article_type,
+                a.article_status AS article_status,
+                l.assignment_end_at AS assignment_end_at,
+                writer.user_id AS writer_user_id,
+                writer.user_name AS writer_user_name,
+                modifier.user_id AS modifier_user_id,
+                modifier.user_name AS modifier_user_name
 			FROM
-			    soma.soma_assignment
-			inner join
-					soma.soma_article
-			on
-					soma.soma_assignment.article_id =soma.soma_article.article_id
-			where soma_article.article_status <> 'D' and soma_article.article_type = 'A'
-			 and soma_article.article_writer_id = #{user_id}
-			ORDER BY soma_article.article_id DESC
+			    soma.soma_assignment l
+			INNER JOIN
+				soma.soma_article a
+			    ON l.article_id = a.article_id
+			JOIN
+			    soma.soma_user writer
+			    ON a.article_writer_id = writer.user_id
+			JOIN
+			    soma.soma_user modifier
+			    ON a.article_modifier_id = modifier.user_id
+			WHERE
+			    a.article_status <> 'D' AND
+			    a.article_type = 'A' AND
+			    a.article_writer_id = #{user_id}
+			ORDER BY
+			    a.article_id DESC
 		]]>
     </select>
 
-    <select id="selectAllAssignments" parameterType="hashmap" resultType="net.swmaestro.portal.assignment.vo.Assignment">
+    <select id="selectAllAssignments" parameterType="hashmap" resultMap="assignmentResultMap">
         <![CDATA[
-				SELECT
-			    soma_article.article_id as articleId,
-					article_writer_id as articleWriterId,
-					article_modifier_id as articleModifierId,
-					article_generation_id as articleGenerationId,
-					article_content as articleContent,
-					article_subject as articleSubject,
-					article_created_at as articleCreatedAt,
-					article_updated_at as articleUpdatedAt,
-					article_type as articleType,
-					article_status as articleStatus,
-					assignment_end_at as assignmentEndAt
-
+			SELECT
+			    a.article_id AS article_id,
+                a.article_writer_id AS article_writer_id,
+                a.article_modifier_id AS article_modifier_id,
+                a.article_generation_id AS article_generation_id,
+                a.article_subject AS article_subject,
+                a.article_content AS article_content,
+                a.article_created_at AS article_created_at,
+                a.article_updated_at AS article_updated_at,
+                a.article_type AS article_type,
+                a.article_status AS article_status,
+                l.assignment_end_at AS assignment_end_at,
+                writer.user_id AS writer_user_id,
+                writer.user_name AS writer_user_name,
+                modifier.user_id AS modifier_user_id,
+                modifier.user_name AS modifier_user_name
 			FROM
-			    soma.soma_assignment
-			inner join
-					soma.soma_article
-			on
-					soma.soma_assignment.article_id =soma.soma_article.article_id
-			where soma_article.article_status <> 'D' and soma_article.article_type = 'A'
-			ORDER BY soma_article.article_id DESC
+			    soma.soma_assignment l
+			INNER JOIN
+				soma.soma_article a
+			    ON l.article_id = a.article_id
+			JOIN
+			    soma.soma_user writer
+			    ON a.article_writer_id = writer.user_id
+			JOIN
+			    soma.soma_user modifier
+			    ON a.article_modifier_id = modifier.user_id
+			WHERE
+			    a.article_status <> 'D' AND
+			    a.article_type = 'A'
+			ORDER BY
+			    a.article_id DESC
 
 		]]>
     </select>

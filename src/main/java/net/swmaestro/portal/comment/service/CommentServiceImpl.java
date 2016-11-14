@@ -3,10 +3,12 @@ package net.swmaestro.portal.comment.service;
 
 import net.swmaestro.portal.assignment.dao.AssignmentDAO;
 import net.swmaestro.portal.assignment.vo.Assignment;
+import net.swmaestro.portal.assignment.vo.AssignmentResult;
 import net.swmaestro.portal.comment.dao.CommentDAO;
 import net.swmaestro.portal.comment.vo.Comment;
 import net.swmaestro.portal.lecture.dao.LectureDAO;
 import net.swmaestro.portal.lecture.vo.Lecture;
+import net.swmaestro.portal.lecture.vo.LectureResult;
 import net.swmaestro.portal.notification.service.NotificationService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -54,20 +56,20 @@ public class CommentServiceImpl implements CommentService {
 
 		Integer targetUserId = null;
 
-		map = new HashMap<String, Object>();
+		map = new HashMap<>();
 		map.put("lecture_id", articleId);
-		Lecture lecture = lectureDAO.selectLecture(map);
+		LectureResult lecture = lectureDAO.selectLecture(map);
 
-		map = new HashMap<String, Object>();
+		map = new HashMap<>();
 		map.put("assignment_id", articleId);
-		Assignment assignment = assignmentDAO.selectAssignment(map);
+		AssignmentResult assignment = assignmentDAO.selectAssignment(map);
 
 		if (lecture != null) {
-			targetUserId = lecture.getArticleWriterId();
+			targetUserId = lecture.getArticleWriter().getUserId();
 		}
 
 		if (assignment != null) {
-			targetUserId = assignment.getArticleWriterId();
+			targetUserId = assignment.getArticleWriter().getUserId();
 		}
 
 		if (targetUserId != null && userId != targetUserId) {

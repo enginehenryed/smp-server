@@ -1,9 +1,8 @@
 package net.swmaestro.portal.assignment.dao;
 
 
-import net.swmaestro.portal.assignment.vo.Assignment;
+import net.swmaestro.portal.assignment.vo.AssignmentResult;
 import net.swmaestro.portal.common.dao.AbstractDAO;
-import net.swmaestro.portal.lecture.vo.Lecture;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,13 +12,13 @@ import java.util.Map;
 public class AssignmentDAO extends AbstractDAO{
 
 	@SuppressWarnings("unchecked")
-	public Assignment selectAssignment(Map<String, Object> map) throws Exception{
-		return (Assignment) selectOne("assignment.selectAssignment", map);
+	public AssignmentResult selectAssignment(Map<String, Object> map) throws Exception{
+		return (AssignmentResult) selectOne("assignment.selectAssignment", map);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Assignment> selectAllAssignments() throws Exception{
-		return (List<Assignment>) selectList("assignment.selectAllAssignments");
+	public List<AssignmentResult> selectAllAssignments() throws Exception{
+		return (List<AssignmentResult>) selectList("assignment.selectAllAssignments");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -35,7 +34,7 @@ public class AssignmentDAO extends AbstractDAO{
 		update("assignment.removeAssignment",map);
 	}
 
-    public List<Assignment> selectAssignmentsByUserId(Map<String, Object> map) {
-		return (List<Assignment>) selectList("assignment.selectAssignmentsByUserId", map);
+    public List<AssignmentResult> selectAssignmentsByUserId(Map<String, Object> map) {
+		return (List<AssignmentResult>) selectList("assignment.selectAssignmentsByUserId", map);
     }
 }
