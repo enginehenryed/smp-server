@@ -1,9 +1,9 @@
 package net.swmaestro.portal.user.controller;
 
 import io.swagger.annotations.*;
-import net.swmaestro.portal.assignment.vo.Assignment;
+import net.swmaestro.portal.assignment.vo.AssignmentResult;
 import net.swmaestro.portal.comment.vo.Comment;
-import net.swmaestro.portal.lecture.vo.Lecture;
+import net.swmaestro.portal.lecture.vo.LectureResult;
 import net.swmaestro.portal.user.vo.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +40,7 @@ public interface UserApi {
         method = RequestMethod.GET)
     ResponseEntity<User> getUser(
             @PathVariable("user-id") Integer userId
-    );
+    ) throws Exception;
 
 
     @RequestMapping(value = "/users",
@@ -79,16 +79,16 @@ public interface UserApi {
     @RequestMapping(value = "/users/me/lecture",
             produces = { "application/json" },
             method = RequestMethod.GET)
-    ResponseEntity<List<Lecture>> getMyLectures();
+    ResponseEntity<List<LectureResult>> getMyLectures() throws Exception;
 
     @RequestMapping(value = "/users/me/assignment",
             produces = { "application/json" },
             method = RequestMethod.GET)
-    ResponseEntity<List<Assignment>> getMyAssignments();
+    ResponseEntity<List<AssignmentResult>> getMyAssignments() throws Exception;
 
     @RequestMapping(value = "/users/me/comment",
             produces = { "application/json" },
             method = RequestMethod.GET)
-    ResponseEntity<List<Comment>> getMyComments();
+    ResponseEntity<List<Comment>> getMyComments() throws Exception;
 
 }

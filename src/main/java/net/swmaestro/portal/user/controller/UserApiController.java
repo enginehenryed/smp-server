@@ -1,12 +1,12 @@
 package net.swmaestro.portal.user.controller;
 
 import net.swmaestro.portal.assignment.service.AssignmentService;
-import net.swmaestro.portal.assignment.vo.Assignment;
+import net.swmaestro.portal.assignment.vo.AssignmentResult;
 import net.swmaestro.portal.auth.JWTAuthentication;
 import net.swmaestro.portal.comment.service.CommentService;
 import net.swmaestro.portal.comment.vo.Comment;
 import net.swmaestro.portal.lecture.service.LectureService;
-import net.swmaestro.portal.lecture.vo.Lecture;
+import net.swmaestro.portal.lecture.vo.LectureResult;
 import net.swmaestro.portal.user.service.UserService;
 import net.swmaestro.portal.user.vo.User;
 import org.springframework.http.HttpStatus;
@@ -40,7 +40,7 @@ public class UserApiController implements UserApi {
         User user = authentication.getUser();
 
         userService.deleteUser(user.getUserId());
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PreAuthorize("hasPermission(null, 'ADMIN')")
@@ -48,30 +48,22 @@ public class UserApiController implements UserApi {
         @PathVariable("user-id") Integer userId
     ) throws Exception {
         userService.deleteUser(userId);
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     public ResponseEntity<User> getMe() throws Exception {
         JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
         User user = authentication.getUser();
 
-        return new ResponseEntity<User>(user, HttpStatus.OK);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     public ResponseEntity<User> getUser(
         @PathVariable("user-id") Integer userId
-    ) {
+    ) throws Exception {
         User user;
-
-        try {
-            user = userService.selectUser(userId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
-        } finally {
-        }
-
-        return new ResponseEntity<User>(user, HttpStatus.OK);
+        user = userService.selectUser(userId);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PreAuthorize("hasPermission(null, 'ADMIN')")
@@ -79,7 +71,7 @@ public class UserApiController implements UserApi {
         List<User> users;
         users = userService.selectAllUsers();
 
-        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     public ResponseEntity<Void> postUser(@RequestBody User user) throws Exception {
@@ -87,7 +79,7 @@ public class UserApiController implements UserApi {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    public ResponseEntity<Void> putMe(@RequestBody(required = true) User user) throws Exception {
+    public ResponseEntity<Void> putMe(@RequestBody User user) throws Exception {
         JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
         User authenticatedUser = authentication.getUser();
 
@@ -95,63 +87,48 @@ public class UserApiController implements UserApi {
         user.setUserGroups(null);
         userService.updateUser(user);
 
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PreAuthorize("hasPermission(null, 'ADMIN')")
     public ResponseEntity<Void> putUser(
             @PathVariable("user-id") Integer userId,
-            @RequestBody(required = true) User user
+            @RequestBody User user
     ) throws Exception {
         user.setUserId(userId);
         userService.updateUser(user);
 
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<List<Lecture>> getMyLectures() {
-        List<Lecture> lectures;
-        try {
-            JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-            User user = authentication.getUser();
-            Integer userId = user.getUserId();
-            lectures = lectureService.selectLecturesByUserId(userId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<List<Lecture>>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return new ResponseEntity<List<Lecture>>(lectures, HttpStatus.OK);
+    public ResponseEntity<List<LectureResult>> getMyLectures() throws Exception {
+        JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        User user = authentication.getUser();
+
+        List<LectureResult> lectures;
+        lectures = lectureService.selectLecturesByUserId(user.getUserId());
+        return new ResponseEntity<>(lectures, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<List<Assignment>> getMyAssignments() {
-        List<Assignment> assignments;
-        try {
-            JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-            User user = authentication.getUser();
-            Integer userId = user.getUserId();
-            assignments = assignmentService.selectAssignmentsByUserId(userId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<List<Assignment>>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return new ResponseEntity<List<Assignment>>(assignments, HttpStatus.OK);
+    public ResponseEntity<List<AssignmentResult>> getMyAssignments() throws Exception {
+        JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        User user = authentication.getUser();
+
+        List<AssignmentResult> assignments;
+        assignments = assignmentService.selectAssignmentsByUserId(user.getUserId());
+        return new ResponseEntity<>(assignments, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<List<Comment>> getMyComments() {
+    public ResponseEntity<List<Comment>> getMyComments() throws Exception {
+        JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        User user = authentication.getUser();
+
         List<Comment> comments;
-        try {
-            JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-            User user = authentication.getUser();
-            Integer userId = user.getUserId();
-            comments = commentService.selectCommentsByUserId(userId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<List<Comment>>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return new ResponseEntity<List<Comment>>(comments, HttpStatus.OK);
+        comments = commentService.selectCommentsByUserId(user.getUserId());
+        return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
 

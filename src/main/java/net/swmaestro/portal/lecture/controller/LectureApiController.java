@@ -6,6 +6,7 @@ import net.swmaestro.portal.comment.service.CommentService;
 import net.swmaestro.portal.comment.vo.Comment;
 import net.swmaestro.portal.lecture.service.LectureService;
 import net.swmaestro.portal.lecture.vo.Lecture;
+import net.swmaestro.portal.lecture.vo.LectureResult;
 import net.swmaestro.portal.user.vo.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,40 +52,40 @@ public class LectureApiController implements LectureApi {
     }
 
 
-    public ResponseEntity<Lecture> getLecture(
+    public ResponseEntity<LectureResult> getLecture(
             @ApiParam(value = "Lecture's ID", required = true) @PathVariable("lecture-id") Integer lectureId
 
 
     ) {
-        Lecture lecture;
+        LectureResult lecture;
 
         try {
             lecture = lectureService.selectLecture(lectureId);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<Lecture>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } finally {
         }
 
-        return new ResponseEntity<Lecture>(lecture, HttpStatus.OK);
+        return new ResponseEntity<>(lecture, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<Lecture>> getLectures(
-            @RequestParam(value="user", required=false) Integer user,
+    public ResponseEntity<List<LectureResult>> getLectures(
+            @RequestParam(value="userId", required=false) Integer userId,
             @RequestParam(value="year", required=false) Integer year,
             @RequestParam(value="month", required=false) Integer month) {
-        List<Lecture> lectures;
+        List<LectureResult> lectures;
         try {
-            if(user != null) {
-                lectures = lectureService.selectLecturesByUserId(user);
+            if(userId != null) {
+                lectures = lectureService.selectLecturesByUserId(userId);
             } else {
                 lectures = lectureService.selectAllLectures(month, year);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<List<Lecture>>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<List<Lecture>>(lectures, HttpStatus.OK);
+        return new ResponseEntity<>(lectures, HttpStatus.OK);
     }
 
     @Override

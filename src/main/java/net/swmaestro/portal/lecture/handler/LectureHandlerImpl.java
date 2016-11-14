@@ -1,7 +1,7 @@
 package net.swmaestro.portal.lecture.handler;
 
 import net.swmaestro.portal.lecture.dao.LectureDAO;
-import net.swmaestro.portal.lecture.vo.Lecture;
+import net.swmaestro.portal.lecture.vo.LectureResult;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,8 +18,8 @@ public class LectureHandlerImpl implements LectureHandler {
     private LectureDAO lectureDAO;
 
     @Override
-    public Lecture selectLecture(int lectureId) throws Exception {
-        Map<String, Object> map = new HashMap<String, Object>();
+    public LectureResult selectLecture(int lectureId) throws Exception {
+        Map<String, Object> map = new HashMap<>();
         map.put("lecture_id", lectureId);
 
         return lectureDAO.selectLecture(map);

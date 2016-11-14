@@ -2,8 +2,8 @@ package net.swmaestro.portal.assignment.controller;
 
 import io.swagger.annotations.*;
 import net.swmaestro.portal.assignment.vo.Assignment;
+import net.swmaestro.portal.assignment.vo.AssignmentResult;
 import net.swmaestro.portal.comment.vo.Comment;
-import net.swmaestro.portal.lecture.vo.Lecture;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,11 +41,11 @@ public interface AssignmentApi {
     @RequestMapping(value = "/assignments/{assignment-id}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<Assignment> getAssignment(
+    ResponseEntity<AssignmentResult> getAssignment(
             @ApiParam(value = "Assignment's ID", required = true) @PathVariable("assignment-id") Integer assignmentId
 
 
-    );
+    ) throws Exception;
 
 
     @ApiOperation(value = "assignments List", notes = "Returns list of assignments.", response = Assignment.class, responseContainer = "List", authorizations = {
@@ -58,10 +58,10 @@ public interface AssignmentApi {
     @RequestMapping(value = "/assignments",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<Assignment>> getAssignments(
-            @RequestParam(value="user", required=false) Integer user,
+    ResponseEntity<List<AssignmentResult>> getAssignments(
+            @RequestParam(value="userId", required=false) Integer userId,
             @RequestParam(value="year", required=false) Integer year,
-            @RequestParam(value="month", required=false) Integer month);
+            @RequestParam(value="month", required=false) Integer month) throws Exception;
 
 
     @ApiOperation(value = "Create Assignment", notes = "Creates a new assignment (Sign Up).", response = Void.class, tags={  })

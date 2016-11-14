@@ -19,6 +19,11 @@
         </collection>
     </resultMap>
 
+    <resultMap id="simpleUserResultMap" type="net.swmaestro.portal.user.vo.SimpleUser">
+        <id property="userId" column="user_id" />
+        <result property="userName" column="user_name" />
+    </resultMap>
+
     <select id="selectUser" parameterType="hashmap" resultMap="userResultMap">
         <![CDATA[
 			SELECT

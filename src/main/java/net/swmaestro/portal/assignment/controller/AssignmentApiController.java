@@ -3,6 +3,7 @@ package net.swmaestro.portal.assignment.controller;
 import io.swagger.annotations.ApiParam;
 import net.swmaestro.portal.assignment.service.AssignmentService;
 import net.swmaestro.portal.assignment.vo.Assignment;
+import net.swmaestro.portal.assignment.vo.AssignmentResult;
 import net.swmaestro.portal.auth.JWTAuthentication;
 import net.swmaestro.portal.comment.service.CommentService;
 import net.swmaestro.portal.comment.vo.Comment;
@@ -51,41 +52,29 @@ public class AssignmentApiController implements AssignmentApi {
     }
 
 
-    public ResponseEntity<Assignment> getAssignment(
+    public ResponseEntity<AssignmentResult> getAssignment(
             @ApiParam(value = "Assignment's ID", required = true) @PathVariable("assignment-id") Integer assignmentId
 
 
-    ) {
-        Assignment assignment;
+    ) throws Exception {
+        AssignmentResult assignment;
+        assignment = assignmentService.selectAssignment(assignmentId);
 
-        try {
-            assignment = assignmentService.selectAssignment(assignmentId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<Assignment>(HttpStatus.INTERNAL_SERVER_ERROR);
-        } finally {
-        }
-
-        return new ResponseEntity<Assignment>(assignment, HttpStatus.OK);
+        return new ResponseEntity<>(assignment, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<Assignment>> getAssignments(
-            @RequestParam(value="user", required=false) Integer user,
+    public ResponseEntity<List<AssignmentResult>> getAssignments(
+            @RequestParam(value="userId", required=false) Integer userId,
             @RequestParam(value="year", required=false) Integer year,
             @RequestParam(value="month", required=false) Integer month
-    ) {
-        List<Assignment> assignments;
-        try {
-            if(user != null) {
-                assignments = assignmentService.selectAssignmentsByUserId(user);
-            } else {
-                assignments = assignmentService.selectAllAssignments(month, year);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<List<Assignment>>(HttpStatus.INTERNAL_SERVER_ERROR);
+    ) throws Exception {
+        List<AssignmentResult> assignments;
+        if(userId != null) {
+            assignments = assignmentService.selectAssignmentsByUserId(userId);
+        } else {
+            assignments = assignmentService.selectAllAssignments(month, year);
         }
-        return new ResponseEntity<List<Assignment>>(assignments, HttpStatus.OK);
+        return new ResponseEntity<>(assignments, HttpStatus.OK);
     }
 
     @Override
