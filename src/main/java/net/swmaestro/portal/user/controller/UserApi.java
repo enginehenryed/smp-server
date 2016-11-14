@@ -76,17 +76,17 @@ public interface UserApi {
             @RequestBody(required = true) User user
     ) throws Exception;
 
-    @RequestMapping(value = "/users/me/lecture",
+    @RequestMapping(value = "/users/me/lectures",
             produces = { "application/json" },
             method = RequestMethod.GET)
     ResponseEntity<List<Lecture>> getMyLectures();
 
-    @RequestMapping(value = "/users/me/assignment",
+    @RequestMapping(value = "/users/me/assignments",
             produces = { "application/json" },
             method = RequestMethod.GET)
     ResponseEntity<List<Assignment>> getMyAssignments();
 
-    @RequestMapping(value = "/users/me/comment",
+    @RequestMapping(value = "/users/me/comments",
             produces = { "application/json" },
             method = RequestMethod.GET)
     ResponseEntity<List<Comment>> getMyComments();
