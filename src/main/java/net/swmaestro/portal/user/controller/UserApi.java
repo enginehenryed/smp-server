@@ -39,7 +39,7 @@ public interface UserApi {
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<User> getUser(
-            @PathVariable("userId") Integer userId
+            @PathVariable("user-id") Integer userId
     );
 
 
