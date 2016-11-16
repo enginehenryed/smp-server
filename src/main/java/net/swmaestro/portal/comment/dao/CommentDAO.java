@@ -40,4 +40,8 @@ public class CommentDAO extends AbstractDAO{
     public List<Comment> selectCommentsByUserId(Map<String, Object> map) {
 		return (List<Comment>) selectList("comment.selectCommentsByUserId", map);
     }
+
+	public Comment selectComment(Map<String, Object> map) {
+		return (Comment)selectOne("comment.selectComment", map);
+	}
 }

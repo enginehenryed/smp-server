@@ -7,6 +7,7 @@ import net.swmaestro.portal.notification.vo.Notification;
 import net.swmaestro.portal.user.vo.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,6 +44,7 @@ public class NotificationApiController implements NotificationApi{
     }
 
     @Override
+    @PreAuthorize("hasPermission(#notificationId, 'Notification', 'OWNER')")
     public ResponseEntity<Void> readNotification(@ApiParam(value = "Notification's ID", required = true)
                                                      @PathVariable("notification-id") Integer notificationId) {
         try {
