@@ -106,7 +106,7 @@ public class AssignmentApiController implements AssignmentApi {
     }
 
     @Override
-    @PreAuthorize("hasPermission(#aissgnmentId, 'Assignment', 'OWNER') OR hasPermission(null, 'ADMIN')")
+    @PreAuthorize("hasPermission(#assignmentId, 'Assignment', 'OWNER') OR hasPermission(null, 'ADMIN')")
     public ResponseEntity<Void> putAssignment(@ApiParam(value = "Assignment's ID", required = true) @PathVariable("assignment-id") Integer assignmentId,
                                            @ApiParam(value = "Assignment's VO") @RequestBody(required = true) Assignment assignment) {
 

@@ -44,7 +44,7 @@ public class NotificationApiController implements NotificationApi{
     }
 
     @Override
-    @PreAuthorize("hasPermission(#notificationId, 'Notification', 'OWNER') OR hasPermission(null, 'ADMIN')")
+    @PreAuthorize("hasPermission(#notificationId, 'Notification', 'OWNER')")
     public ResponseEntity<Void> readNotification(@ApiParam(value = "Notification's ID", required = true)
                                                      @PathVariable("notification-id") Integer notificationId) {
         try {
