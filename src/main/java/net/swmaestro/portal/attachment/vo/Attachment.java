@@ -2,6 +2,8 @@ package net.swmaestro.portal.attachment.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 
+import java.util.List;
+
 
 /**
  * Attachment
@@ -16,7 +18,15 @@ public class Attachment   {
     private String attachmentType;
     private int attachmentWriterId;
     private int attachmentModifierId;
+    private List<Attachment> attachmentList = null;
 
+    public List<Attachment> getAttachmentList() {
+        return attachmentList;
+    }
+
+    public void setAttachmentList(List<Attachment> attachmentList) {
+        this.attachmentList = attachmentList;
+    }
 
     /**
      * Attachment ID
