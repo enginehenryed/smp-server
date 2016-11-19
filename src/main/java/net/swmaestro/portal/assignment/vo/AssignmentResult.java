@@ -2,9 +2,11 @@ package net.swmaestro.portal.assignment.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
+import net.swmaestro.portal.attachment.vo.Attachment;
 import net.swmaestro.portal.user.vo.SimpleUser;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by junha on 2016. 11. 14..
@@ -38,6 +40,16 @@ public class AssignmentResult {
     private SimpleUser articleWriter = null;
 
     private SimpleUser articleModifier = null;
+
+    private List<Attachment> attachmentList = null;
+
+    public List<Attachment> getAttachmentList() {
+        return attachmentList;
+    }
+
+    public void setAttachmentList(List<Attachment> attachmentList) {
+        this.attachmentList = attachmentList;
+    }
 
     /**
      * Assignment's unique ID.
