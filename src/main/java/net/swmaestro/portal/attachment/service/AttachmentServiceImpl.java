@@ -53,7 +53,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 		attachment.setAttachmentName(fileName);
 		attachment.setAttachmentExtension(fileExtension);
 		attachment.setAttachmentSize(file.getSize());
-		attachment.setAttachmentType("");  // FIXME: 2016. 10. 15.
+		attachment.setAttachmentType(file.getContentType());
 		attachment.setAttachmentWriterId(attachmentWriterId);
 		attachmentDAO.insertAttachment(attachment);
 
