@@ -20,6 +20,18 @@
         <association property="articleWriter" resultMap="user.simpleUserResultMap" columnPrefix="writer_" />
         <association property="articleModifier" resultMap="user.simpleUserResultMap" columnPrefix="modifier_" />
         <association property="lectureTeacher" resultMap="user.simpleUserResultMap" columnPrefix="teacher_" />
+
+        <collection property="attachmentList" javaType="java.util.ArrayList" ofType="net.swmaestro.portal.attachment.vo.Attachment">
+            <id property="attachmentId" column="attachment_id" />
+            <result property="attachmentUrl" column="attachment_url" />
+            <result property="attachmentName" column="attachment_name" />
+            <result property="attachmentExtension" column="attachment_extension" />
+            <result property="attachmentSize" column="attachment_size" />
+            <result property="attachmentType" column="attachment_type" />
+            <result property="attachmentWriterId" column="attachment_writer_id" />
+            <result property="attachmentModifierId" column="attachment_modifier_id" />
+        </collection>
+
     </resultMap>
 
     <select id="selectLecture" parameterType="hashmap" resultMap="lectureResultMap">
@@ -43,7 +55,16 @@
                 modifier.user_id AS modifier_user_id,
                 modifier.user_name AS modifier_user_name,
                 teacher.user_id AS teacher_user_id,
-                teacher.user_name AS teacher_user_name
+                teacher.user_name AS teacher_user_name,
+                at.attachment_id,
+                at.attachment_url,
+                at.attachment_name,
+                at.attachment_extension,
+                at.attachment_size,
+                at.attachment_type,
+                at.attachment_writer_id,
+                at.attachment_modifier_id
+
 			FROM
 			    soma.soma_lecture l
 			INNER JOIN
@@ -58,7 +79,9 @@
 			JOIN
 			    soma.soma_user teacher
 			    ON l.lecture_teacher_id = teacher.user_id
-		    WHERE
+			LEFT OUTER JOIN soma.soma_article_attachment aa ON aa.article_id = l.article_id
+         inner JOIN soma.soma_attachment at ON aa.attachment_id = at.attachment_id
+		  WHERE
 		        a.article_id = #{lecture_id}
 			ORDER BY
 			    a.article_id DESC
@@ -86,7 +109,15 @@
                 modifier.user_id AS modifier_user_id,
                 modifier.user_name AS modifier_user_name,
                 teacher.user_id AS teacher_user_id,
-                teacher.user_name AS teacher_user_name
+                teacher.user_name AS teacher_user_name,
+                at.attachment_id,
+                at.attachment_url,
+                at.attachment_name,
+                at.attachment_extension,
+                at.attachment_size,
+                at.attachment_type,
+                at.attachment_writer_id,
+                at.attachment_modifier_id
 			FROM
 			    soma.soma_lecture l
 			INNER JOIN
@@ -101,6 +132,9 @@
 			JOIN
 			    soma.soma_user teacher
 			    ON l.lecture_teacher_id = teacher.user_id
+			    LEFT OUTER JOIN soma.soma_article_attachment aa ON aa.article_id = l.article_id
+         inner JOIN soma.soma_attachment at ON aa.attachment_id = at.attachment_id
+
 			WHERE
 			    a.article_status <> 'D' AND
 			    a.article_type = 'L'
@@ -131,7 +165,15 @@
                 modifier.user_id AS modifier_user_id,
                 modifier.user_name AS modifier_user_name,
                 teacher.user_id AS teacher_user_id,
-                teacher.user_name AS teacher_user_name
+                teacher.user_name AS teacher_user_name,
+                at.attachment_id,
+                at.attachment_url,
+                at.attachment_name,
+                at.attachment_extension,
+                at.attachment_size,
+                at.attachment_type,
+                at.attachment_writer_id,
+                at.attachment_modifier_id
 			FROM
 			    soma.soma_lecture l
 			INNER JOIN
@@ -146,6 +188,9 @@
 			JOIN
 			    soma.soma_user teacher
 			    ON l.lecture_teacher_id = teacher.user_id
+			    LEFT OUTER JOIN soma.soma_article_attachment aa ON aa.article_id = l.article_id
+         inner JOIN soma.soma_attachment at ON aa.attachment_id = at.attachment_id
+
 			WHERE
 			    a.article_status <> 'D' AND
 			    a.article_writer_id = #{user_id} AND
