@@ -80,7 +80,7 @@
 			    soma.soma_user teacher
 			    ON l.lecture_teacher_id = teacher.user_id
 			LEFT OUTER JOIN soma.soma_article_attachment aa ON aa.article_id = l.article_id
-         inner JOIN soma.soma_attachment at ON aa.attachment_id = at.attachment_id
+         LEFT OUTER JOIN soma.soma_attachment at ON aa.attachment_id = at.attachment_id
 		  WHERE
 		        a.article_id = #{lecture_id}
 			ORDER BY
@@ -133,7 +133,7 @@
 			    soma.soma_user teacher
 			    ON l.lecture_teacher_id = teacher.user_id
 			    LEFT OUTER JOIN soma.soma_article_attachment aa ON aa.article_id = l.article_id
-         inner JOIN soma.soma_attachment at ON aa.attachment_id = at.attachment_id
+         LEFT OUTER JOIN soma.soma_attachment at ON aa.attachment_id = at.attachment_id
 
 			WHERE
 			    a.article_status <> 'D' AND
@@ -189,7 +189,7 @@
 			    soma.soma_user teacher
 			    ON l.lecture_teacher_id = teacher.user_id
 			    LEFT OUTER JOIN soma.soma_article_attachment aa ON aa.article_id = l.article_id
-         inner JOIN soma.soma_attachment at ON aa.attachment_id = at.attachment_id
+         LEFT OUTER JOIN soma.soma_attachment at ON aa.attachment_id = at.attachment_id
 
 			WHERE
 			    a.article_status <> 'D' AND
