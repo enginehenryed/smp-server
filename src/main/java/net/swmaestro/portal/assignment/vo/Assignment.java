@@ -2,8 +2,10 @@ package net.swmaestro.portal.assignment.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
+import net.swmaestro.portal.attachment.vo.Attachment;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -41,6 +43,17 @@ public class Assignment {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern=DATE_PATTERN, timezone = TIME_ZONE)
     private Date assignmentEndAt = null;
+
+    private List<Attachment> attachmentList = null;
+
+    public List<Attachment> getAttachmentList() {
+        return attachmentList;
+    }
+
+    public void setAttachmentList(List<Attachment> attachmentList) {
+        this.attachmentList = attachmentList;
+    }
+
 
     /**
      * Assignment's unique ID.
