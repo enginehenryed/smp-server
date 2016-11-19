@@ -21,9 +21,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 
 @Controller
@@ -57,11 +54,11 @@ public class AttachmentApiController implements AttachmentApi {
             attachment = attachmentService.getAttachment(attachmentId);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new UnexpectedException();
+            throw new UnexpectedException("Unexpected Exception");
         }
 
         if (attachment == null) {
-            throw new NotFoundException();
+            throw new NotFoundException("Attachment not found");
         }
 
         HttpHeaders responseHeaders = new HttpHeaders();
