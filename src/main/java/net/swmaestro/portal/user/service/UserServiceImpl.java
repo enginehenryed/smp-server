@@ -7,6 +7,7 @@ import net.swmaestro.portal.common.exception.BadRequestException;
 import net.swmaestro.portal.common.util.EmailValidator;
 import net.swmaestro.portal.user.dao.UserDAO;
 import net.swmaestro.portal.user.handler.UserHandler;
+import net.swmaestro.portal.user.utils.UserUtils;
 import net.swmaestro.portal.user.vo.Group;
 import net.swmaestro.portal.user.vo.User;
 import net.swmaestro.portal.user.vo.UserResult;
@@ -34,14 +35,6 @@ public class UserServiceImpl implements UserService {
     @Resource(name="userHandler")
     private UserHandler userHandler;
 
-    private void makeUserResultSafe(UserResult userResult) {
-        userResult.setUserPhone(null);
-        userResult.setUserCreatedAt(null);
-        userResult.setUserGender(null);
-        userResult.setUserStatus(null);
-        userResult.setUserUpdatedAt(null);
-    }
-
 	@Override
 	public UserResult selectUser(Integer callerId, int userId) throws Exception {
 		Map<String, Object> map = new HashMap<>();
@@ -49,7 +42,7 @@ public class UserServiceImpl implements UserService {
         UserResult userResult = userDAO.selectUser(map);
 
         if (!userHandler.checkIsAdmin(callerId)) {
-            makeUserResultSafe(userResult);
+            UserUtils.makeUserResultSafe(userResult);
         }
 		
 		return userResult;
@@ -59,7 +52,7 @@ public class UserServiceImpl implements UserService {
     public List<UserResult> selectAllUsers(Integer callerId) throws Exception {
         List<UserResult> userResultList = userDAO.selectAllUsers(new HashMap<>());
         if (!userHandler.checkIsAdmin(callerId)) {
-            userResultList.forEach(this::makeUserResultSafe);
+            userResultList.forEach(UserUtils::makeUserResultSafe);
         }
 
         return userResultList;

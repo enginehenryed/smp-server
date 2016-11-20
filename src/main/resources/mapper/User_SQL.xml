@@ -67,6 +67,31 @@
 		]]>
     </select>
 
+    <select id="searchUsers" parameterType="hashmap" resultMap="userResultMap">
+        <![CDATA[
+			SELECT
+			    u.user_id,
+			    u.user_email,
+			    u.user_name,
+			    u.user_gender,
+			    u.user_phone,
+			    u.user_profile_image,
+			    u.user_created_at,
+			    u.user_updated_at,
+			    u.user_status,
+			    g.group_id AS group_group_id,
+			    g.user_id AS group_user_id,
+			    g.generation_id AS group_generation_id,
+			    g.group_code AS group_group_code
+			FROM
+			    soma.soma_user u
+			    LEFT OUTER JOIN soma.soma_group g ON u.user_id = g.user_id
+			WHERE
+			  u.user_name LIKE '%${query}%' or u.user_email LIKE '%${query}%'
+			ORDER BY u.user_id DESC
+		]]>
+    </select>
+
     <select id="selectAllUsers" parameterType="hashmap" resultMap="userResultMap">
         <![CDATA[
 			SELECT
@@ -89,6 +114,7 @@
 			ORDER BY u.user_id DESC
 		]]>
     </select>
+
 
     <insert id="insertUser" parameterType="hashmap">
         <![CDATA[
