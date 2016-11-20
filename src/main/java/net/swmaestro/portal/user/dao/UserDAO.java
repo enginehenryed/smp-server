@@ -58,4 +58,8 @@ public class UserDAO extends AbstractDAO{
 	public void insertGroupsList(List<Map<String, Object>> mapList) throws Exception {
 		insert("user.insertGroupsList", mapList);
 	}
+
+    public List<UserResult> searchUsers(Map<String, Object> map) {
+		return (List<UserResult>) selectList("user.searchUsers", map);
+    }
 }

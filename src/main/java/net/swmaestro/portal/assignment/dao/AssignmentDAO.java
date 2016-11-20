@@ -3,6 +3,7 @@ package net.swmaestro.portal.assignment.dao;
 
 import net.swmaestro.portal.assignment.vo.AssignmentResult;
 import net.swmaestro.portal.common.dao.AbstractDAO;
+import net.swmaestro.portal.user.vo.UserResult;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -36,5 +37,9 @@ public class AssignmentDAO extends AbstractDAO{
 
     public List<AssignmentResult> selectAssignmentsByUserId(Map<String, Object> map) {
 		return (List<AssignmentResult>) selectList("assignment.selectAssignmentsByUserId", map);
+    }
+
+    public List<AssignmentResult> searchAssignments(Map<String, Object> map) {
+		return (List<AssignmentResult>) selectList("assignment.searchAssignments", map);
     }
 }

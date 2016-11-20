@@ -62,14 +62,18 @@ public class UserApiController implements UserApi {
     public ResponseEntity<UserResult> getUser(
         @PathVariable("user-id") Integer userId
     ) throws Exception {
+        JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        Integer callerId = authentication.getUser().getUserId();
         UserResult user;
-        user = userService.selectUser(userId);
+        user = userService.selectUser(callerId, userId);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     public ResponseEntity<List<UserResult>> getUsers() throws Exception {
+        JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        Integer callerId = authentication.getUser().getUserId();
         List<UserResult> users;
-        users = userService.selectAllUsers();
+        users = userService.selectAllUsers(callerId);
 
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
