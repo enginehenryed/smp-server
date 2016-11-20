@@ -1,17 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="user">
+    
+    <resultMap id="userResultMap" type="net.swmaestro.portal.user.vo.UserResult">
+        <id property="userId" column="user_id" />
+        <result property="userEmail" column="user_email" />
+        <result property="userName" column="user_name" />
+        <result property="userGender" column="user_gender" />
+        <result property="userPhone" column="user_phone" />
+        <result property="userProfileImage" column="user_profile_image" />
+        <result property="userCreatedAt" column="user_created_at" />
+        <result property="userUpdatedAt" column="user_updated_at" />
+        <result property="userStatus" column="user_status" />
+        <collection property="userGroups" javaType="java.util.ArrayList" ofType="net.swmaestro.portal.user.vo.Group">
+            <id property="groupId" column="group_group_id" />
+            <result property="userId" column="group_user_id" />
+            <result property="generationId" column="group_generation_id" />
+            <result property="groupCode" column="group_group_code" />
+        </collection>
+    </resultMap>
 
-    <select id="selectUser" parameterType="hashmap" resultType="net.swmaestro.portal.user.vo.User">
+    <resultMap id="simpleUserResultMap" type="net.swmaestro.portal.user.vo.SimpleUser">
+        <id property="userId" column="user_id" />
+        <result property="userName" column="user_name" />
+        <result property="userProfileImage" column="user_profile_image" />
+    </resultMap>
+
+    <select id="selectUser" parameterType="hashmap" resultMap="userResultMap">
         <![CDATA[
 			SELECT
-			    user_id AS userId, user_email AS userEmail, user_name AS userName
+			    u.user_id,
+			    u.user_email,
+			    u.user_name,
+			    u.user_gender,
+			    u.user_phone,
+			    u.user_profile_image,
+			    u.user_created_at,
+			    u.user_updated_at,
+			    u.user_status,
+			    g.group_id AS group_group_id,
+			    g.user_id AS group_user_id,
+			    g.generation_id AS group_generation_id,
+			    g.group_code AS group_group_code
 			FROM
-			    soma.soma_user
+			    soma.soma_user u
+			    LEFT OUTER JOIN soma.soma_group g ON u.user_id = g.user_id
 			WHERE
-			    user_id = #{userId}
-			ORDER BY user_id DESC
+			    u.user_id = #{userId}
+			ORDER BY u.user_id DESC
 		]]>
     </select>
 
@@ -21,7 +57,8 @@
 			    user_id AS userId,
 			    user_email AS userEmail,
 			    user_name AS userName,
-			    user_password AS userPassword
+			    user_password AS userPassword,
+			    user_status AS userStatus
 			FROM
 			    soma.soma_user
 			WHERE
@@ -30,13 +67,26 @@
 		]]>
     </select>
 
-    <select id="selectAllUsers" parameterType="hashmap" resultType="net.swmaestro.portal.user.vo.User">
+    <select id="selectAllUsers" parameterType="hashmap" resultMap="userResultMap">
         <![CDATA[
 			SELECT
-			    *
+			    u.user_id,
+			    u.user_email,
+			    u.user_name,
+			    u.user_gender,
+			    u.user_phone,
+			    u.user_profile_image,
+			    u.user_created_at,
+			    u.user_updated_at,
+			    u.user_status,
+			    g.group_id AS group_group_id,
+			    g.user_id AS group_user_id,
+			    g.generation_id AS group_generation_id,
+			    g.group_code AS group_group_code
 			FROM
-			    soma.soma_user
-			ORDER BY user_id DESC
+			    soma.soma_user u
+			    LEFT OUTER JOIN soma.soma_group g ON u.user_id = g.user_id
+			ORDER BY u.user_id DESC
 		]]>
     </select>
 
@@ -47,12 +97,56 @@
                     user_email,
                     user_password,
                     user_name,
+                    user_gender,
+                    user_phone,
                     user_created_at,
-                    user_updated_at
+                    user_updated_at,
+                    user_status
                 )
-            VALUES ( #{userEmail}, #{userPassword}, #{userName}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP )
+            VALUES ( #{userEmail}, #{userPassword}, #{userName}, #{userGender}, #{userPhone}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'R' );
         ]]>
     </insert>
+
+    <update id="updateUser" parameterType="hashmap">
+        <![CDATA[
+            UPDATE soma.soma_user
+            SET
+              user_updated_at = CURRENT_TIMESTAMP,
+              user_name = COALESCE(#{userName}, user_name),
+              user_password = COALESCE(#{userPassword}, user_password),
+              user_phone = COALESCE(#{userPhone}, user_phone),
+              user_gender = COALESCE(#{userGender}, user_gender),
+              user_profile_image = COALESCE(#{userProfileImage}, user_profile_image),
+              user_status = COALESCE(#{userStatus}, user_status)
+            WHERE user_id = #{userId}
+        ]]>
+    </update>
+
+    <update id="removeUser" parameterType="hashmap">
+        <![CDATA[
+            UPDATE soma.soma_user
+            SET
+              user_email = NULL,
+              user_name = NULL,
+              user_password = NULL,
+              user_phone = NULL,
+              user_gender = NULL,
+              user_status = 'D',
+              user_updated_at = CURRENT_TIMESTAMP
+            WHERE user_id = #{userId}
+        ]]>
+    </update>
+
+    <select id="countUserByEmail" parameterType="hashmap" resultType="int">
+        <![CDATA[
+            SELECT
+                count(*)
+            FROM
+                soma.soma_user
+            WHERE
+                user_email = #{userEmail}
+        ]]>
+    </select>
 
     <select id="countUserGroupsByGroupCode" parameterType="hashmap" resultType="int">
         <![CDATA[
@@ -65,5 +159,32 @@
                 group_code = #{groupCode}
         ]]>
     </select>
+
+    <insert id="insertGroupsList" parameterType="java.util.List">
+        <![CDATA[
+            INSERT INTO
+                soma.soma_group (
+                    user_id,
+                    generation_id,
+                    group_code
+                )
+            VALUES
+        ]]>
+        <foreach collection="list" item="item" index="index" separator=", " >
+        <![CDATA[
+            (#{item.userId}, #{item.generationId}, #{item.groupCode})
+        ]]>
+        </foreach>
+    </insert>
+
+    <delete id="deleteGroupsByUser" parameterType="hashmap">
+        <![CDATA[
+            DELETE
+            FROM
+                soma.soma_group
+            WHERE
+                user_id = #{userId}
+        ]]>
+    </delete>
 
 </mapper>

@@ -3,7 +3,7 @@ package net.swmaestro.portal.lecture.service;
 
 import net.swmaestro.portal.lecture.dao.LectureDAO;
 import net.swmaestro.portal.lecture.vo.Lecture;
-import net.swmaestro.portal.user.dao.UserDAO;
+import net.swmaestro.portal.lecture.vo.LectureResult;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -16,28 +16,25 @@ public class LectureServiceImpl implements LectureService {
 
 	@Resource(name="lectureDAO")
 	private LectureDAO lectureDAO;
-
-	@Resource(name="userDAO")
-	private UserDAO userDAO;
 	
 	@Override
-	public Lecture selectLecture(int lectureId) throws Exception {
+	public LectureResult selectLecture(int lectureId) throws Exception {
 
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		map.put("lecture_id", lectureId);
 
 		return lectureDAO.selectLecture(map);
 	}
 
 	@Override
-	public List selectAllLectures(Integer month, Integer year) throws Exception {
-		List<Lecture> lectures = lectureDAO.selectAllLectures();
+	public List<LectureResult> selectAllLectures(Integer month, Integer year) throws Exception {
+		List<LectureResult> lectures = lectureDAO.selectAllLectures();
 		if (month == null && year == null) {
 			return lectures;
 		}
-		List<Lecture> selectedLectures = new ArrayList<>();
+		List<LectureResult> selectedLectures = new ArrayList<>();
 		Calendar calendar = Calendar.getInstance();
-		for (Lecture lecture : lectures) {
+		for (LectureResult lecture : lectures) {
 			Date beginAt = lecture.getLectureBeginAt();
 			Date endAt = lecture.getLectureEndAt();
 			calendar.setTime(beginAt);
@@ -115,9 +112,9 @@ public class LectureServiceImpl implements LectureService {
 	}
 
 	@Override
-	public List<Lecture> selectLecturesByUserId(Integer user) throws Exception {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("user_id", user);
+	public List<LectureResult> selectLecturesByUserId(Integer userId) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("user_id", userId);
 
 		return lectureDAO.selectLecturesByUserId(map);
 	}

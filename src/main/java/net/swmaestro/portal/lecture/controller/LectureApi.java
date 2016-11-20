@@ -2,12 +2,12 @@ package net.swmaestro.portal.lecture.controller;
 
 import io.swagger.annotations.*;
 import net.swmaestro.portal.comment.vo.Comment;
+import net.swmaestro.portal.comment.vo.CommentResult;
 import net.swmaestro.portal.lecture.vo.Lecture;
-import org.springframework.format.annotation.DateTimeFormat;
+import net.swmaestro.portal.lecture.vo.LectureResult;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-10-05T11:30:19.659Z")
@@ -40,7 +40,7 @@ public interface LectureApi {
     @RequestMapping(value = "/lectures/{lecture-id}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<Lecture> getLecture(
+    ResponseEntity<LectureResult> getLecture(
             @ApiParam(value = "Lecture's ID", required = true) @PathVariable("lecture-id") Integer lectureId
 
 
@@ -57,8 +57,8 @@ public interface LectureApi {
     @RequestMapping(value = "/lectures",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<Lecture>> getLectures(
-            @RequestParam(value="user", required=false) Integer user,
+    ResponseEntity<List<LectureResult>> getLectures(
+            @RequestParam(value="userId", required=false) Integer userId,
             @RequestParam(value="year", required=false) Integer year,
             @RequestParam(value="month", required=false) Integer month);
 
@@ -107,7 +107,7 @@ public interface LectureApi {
     @RequestMapping(value = "/lectures/{lecture-id}/comments",
             produces = { "application/json" },
             method = RequestMethod.GET)
-    ResponseEntity<List<Comment>> getCommentsByLectureId(  @ApiParam(value = "Lecture's ID", required = true) @PathVariable("lecture-id") Integer lectureId
+    ResponseEntity<List<CommentResult>> getCommentsByLectureId(@ApiParam(value = "Lecture's ID", required = true) @PathVariable("lecture-id") Integer lectureId
     );
 
     @ApiOperation(value = "Create Comment By Lecture Id", notes = "Create Comment By Lecture Id.", response = Void.class, tags={  })

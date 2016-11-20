@@ -1,7 +1,7 @@
 package net.swmaestro.portal.assignment.handler;
 
 import net.swmaestro.portal.assignment.dao.AssignmentDAO;
-import net.swmaestro.portal.assignment.vo.Assignment;
+import net.swmaestro.portal.assignment.vo.AssignmentResult;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,8 +18,8 @@ public class AssignmentHandlerImpl implements AssignmentHandler {
     private AssignmentDAO assignmentDAO;
 
     @Override
-    public Assignment selectAssignment(int assignmentId) throws Exception {
-        Map<String, Object> map = new HashMap<String, Object>();
+    public AssignmentResult selectAssignment(int assignmentId) throws Exception {
+        Map<String, Object> map = new HashMap<>();
         map.put("assignment_id", assignmentId);
 
         return assignmentDAO.selectAssignment(map);

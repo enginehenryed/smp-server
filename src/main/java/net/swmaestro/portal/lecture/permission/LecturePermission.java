@@ -2,7 +2,7 @@ package net.swmaestro.portal.lecture.permission;
 
 import net.swmaestro.portal.common.permission.Permission;
 import net.swmaestro.portal.lecture.handler.LectureHandler;
-import net.swmaestro.portal.lecture.vo.Lecture;
+import net.swmaestro.portal.lecture.vo.LectureResult;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
@@ -17,7 +17,7 @@ public class LecturePermission implements Permission {
 
     @Override
     public boolean isOwner(int authUserId, Serializable targetId) {
-        Lecture lecture = null;
+        LectureResult lecture = null;
         try {
             lecture = lectureHandler.selectLecture((int)targetId);
         } catch (Exception e) {
@@ -25,6 +25,6 @@ public class LecturePermission implements Permission {
             return false;
         } finally {}
 
-        return lecture.getArticleWriterId() == authUserId;
+        return lecture.getArticleWriter().getUserId() == authUserId;
     }
 }

@@ -1,28 +1,21 @@
 package net.swmaestro.portal.attachment.vo;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * Created by junha on 2016. 10. 15..
  */
 public class PostAttachmentResponse {
 
-    private int attachmentId;
+    private String attachmentId;
 
-    public PostAttachmentResponse(int attachmentId) {
+    public PostAttachmentResponse(String attachmentId) {
         setAttachmentId(attachmentId);
     }
 
-    /**
-     * Attachment ID
-     * @return attachmentId
-     **/
-    @ApiModelProperty(required = true, value = "Attachment ID")
-    public int getAttachmentId() {
+    public String getAttachmentId() {
         return attachmentId;
     }
 
-    public void setAttachmentId(int attachmentId) {
+    public void setAttachmentId(String attachmentId) {
         this.attachmentId = attachmentId;
     }
 }

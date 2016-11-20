@@ -1,7 +1,7 @@
 package net.swmaestro.portal.assignment.permission;
 
 import net.swmaestro.portal.assignment.handler.AssignmentHandler;
-import net.swmaestro.portal.assignment.vo.Assignment;
+import net.swmaestro.portal.assignment.vo.AssignmentResult;
 import net.swmaestro.portal.common.permission.Permission;
 
 import javax.annotation.Resource;
@@ -17,7 +17,7 @@ public class AssignmentPermission implements Permission {
 
     @Override
     public boolean isOwner(int authUserId, Serializable targetId) {
-        Assignment assignment = null;
+        AssignmentResult assignment = null;
         try {
             assignment = assignmentHandler.selectAssignment((int)targetId);
         } catch (Exception e) {
@@ -25,6 +25,6 @@ public class AssignmentPermission implements Permission {
             return false;
         } finally {}
 
-        return assignment.getArticleWriterId() == authUserId;
+        return assignment.getArticleWriter().getUserId() == authUserId;
     }
 }

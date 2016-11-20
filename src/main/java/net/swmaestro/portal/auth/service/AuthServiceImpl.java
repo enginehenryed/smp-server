@@ -2,6 +2,7 @@ package net.swmaestro.portal.auth.service;
 
 
 import net.swmaestro.portal.auth.TokenUtil;
+import net.swmaestro.portal.common.exception.BadRequestException;
 import net.swmaestro.portal.user.dao.UserDAO;
 import net.swmaestro.portal.user.handler.UserHandler;
 import net.swmaestro.portal.user.vo.User;
@@ -30,14 +31,19 @@ public class AuthServiceImpl implements AuthService {
 		} finally { }
 
 		if (user == null) {
-			// TODO: Impl - User not exists. (Leave)
-			return null;
+			// User not exists.
+			throw new BadRequestException("Invalid credentials");
 		}
 
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		if (!encoder.matches(password, user.getUserPassword())) {
 			// Password NOT matching.
-			return null;
+			throw new BadRequestException("Invalid credentials");
+		}
+
+		if (!user.getUserStatus().equals("A")) {
+			// User status is NOT AVAILABLE
+			throw new BadRequestException("Invalid credentials");
 		}
 
 		String token = TokenUtil.generate(user.getUserId());

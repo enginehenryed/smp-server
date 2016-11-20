@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Service("attachmentService")
 public class AttachmentServiceImpl implements AttachmentService {
@@ -21,7 +22,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 	private AttachmentDAO attachmentDAO;
 
 	@Override
-	public Attachment getAttachment(int attachmentId) throws Exception {
+	public Attachment getAttachment(String attachmentId) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		map.put("attachmentId", attachmentId);
 
@@ -29,7 +30,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 	}
 
 	@Override
-	public int createAttachment(MultipartFile file, int attachmentWriterId) throws Exception {
+	public String createAttachment(MultipartFile file, int attachmentWriterId) throws Exception {
 		String fileName = file.getOriginalFilename();
 		String fileExtension, storedFileName;
 
@@ -49,11 +50,12 @@ public class AttachmentServiceImpl implements AttachmentService {
 
 		// Create Attachment row in DB.
 		Attachment attachment = new Attachment();
+		attachment.setAttachmentId(UUID.randomUUID().toString().replace("-", ""));
 		attachment.setAttachmentUrl(storedFileName);
 		attachment.setAttachmentName(fileName);
 		attachment.setAttachmentExtension(fileExtension);
 		attachment.setAttachmentSize(file.getSize());
-		attachment.setAttachmentType("");  // FIXME: 2016. 10. 15.
+		attachment.setAttachmentType(file.getContentType());
 		attachment.setAttachmentWriterId(attachmentWriterId);
 		attachmentDAO.insertAttachment(attachment);
 

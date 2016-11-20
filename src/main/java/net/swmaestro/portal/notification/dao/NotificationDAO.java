@@ -18,4 +18,16 @@ public class NotificationDAO extends AbstractDAO {
     public List<Notification> selectNotificationsByUserId(Map<String, Object> map) throws Exception {
         return (List<Notification>) selectList("notification.selectNotificationsByUserId", map);
     }
+
+    public void updateNotificationToBeRead(Map<String, Object> map) {
+        update("notification.updateNotificationToBeRead",map);
+    }
+
+    public void insertNotification(Map<String, Object> map) {
+        insert("notification.insertNotification", map);
+    }
+
+    public Notification selectNotification(Map<String, Object> map) {
+        return (Notification) selectOne("notification.selectNotification", map);
+    }
 }

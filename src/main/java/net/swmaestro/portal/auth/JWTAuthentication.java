@@ -1,6 +1,7 @@
 package net.swmaestro.portal.auth;
 
 import net.swmaestro.portal.user.vo.User;
+import net.swmaestro.portal.user.vo.UserResult;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 
 import javax.security.auth.Subject;
@@ -10,7 +11,7 @@ import javax.security.auth.Subject;
  */
 public class JWTAuthentication extends AbstractAuthenticationToken {
     private String token;
-    private User user;
+    private UserResult user;
     private boolean authenticated;
 
     public JWTAuthentication(String token) {
@@ -28,11 +29,11 @@ public class JWTAuthentication extends AbstractAuthenticationToken {
         this.token = token;
     }
 
-    public User getUser() {
+    public UserResult getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserResult user) {
         this.user = user;
     }
 

@@ -1,16 +1,20 @@
 package net.swmaestro.portal.user.service;
 
 
-import net.swmaestro.portal.user.dao.UserDAO;
 import net.swmaestro.portal.user.vo.User;
+import net.swmaestro.portal.user.vo.UserResult;
 
 import java.util.List;
-import java.util.Map;
 
 public interface UserService {
 
-	User selectUser(int userId) throws Exception;
+	UserResult selectUser(int userId) throws Exception;
+
+	List<UserResult> selectAllUsers() throws Exception;
 
 	int insertUser(User user) throws Exception;
 
+	void updateUser(User user) throws Exception;
+
+    void deleteUser(Integer userId) throws Exception;
 }

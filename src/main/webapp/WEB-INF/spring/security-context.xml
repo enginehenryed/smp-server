@@ -68,11 +68,14 @@
                  value-type="net.swmaestro.portal.common.permission.Permission">
                 <beans:entry key="Lecture" value-ref="lecturePermission"/>
                 <beans:entry key="Assignment" value-ref="assignmentPermission"/>
+                <beans:entry key="Notification" value-ref="notificationPermission"/>
+                <beans:entry key="Comment" value-ref="commentPermission"/>
             </beans:map>
         </beans:constructor-arg>
     </beans:bean>
 
     <beans:bean id="lecturePermission" class="net.swmaestro.portal.lecture.permission.LecturePermission" />
     <beans:bean id="assignmentPermission" class="net.swmaestro.portal.assignment.permission.AssignmentPermission" />
-
+    <beans:bean id="notificationPermission" class="net.swmaestro.portal.notification.permission.NotificationPermission" />
+    <beans:bean id="commentPermission" class="net.swmaestro.portal.comment.permission.CommentPermission" />
 </beans:beans>

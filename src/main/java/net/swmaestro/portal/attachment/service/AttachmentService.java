@@ -7,8 +7,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface AttachmentService {
 
-	Attachment getAttachment(final int attachmentId) throws Exception;
+	Attachment getAttachment(final String attachmentId) throws Exception;
 
-	int createAttachment(MultipartFile file, int attachmentWriterId) throws Exception;
+	String createAttachment(MultipartFile file, int attachmentWriterId) throws Exception;
 
 }

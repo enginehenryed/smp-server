@@ -10,4 +10,8 @@ import java.util.List;
 
 public interface NotificationService {
     List<Notification> getNotificationsByUserId(Integer userId) throws Exception;
+
+    void readNotification(Integer userId, Integer notificationId)  throws Exception;
+
+    void sendNotification(Integer targetUserId, String notificationMessage, String notificationUrl) throws Exception;
 }

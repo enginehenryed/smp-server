@@ -28,6 +28,7 @@
         <![CDATA[
             INSERT INTO
                 soma.soma_attachment (
+                    attachment_id,
                     attachment_url,
                     attachment_name,
                     attachment_extension,
@@ -36,9 +37,11 @@
                     attachment_writer_id,
                     attachment_modifier_id,
                     attachment_created_at,
-                    attachment_updated_at
+                    attachment_updated_at,
+                    attachment_status
                 )
             VALUES (
+                #{attachmentId},
                 #{attachmentUrl},
                 #{attachmentName},
                 #{attachmentExtension},
@@ -47,7 +50,8 @@
                 #{attachmentWriterId},
                 #{attachmentWriterId},
                 CURRENT_TIMESTAMP,
-                CURRENT_TIMESTAMP
+                CURRENT_TIMESTAMP,
+                'A'
             )
         ]]>
     </insert>

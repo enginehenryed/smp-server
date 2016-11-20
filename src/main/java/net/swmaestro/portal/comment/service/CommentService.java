@@ -11,6 +11,8 @@ public interface CommentService {
 	void insertCommentInArticle(int articleId, Integer userId, Comment comment) throws Exception;
 	void removeComment(Integer userId, Integer commentId) throws Exception;
 	void updateComment(Integer commentId, Integer userId, Comment comment) throws Exception;
+
+    List<Comment> selectCommentsByUserId(Integer userId) throws Exception;
 //	List selectCommentsByUserId(int userId) throws Exception;
 //	Comment selectComment() throws Exception;
 /*

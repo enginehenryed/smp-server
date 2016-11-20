@@ -2,7 +2,7 @@ package net.swmaestro.portal.lecture.dao;
 
 
 import net.swmaestro.portal.common.dao.AbstractDAO;
-import net.swmaestro.portal.lecture.vo.Lecture;
+import net.swmaestro.portal.lecture.vo.LectureResult;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,13 +12,13 @@ import java.util.Map;
 public class LectureDAO extends AbstractDAO{
 
 	@SuppressWarnings("unchecked")
-	public Lecture selectLecture(Map<String, Object> map) throws Exception{
-		return (Lecture) selectOne("lecture.selectLecture", map);
+	public LectureResult selectLecture(Map<String, Object> map) throws Exception{
+		return (LectureResult) selectOne("lecture.selectLecture", map);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Lecture> selectAllLectures() throws Exception{
-		return (List<Lecture>) selectList("lecture.selectAllLectures");
+	public List<LectureResult> selectAllLectures() throws Exception{
+		return (List<LectureResult>) selectList("lecture.selectAllLectures");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -34,7 +34,7 @@ public class LectureDAO extends AbstractDAO{
 		update("lecture.removeLecture",map);
 	}
 
-	public List<Lecture> selectLecturesByUserId(Map<String, Object> map) throws Exception{
-		return (List<Lecture>) selectList("lecture.selectLecturesByUserId", map);
+	public List<LectureResult> selectLecturesByUserId(Map<String, Object> map) throws Exception{
+		return (List<LectureResult>) selectList("lecture.selectLecturesByUserId", map);
 	}
 }
