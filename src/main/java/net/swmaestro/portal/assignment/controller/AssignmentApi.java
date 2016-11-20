@@ -4,6 +4,7 @@ import io.swagger.annotations.*;
 import net.swmaestro.portal.assignment.vo.Assignment;
 import net.swmaestro.portal.assignment.vo.AssignmentResult;
 import net.swmaestro.portal.comment.vo.Comment;
+import net.swmaestro.portal.comment.vo.CommentResult;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -107,7 +108,7 @@ public interface AssignmentApi {
     @RequestMapping(value = "/assignments/{assignment-id}/comments",
             produces = { "application/json" },
             method = RequestMethod.GET)
-    ResponseEntity<List<Comment>> getCommentsByAssignmentId(  @ApiParam(value = "Assignment's ID", required = true) @PathVariable("assignment-id") Integer assignmentId
+    ResponseEntity<List<CommentResult>> getCommentsByAssignmentId(@ApiParam(value = "Assignment's ID", required = true) @PathVariable("assignment-id") Integer assignmentId
     );
 
     @ApiOperation(value = "Create Comment By Assignment Id", notes = "Create Comment By Assignment Id.", response = Void.class, tags={  })
