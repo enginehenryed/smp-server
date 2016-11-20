@@ -7,6 +7,7 @@ import net.swmaestro.portal.assignment.vo.AssignmentResult;
 import net.swmaestro.portal.auth.JWTAuthentication;
 import net.swmaestro.portal.comment.service.CommentService;
 import net.swmaestro.portal.comment.vo.Comment;
+import net.swmaestro.portal.comment.vo.CommentResult;
 import net.swmaestro.portal.user.vo.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -114,15 +115,15 @@ public class AssignmentApiController implements AssignmentApi {
 
 
     @Override
-    public ResponseEntity<List<Comment>> getCommentsByAssignmentId(@ApiParam(value = "Assignment's ID", required = true) @PathVariable("assignment-id") Integer assignmentId) {
-        List<Comment> comments;
+    public ResponseEntity<List<CommentResult>> getCommentsByAssignmentId(@ApiParam(value = "Assignment's ID", required = true) @PathVariable("assignment-id") Integer assignmentId) {
+        List<CommentResult> comments;
         try {
             comments = commentService.selectCommentsByArticleId(assignmentId);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<List<Comment>>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<List<CommentResult>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<List<Comment>>(comments, HttpStatus.OK);
+        return new ResponseEntity<List<CommentResult>>(comments, HttpStatus.OK);
     }
 
     @Override
