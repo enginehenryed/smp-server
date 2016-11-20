@@ -4,6 +4,8 @@ package net.swmaestro.portal.user.handler;
 import net.swmaestro.portal.user.vo.User;
 import net.swmaestro.portal.user.vo.UserResult;
 
+import java.util.List;
+
 
 public interface UserHandler {
 
@@ -14,5 +16,7 @@ public interface UserHandler {
 	boolean checkIsAdmin(int userId) throws Exception;
 
 	boolean checkIsMentor(int userId) throws Exception;
+
+	List<UserResult> searchUsers(int callerId, String query) throws Exception;
 
 }
