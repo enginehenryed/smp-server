@@ -8,7 +8,7 @@ import net.swmaestro.portal.auth.JWTAuthentication;
 import net.swmaestro.portal.comment.service.CommentService;
 import net.swmaestro.portal.comment.vo.Comment;
 import net.swmaestro.portal.comment.vo.CommentResult;
-import net.swmaestro.portal.user.vo.User;
+import net.swmaestro.portal.user.vo.UserResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,7 +41,7 @@ public class AssignmentApiController implements AssignmentApi {
     ) {
         try {
             JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-            User user = authentication.getUser();
+            UserResult user = authentication.getUser();
             Integer userId = user.getUserId();
             assignmentService.removeAssignment(userId, assignmentId);
         } catch (Exception e) {
@@ -84,7 +84,7 @@ public class AssignmentApiController implements AssignmentApi {
     public ResponseEntity<Void> postAssignment(@ApiParam(value = "Assignment's articleGenerationId") @RequestBody(required = true) Assignment assignment) {
         try {
             JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-            User user = authentication.getUser();
+            UserResult user = authentication.getUser();
             Integer userId = user.getUserId();
             assignmentService.insertAssignment(userId, assignment);
         } catch (Exception e) {
@@ -102,7 +102,7 @@ public class AssignmentApiController implements AssignmentApi {
 
         try {
             JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-            User user = authentication.getUser();
+            UserResult user = authentication.getUser();
             Integer userId = user.getUserId();
             assignmentService.updateAssignment(assignmentId, userId, assignment);
         } catch (Exception e) {
@@ -130,7 +130,7 @@ public class AssignmentApiController implements AssignmentApi {
     public ResponseEntity<Void> postCommentInAssignment(@ApiParam(value = "Assignment's ID", required = true) @PathVariable("assignment-id") Integer assignmentId, @ApiParam(value = "Comment") @RequestBody(required = true) Comment comment) {
         try {
             JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-            User user = authentication.getUser();
+            UserResult user = authentication.getUser();
             Integer userId = user.getUserId();
             commentService.insertCommentInArticle(assignmentId, userId, comment);
         } catch (Exception e) {
@@ -146,7 +146,7 @@ public class AssignmentApiController implements AssignmentApi {
     public ResponseEntity<Void> deleteComment(@ApiParam(value = "Comment's ID", required = true) @PathVariable("comment-id") Integer commentId) {
         try {
             JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-            User user = authentication.getUser();
+            UserResult user = authentication.getUser();
             Integer userId = user.getUserId();
             commentService.removeComment(userId, commentId);
         } catch (Exception e) {
@@ -164,7 +164,7 @@ public class AssignmentApiController implements AssignmentApi {
 
         try {
             JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-            User user = authentication.getUser();
+            UserResult user = authentication.getUser();
             Integer userId = user.getUserId();
             commentService.updateComment(commentId, userId, comment);
         } catch (Exception e) {

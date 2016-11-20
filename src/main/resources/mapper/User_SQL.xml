@@ -2,12 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="user">
     
-    <resultMap id="userResultMap" type="net.swmaestro.portal.user.vo.User">
+    <resultMap id="userResultMap" type="net.swmaestro.portal.user.vo.UserResult">
         <id property="userId" column="user_id" />
         <result property="userEmail" column="user_email" />
         <result property="userName" column="user_name" />
         <result property="userGender" column="user_gender" />
         <result property="userPhone" column="user_phone" />
+        <result property="userProfileImage" column="user_profile_image" />
         <result property="userCreatedAt" column="user_created_at" />
         <result property="userUpdatedAt" column="user_updated_at" />
         <result property="userStatus" column="user_status" />
@@ -22,6 +23,7 @@
     <resultMap id="simpleUserResultMap" type="net.swmaestro.portal.user.vo.SimpleUser">
         <id property="userId" column="user_id" />
         <result property="userName" column="user_name" />
+        <result property="userProfileImage" column="user_profile_image" />
     </resultMap>
 
     <select id="selectUser" parameterType="hashmap" resultMap="userResultMap">
@@ -32,6 +34,7 @@
 			    u.user_name,
 			    u.user_gender,
 			    u.user_phone,
+			    u.user_profile_image,
 			    u.user_created_at,
 			    u.user_updated_at,
 			    u.user_status,
@@ -72,6 +75,7 @@
 			    u.user_name,
 			    u.user_gender,
 			    u.user_phone,
+			    u.user_profile_image,
 			    u.user_created_at,
 			    u.user_updated_at,
 			    u.user_status,
@@ -112,6 +116,7 @@
               user_password = COALESCE(#{userPassword}, user_password),
               user_phone = COALESCE(#{userPhone}, user_phone),
               user_gender = COALESCE(#{userGender}, user_gender),
+              user_profile_image = COALESCE(#{userProfileImage}, user_profile_image),
               user_status = COALESCE(#{userStatus}, user_status)
             WHERE user_id = #{userId}
         ]]>

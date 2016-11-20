@@ -5,6 +5,7 @@ import net.swmaestro.portal.assignment.vo.AssignmentResult;
 import net.swmaestro.portal.comment.vo.Comment;
 import net.swmaestro.portal.lecture.vo.LectureResult;
 import net.swmaestro.portal.user.vo.User;
+import net.swmaestro.portal.user.vo.UserResult;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,13 +33,13 @@ public interface UserApi {
     @RequestMapping(value = "/users/me",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<User> getMe() throws Exception;
+    ResponseEntity<UserResult> getMe() throws Exception;
 
 
     @RequestMapping(value = "/users/{user-id}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<User> getUser(
+    ResponseEntity<UserResult> getUser(
             @PathVariable("user-id") Integer userId
     ) throws Exception;
 
@@ -46,7 +47,7 @@ public interface UserApi {
     @RequestMapping(value = "/users",
         produces = { "application/json" },
         method = RequestMethod.GET)
-    ResponseEntity<List<User>> getUsers() throws Exception;
+    ResponseEntity<List<UserResult>> getUsers() throws Exception;
 
 
     @RequestMapping(value = "/users",

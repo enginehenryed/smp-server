@@ -3,6 +3,7 @@ package net.swmaestro.portal.common.permission;
 import net.swmaestro.portal.auth.JWTAuthentication;
 import net.swmaestro.portal.user.handler.UserHandler;
 import net.swmaestro.portal.user.vo.User;
+import net.swmaestro.portal.user.vo.UserResult;
 import org.apache.log4j.Logger;
 import org.springframework.security.core.Authentication;
 
@@ -35,7 +36,7 @@ public class PortalPermissionEvaluator implements org.springframework.security.a
         }
 
         JWTAuthentication jwtAuthentication = (JWTAuthentication) authentication;
-        User user = jwtAuthentication.getUser();
+        UserResult user = jwtAuthentication.getUser();
         assert user != null;
 
         boolean isPermitted = false;
@@ -76,7 +77,7 @@ public class PortalPermissionEvaluator implements org.springframework.security.a
         log.debug(String.format("Permission `%s` attempt for targetType `%s` with targetId `%s`.", permissionText, targetType, targetId));
 
         JWTAuthentication jwtAuthentication = (JWTAuthentication) authentication;
-        User user = jwtAuthentication.getUser();
+        UserResult user = jwtAuthentication.getUser();
         assert user != null;
 
         if (targetType == null) {

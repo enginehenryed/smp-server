@@ -48,17 +48,18 @@
                 l.assignment_end_at AS assignment_end_at,
                 writer.user_id AS writer_user_id,
                 writer.user_name AS writer_user_name,
+                writer.user_profile_image AS writer_user_profile_image,
                 modifier.user_id AS modifier_user_id,
                 modifier.user_name AS modifier_user_name,
-                at.attachment_id,
-                at.attachment_url,
-                at.attachment_name,
-                at.attachment_extension,
-                at.attachment_size,
-                at.attachment_type,
-                at.attachment_writer_id,
-                at.attachment_modifier_id
-
+                modifier.user_profile_image AS modifier_user_profile_image,
+                att.attachment_id,
+                att.attachment_url,
+                att.attachment_name,
+                att.attachment_extension,
+                att.attachment_size,
+                att.attachment_type,
+                att.attachment_writer_id,
+                att.attachment_modifier_id
 			FROM
 			    soma.soma_assignment l
 			INNER JOIN
@@ -70,10 +71,12 @@
 			JOIN
 			    soma.soma_user modifier
 			    ON a.article_modifier_id = modifier.user_id
-
-		LEFT OUTER JOIN soma.soma_article_attachment aa ON aa.article_id = l.article_id
-         LEFT OUTER JOIN soma.soma_attachment at ON aa.attachment_id = at.attachment_id
-
+		    LEFT OUTER JOIN
+		        soma.soma_article_attachment aa
+		        ON aa.article_id = l.article_id
+            LEFT OUTER JOIN
+                soma.soma_attachment att
+                ON aa.attachment_id = att.attachment_id
 		    WHERE
 		        a.article_id = #{assignment_id} AND
 		        a.article_type = 'A'
@@ -99,16 +102,18 @@
                 l.assignment_end_at AS assignment_end_at,
                 writer.user_id AS writer_user_id,
                 writer.user_name AS writer_user_name,
+                writer.user_profile_image AS writer_user_profile_image,
                 modifier.user_id AS modifier_user_id,
                 modifier.user_name AS modifier_user_name,
-                at.attachment_id,
-                at.attachment_url,
-                at.attachment_name,
-                at.attachment_extension,
-                at.attachment_size,
-                at.attachment_type,
-                at.attachment_writer_id,
-                at.attachment_modifier_id
+                modifier.user_profile_image AS modifier_user_profile_image,
+                att.attachment_id,
+                att.attachment_url,
+                att.attachment_name,
+                att.attachment_extension,
+                att.attachment_size,
+                att.attachment_type,
+                att.attachment_writer_id,
+                att.attachment_modifier_id
 			FROM
 			    soma.soma_assignment l
 			INNER JOIN
@@ -120,8 +125,12 @@
 			JOIN
 			    soma.soma_user modifier
 			    ON a.article_modifier_id = modifier.user_id
-			    LEFT OUTER JOIN soma.soma_article_attachment aa ON aa.article_id = l.article_id
-         LEFT OUTER JOIN soma.soma_attachment at ON aa.attachment_id = at.attachment_id
+            LEFT OUTER JOIN
+                soma.soma_article_attachment aa
+                ON aa.article_id = l.article_id
+            LEFT OUTER JOIN
+                soma.soma_attachment att
+                ON aa.attachment_id = att.attachment_id
 
 			WHERE
 			    a.article_status <> 'D' AND
@@ -148,16 +157,18 @@
                 l.assignment_end_at AS assignment_end_at,
                 writer.user_id AS writer_user_id,
                 writer.user_name AS writer_user_name,
+                writer.user_profile_image AS writer_user_profile_image,
                 modifier.user_id AS modifier_user_id,
                 modifier.user_name AS modifier_user_name,
-                at.attachment_id,
-                at.attachment_url,
-                at.attachment_name,
-                at.attachment_extension,
-                at.attachment_size,
-                at.attachment_type,
-                at.attachment_writer_id,
-                at.attachment_modifier_id
+                modifier.user_profile_image AS modifier_user_profile_image,
+                att.attachment_id,
+                att.attachment_url,
+                att.attachment_name,
+                att.attachment_extension,
+                att.attachment_size,
+                att.attachment_type,
+                att.attachment_writer_id,
+                att.attachment_modifier_id
 			FROM
 			    soma.soma_assignment l
 			INNER JOIN
@@ -169,9 +180,12 @@
 			JOIN
 			    soma.soma_user modifier
 			    ON a.article_modifier_id = modifier.user_id
-			    LEFT OUTER JOIN soma.soma_article_attachment aa ON aa.article_id = l.article_id
-         LEFT OUTER JOIN soma.soma_attachment at ON aa.attachment_id = at.attachment_id
-
+            LEFT OUTER JOIN
+                soma.soma_article_attachment aa
+                ON aa.article_id = l.article_id
+            LEFT OUTER JOIN
+                soma.soma_attachment att
+                ON aa.attachment_id = att.attachment_id
 			WHERE
 			    a.article_status <> 'D' AND
 			    a.article_type = 'A'

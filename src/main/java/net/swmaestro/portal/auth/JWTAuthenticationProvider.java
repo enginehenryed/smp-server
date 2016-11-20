@@ -7,6 +7,7 @@ import net.swmaestro.portal.auth.exception.ExpiredTokenException;
 import net.swmaestro.portal.auth.exception.InvalidTokenException;
 import net.swmaestro.portal.auth.exception.UnexpectedException;
 import net.swmaestro.portal.user.vo.User;
+import net.swmaestro.portal.user.vo.UserResult;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -48,7 +49,7 @@ public class JWTAuthenticationProvider implements AuthenticationProvider {
             throw new UnexpectedException("Unexpected server exception");
         } finally { }
 
-        User user;
+        UserResult user;
         try {
             user = userHandler.selectUser(userId);
         } catch (Exception e) {

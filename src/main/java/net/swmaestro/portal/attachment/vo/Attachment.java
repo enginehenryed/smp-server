@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
  */
 
 public class Attachment   {
-    private int attachmentId;
+    private String attachmentId;
     private String attachmentUrl;
     private String attachmentName;
     private String attachmentExtension;
@@ -22,11 +22,11 @@ public class Attachment   {
      * @return attachmentId
      **/
     @ApiModelProperty(value = "Attachment ID")
-    public int getAttachmentId() {
+    public String getAttachmentId() {
         return attachmentId;
     }
 
-    public void setAttachmentId(int attachmentId) {
+    public void setAttachmentId(String attachmentId) {
         this.attachmentId = attachmentId;
     }
 

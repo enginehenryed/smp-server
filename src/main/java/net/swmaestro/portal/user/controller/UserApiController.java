@@ -9,6 +9,7 @@ import net.swmaestro.portal.lecture.service.LectureService;
 import net.swmaestro.portal.lecture.vo.LectureResult;
 import net.swmaestro.portal.user.service.UserService;
 import net.swmaestro.portal.user.vo.User;
+import net.swmaestro.portal.user.vo.UserResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -37,7 +38,7 @@ public class UserApiController implements UserApi {
 
     public ResponseEntity<Void> deleteMe() throws Exception {
         JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-        User user = authentication.getUser();
+        UserResult user = authentication.getUser();
 
         userService.deleteUser(user.getUserId());
         return new ResponseEntity<>(HttpStatus.OK);
@@ -51,23 +52,23 @@ public class UserApiController implements UserApi {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public ResponseEntity<User> getMe() throws Exception {
+    public ResponseEntity<UserResult> getMe() throws Exception {
         JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-        User user = authentication.getUser();
+        UserResult user = authentication.getUser();
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    public ResponseEntity<User> getUser(
+    public ResponseEntity<UserResult> getUser(
         @PathVariable("user-id") Integer userId
     ) throws Exception {
-        User user;
+        UserResult user;
         user = userService.selectUser(userId);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<User>> getUsers() throws Exception {
-        List<User> users;
+    public ResponseEntity<List<UserResult>> getUsers() throws Exception {
+        List<UserResult> users;
         users = userService.selectAllUsers();
 
         return new ResponseEntity<>(users, HttpStatus.OK);
@@ -80,7 +81,7 @@ public class UserApiController implements UserApi {
 
     public ResponseEntity<Void> putMe(@RequestBody User user) throws Exception {
         JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-        User authenticatedUser = authentication.getUser();
+        UserResult authenticatedUser = authentication.getUser();
 
         user.setUserId(authenticatedUser.getUserId());
         user.setUserGroups(null);
@@ -103,7 +104,7 @@ public class UserApiController implements UserApi {
     @Override
     public ResponseEntity<List<LectureResult>> getMyLectures() throws Exception {
         JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-        User user = authentication.getUser();
+        UserResult user = authentication.getUser();
 
         List<LectureResult> lectures;
         lectures = lectureService.selectLecturesByUserId(user.getUserId());
@@ -113,7 +114,7 @@ public class UserApiController implements UserApi {
     @Override
     public ResponseEntity<List<AssignmentResult>> getMyAssignments() throws Exception {
         JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-        User user = authentication.getUser();
+        UserResult user = authentication.getUser();
 
         List<AssignmentResult> assignments;
         assignments = assignmentService.selectAssignmentsByUserId(user.getUserId());
@@ -123,7 +124,7 @@ public class UserApiController implements UserApi {
     @Override
     public ResponseEntity<List<Comment>> getMyComments() throws Exception {
         JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-        User user = authentication.getUser();
+        UserResult user = authentication.getUser();
 
         List<Comment> comments;
         comments = commentService.selectCommentsByUserId(user.getUserId());
