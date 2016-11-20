@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiParam;
 import net.swmaestro.portal.auth.JWTAuthentication;
 import net.swmaestro.portal.comment.service.CommentService;
 import net.swmaestro.portal.comment.vo.Comment;
+import net.swmaestro.portal.comment.vo.CommentResult;
 import net.swmaestro.portal.lecture.service.LectureService;
 import net.swmaestro.portal.lecture.vo.Lecture;
 import net.swmaestro.portal.lecture.vo.LectureResult;
@@ -124,15 +125,15 @@ public class LectureApiController implements LectureApi {
 
 
     @Override
-    public ResponseEntity<List<Comment>> getCommentsByLectureId(@ApiParam(value = "Lecture's ID", required = true) @PathVariable("lecture-id") Integer lectureId) {
-            List<Comment> comments;
+    public ResponseEntity<List<CommentResult>> getCommentsByLectureId(@ApiParam(value = "Lecture's ID", required = true) @PathVariable("lecture-id") Integer lectureId) {
+            List<CommentResult> comments;
             try {
                 comments = commentService.selectCommentsByArticleId(lectureId);
             } catch (Exception e) {
                 e.printStackTrace();
-                return new ResponseEntity<List<Comment>>(HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<List<CommentResult>>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-            return new ResponseEntity<List<Comment>>(comments, HttpStatus.OK);
+            return new ResponseEntity<List<CommentResult>>(comments, HttpStatus.OK);
         }
 
     @Override
