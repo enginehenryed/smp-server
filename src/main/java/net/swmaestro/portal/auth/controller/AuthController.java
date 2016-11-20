@@ -33,10 +33,10 @@ public class AuthController {
     public @ResponseBody Object token(@RequestHeader(value="Authorization") String authorizationHeader) throws Exception {
 
         if (authorizationHeader == null) {
-            throw new MissingAuthorizationException("Authorization header required.");
+            throw new MissingAuthorizationException("Basic Authorization header required.");
         }
         if (!authorizationHeader.startsWith("Basic ")) {
-            throw new InvalidAuthorizationException("Authorization header needs Bearer token.");
+            throw new InvalidAuthorizationException("Basic Authorization header needs Basic token.");
         }
 
         String base64Credentials = authorizationHeader.substring("Basic".length()).trim();
