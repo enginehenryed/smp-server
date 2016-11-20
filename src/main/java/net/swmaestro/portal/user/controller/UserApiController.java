@@ -5,6 +5,7 @@ import net.swmaestro.portal.assignment.vo.AssignmentResult;
 import net.swmaestro.portal.auth.JWTAuthentication;
 import net.swmaestro.portal.comment.service.CommentService;
 import net.swmaestro.portal.comment.vo.Comment;
+import net.swmaestro.portal.common.exception.NotFoundException;
 import net.swmaestro.portal.lecture.service.LectureService;
 import net.swmaestro.portal.lecture.vo.LectureResult;
 import net.swmaestro.portal.user.service.UserService;
@@ -66,6 +67,9 @@ public class UserApiController implements UserApi {
         Integer callerId = authentication.getUser().getUserId();
         UserResult user;
         user = userService.selectUser(callerId, userId);
+        if (user == null) {
+            throw new NotFoundException("User not found");
+        }
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 

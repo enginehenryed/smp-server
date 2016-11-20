@@ -8,10 +8,13 @@ import net.swmaestro.portal.user.vo.UserResult;
 public class UserUtils {
 
     public static void makeUserResultSafe(UserResult userResult) {
-        userResult.setUserPhone(null);
-        userResult.setUserCreatedAt(null);
-        userResult.setUserGender(null);
-        userResult.setUserStatus(null);
-        userResult.setUserUpdatedAt(null);
+        if (userResult != null) {
+            userResult.setUserPhone(null);
+            userResult.setUserCreatedAt(null);
+            userResult.setUserGender(null);
+            userResult.setUserStatus(null);
+            userResult.setUserUpdatedAt(null);
+        }
     }
 }
+
