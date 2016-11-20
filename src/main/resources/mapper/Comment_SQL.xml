@@ -3,13 +3,33 @@
 
 <mapper namespace="comment">
 
-    <select id="selectCommentsByArticleId" parameterType="hashmap" resultType="net.swmaestro.portal.comment.vo.Comment">
+    <resultMap id="commentResultMap" type="net.swmaestro.portal.comment.vo.CommentResult">
+        <id property="commentId" column="comment_id" />
+
+        <result property="commentContent" column="comment_content" />
+        <result property="commentWriterId" column="comment_writer_id" />
+        <result property="commentParentId" column="comment_parent_id" />
+        <result property="commentCreatedAt" column="comment_created_at" />
+        <result property="commentUpdatedAt" column="comment_updated_at" />
+        <result property="commentStatus" column="article_type" />
+
+        <association property="commentWriter" resultMap="user.simpleUserResultMap" columnPrefix="writer_" />
+
+
+    </resultMap>
+
+    <select id="selectCommentsByArticleId" parameterType="hashmap" resultMap="commentResultMap">
         <![CDATA[
-			SELECT soma.soma_comment.comment_id as commentId, comment_content as commentContent, comment_writer_id as commentWriterId,
-  comment_parent_id as commentParentId, comment_created_at as commentCreatedAt, comment_updated_at as commentUpdatedAt, comment_status as commentStatus
-FROM soma.soma_comment inner join soma_article_comment on soma.soma_comment.comment_id = soma.soma_article_comment.comment_id
+			SELECT c.comment_id as comment_id, comment_content as comment_content, comment_writer_id as comment_writer_id,
+  comment_parent_id as comment_parent_id, comment_created_at as comment_created_at, comment_updated_at as comment_updated_at,
+  comment_status as commentStatus,
+  writer.user_name, writer.user_id
+FROM soma_comment as c inner join soma_article_comment on c.comment_id = soma_article_comment.comment_id
+JOIN
+			    soma_user as writer
+			    ON c.comment_writer_id = writer.user_id
 WHERE soma_article_comment.article_id = #{article_id}
-ORDER BY soma_comment.comment_id DESC
+ORDER BY c.comment_id DESC
 		]]>
     </select>
 
