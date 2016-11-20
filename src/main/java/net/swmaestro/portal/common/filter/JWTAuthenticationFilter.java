@@ -31,6 +31,7 @@ public class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFil
         super(new AndRequestMatcher(
                 new NegatedRequestMatcher(new AntPathRequestMatcher("/**", "OPTIONS")),
                 new NegatedRequestMatcher(new AntPathRequestMatcher("/users", "POST")),
+                new NegatedRequestMatcher(new AntPathRequestMatcher("/attachments/**", "GET")),
                 new AntPathRequestMatcher(defaultFilterProcessesUrl)
         ));
     }

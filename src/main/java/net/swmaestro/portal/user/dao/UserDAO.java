@@ -3,6 +3,7 @@ package net.swmaestro.portal.user.dao;
 
 import net.swmaestro.portal.common.dao.AbstractDAO;
 import net.swmaestro.portal.user.vo.User;
+import net.swmaestro.portal.user.vo.UserResult;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -13,8 +14,8 @@ import java.util.Map;
 public class UserDAO extends AbstractDAO{
 
 	@SuppressWarnings("unchecked")
-	public User selectUser(Map<String, Object> map) throws Exception{
-		return (User) selectOne("user.selectUser", map);
+	public UserResult selectUser(Map<String, Object> map) throws Exception{
+		return (UserResult) selectOne("user.selectUser", map);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -23,8 +24,8 @@ public class UserDAO extends AbstractDAO{
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<User> selectAllUsers(Map<String, Object> map) throws Exception{
-		return (List<User>) selectList("user.selectAllUsers", map);
+	public List<UserResult> selectAllUsers(Map<String, Object> map) throws Exception{
+		return (List<UserResult>) selectList("user.selectAllUsers", map);
 	}
 
 	@SuppressWarnings("unchecked")

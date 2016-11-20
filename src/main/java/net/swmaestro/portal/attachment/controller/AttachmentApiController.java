@@ -8,7 +8,7 @@ import net.swmaestro.portal.attachment.vo.PostAttachmentResponse;
 import net.swmaestro.portal.auth.JWTAuthentication;
 import net.swmaestro.portal.common.exception.NotFoundException;
 import net.swmaestro.portal.common.exception.UnexpectedException;
-import net.swmaestro.portal.user.vo.User;
+import net.swmaestro.portal.user.vo.UserResult;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.net.URLEncoder;
 
 
 @Controller
@@ -35,9 +36,9 @@ public class AttachmentApiController implements AttachmentApi {
     ) throws Exception {
 
         JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-        User user = authentication.getUser();
+        UserResult user = authentication.getUser();
 
-        int attachmentId = attachmentService.createAttachment(file, user.getUserId());
+        String attachmentId = attachmentService.createAttachment(file, user.getUserId());
 
         return new ResponseEntity<>(
                 new PostAttachmentResponse(attachmentId),
@@ -47,8 +48,8 @@ public class AttachmentApiController implements AttachmentApi {
 
     @Override
     public ResponseEntity<FileSystemResource> getAttachment(
-            @ApiParam(value = "Attachment ID", required = true) @PathVariable("attachment-id") int attachmentId
-    ) {
+            @ApiParam(value = "Attachment ID", required = true) @PathVariable("attachment-id") String attachmentId
+    ) throws Exception {
         Attachment attachment;
         try {
             attachment = attachmentService.getAttachment(attachmentId);
@@ -62,7 +63,13 @@ public class AttachmentApiController implements AttachmentApi {
         }
 
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Content-Disposition", "attachment; filename*=''" + attachment.getAttachmentName());
+
+        if (attachment.getAttachmentType() != null && attachment.getAttachmentType().length() > 0) {
+            responseHeaders.set("Content-Type", attachment.getAttachmentType());
+        } else {
+            responseHeaders.set("Content-Type", "application/octet-stream");
+        }
+        responseHeaders.set("Content-Disposition", "attachment; filename*=UTF-8''" + URLEncoder.encode(attachment.getAttachmentName(), "UTF-8"));
         responseHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 
         return new ResponseEntity<>(

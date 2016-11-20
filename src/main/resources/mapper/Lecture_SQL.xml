@@ -52,19 +52,21 @@
                 l.lecture_end_at AS lecture_end_at,
                 writer.user_id AS writer_user_id,
                 writer.user_name AS writer_user_name,
+                writer.user_profile_image AS writer_user_profile_image,
                 modifier.user_id AS modifier_user_id,
                 modifier.user_name AS modifier_user_name,
+                modifier.user_profile_image AS modifier_user_profile_image,
                 teacher.user_id AS teacher_user_id,
                 teacher.user_name AS teacher_user_name,
-                at.attachment_id,
-                at.attachment_url,
-                at.attachment_name,
-                at.attachment_extension,
-                at.attachment_size,
-                at.attachment_type,
-                at.attachment_writer_id,
-                at.attachment_modifier_id
-
+                teacher.user_profile_image AS teacher_user_profile_image,
+                att.attachment_id,
+                att.attachment_url,
+                att.attachment_name,
+                att.attachment_extension,
+                att.attachment_size,
+                att.attachment_type,
+                att.attachment_writer_id,
+                att.attachment_modifier_id
 			FROM
 			    soma.soma_lecture l
 			INNER JOIN
@@ -79,9 +81,13 @@
 			JOIN
 			    soma.soma_user teacher
 			    ON l.lecture_teacher_id = teacher.user_id
-			LEFT OUTER JOIN soma.soma_article_attachment aa ON aa.article_id = l.article_id
-         LEFT OUTER JOIN soma.soma_attachment at ON aa.attachment_id = at.attachment_id
-		  WHERE
+			LEFT OUTER JOIN
+			    soma.soma_article_attachment aa
+			    ON aa.article_id = l.article_id
+            LEFT OUTER JOIN
+                soma.soma_attachment att
+                ON aa.attachment_id = att.attachment_id
+		    WHERE
 		        a.article_id = #{lecture_id}
 			ORDER BY
 			    a.article_id DESC
@@ -106,18 +112,21 @@
                 l.lecture_end_at AS lecture_end_at,
                 writer.user_id AS writer_user_id,
                 writer.user_name AS writer_user_name,
+                writer.user_profile_image AS writer_user_profile_image,
                 modifier.user_id AS modifier_user_id,
                 modifier.user_name AS modifier_user_name,
+                modifier.user_profile_image AS modifier_user_profile_image,
                 teacher.user_id AS teacher_user_id,
                 teacher.user_name AS teacher_user_name,
-                at.attachment_id,
-                at.attachment_url,
-                at.attachment_name,
-                at.attachment_extension,
-                at.attachment_size,
-                at.attachment_type,
-                at.attachment_writer_id,
-                at.attachment_modifier_id
+                teacher.user_profile_image AS teacher_user_profile_image,
+                att.attachment_id,
+                att.attachment_url,
+                att.attachment_name,
+                att.attachment_extension,
+                att.attachment_size,
+                att.attachment_type,
+                att.attachment_writer_id,
+                att.attachment_modifier_id
 			FROM
 			    soma.soma_lecture l
 			INNER JOIN
@@ -132,9 +141,12 @@
 			JOIN
 			    soma.soma_user teacher
 			    ON l.lecture_teacher_id = teacher.user_id
-			    LEFT OUTER JOIN soma.soma_article_attachment aa ON aa.article_id = l.article_id
-         LEFT OUTER JOIN soma.soma_attachment at ON aa.attachment_id = at.attachment_id
-
+            LEFT OUTER JOIN
+                soma.soma_article_attachment aa
+                ON aa.article_id = l.article_id
+            LEFT OUTER JOIN
+                soma.soma_attachment att
+                ON aa.attachment_id = att.attachment_id
 			WHERE
 			    a.article_status <> 'D' AND
 			    a.article_type = 'L'
@@ -162,18 +174,21 @@
                 l.lecture_end_at AS lecture_end_at,
                 writer.user_id AS writer_user_id,
                 writer.user_name AS writer_user_name,
+                writer.user_profile_image AS writer_user_profile_image,
                 modifier.user_id AS modifier_user_id,
                 modifier.user_name AS modifier_user_name,
+                modifier.user_profile_image AS modifier_user_profile_image,
                 teacher.user_id AS teacher_user_id,
                 teacher.user_name AS teacher_user_name,
-                at.attachment_id,
-                at.attachment_url,
-                at.attachment_name,
-                at.attachment_extension,
-                at.attachment_size,
-                at.attachment_type,
-                at.attachment_writer_id,
-                at.attachment_modifier_id
+                teacher.user_profile_image AS teacher_user_profile_image,
+                att.attachment_id,
+                att.attachment_url,
+                att.attachment_name,
+                att.attachment_extension,
+                att.attachment_size,
+                att.attachment_type,
+                att.attachment_writer_id,
+                att.attachment_modifier_id
 			FROM
 			    soma.soma_lecture l
 			INNER JOIN
@@ -188,9 +203,12 @@
 			JOIN
 			    soma.soma_user teacher
 			    ON l.lecture_teacher_id = teacher.user_id
-			    LEFT OUTER JOIN soma.soma_article_attachment aa ON aa.article_id = l.article_id
-         LEFT OUTER JOIN soma.soma_attachment at ON aa.attachment_id = at.attachment_id
-
+            LEFT OUTER JOIN
+                soma.soma_article_attachment aa
+                ON aa.article_id = l.article_id
+            LEFT OUTER JOIN
+                soma.soma_attachment att
+                ON aa.attachment_id = att.attachment_id
 			WHERE
 			    a.article_status <> 'D' AND
 			    a.article_writer_id = #{user_id} AND

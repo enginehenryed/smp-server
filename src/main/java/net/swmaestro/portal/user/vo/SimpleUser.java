@@ -8,6 +8,8 @@ public class SimpleUser {
 
     private String userName = null;
 
+    private String userProfileImage = null;
+
     public Integer getUserId() {
         return userId;
     }
@@ -22,5 +24,13 @@ public class SimpleUser {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getUserProfileImage() {
+        return userProfileImage;
+    }
+
+    public void setUserProfileImage(String userProfileImage) {
+        this.userProfileImage = userProfileImage;
     }
 }

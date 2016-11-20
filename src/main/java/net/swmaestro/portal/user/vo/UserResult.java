@@ -1,19 +1,17 @@
 package net.swmaestro.portal.user.vo;
 
-import java.util.List;
-import java.util.Objects;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 
-
+import java.util.List;
+import java.util.Objects;
 
 
 /**
  * User
  */
 
-public class User   {
+public class UserResult {
     private static final String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
     private static final String TIME_ZONE = "Asia/Seoul";
 
@@ -29,7 +27,7 @@ public class User   {
 
     private String userGender = null;
 
-    private String userProfileImageId = null;
+    private String userProfileImage = null;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern=DATE_PATTERN, timezone = TIME_ZONE)
     private String userCreatedAt = null;
@@ -41,7 +39,7 @@ public class User   {
 
     private String userStatus = null;
 
-    public User userId(Integer userId) {
+    public UserResult userId(Integer userId) {
         this.userId = userId;
         return this;
     }
@@ -59,7 +57,7 @@ public class User   {
         this.userId = userId;
     }
 
-    public User userEmail(String userEmail) {
+    public UserResult userEmail(String userEmail) {
         this.userEmail = userEmail;
         return this;
     }
@@ -77,7 +75,7 @@ public class User   {
         this.userEmail = userEmail;
     }
 
-    public User userName(String userName) {
+    public UserResult userName(String userName) {
         this.userName = userName;
         return this;
     }
@@ -124,12 +122,12 @@ public class User   {
         this.userGender = userGender;
     }
 
-    public String getUserProfileImageId() {
-        return userProfileImageId;
+    public String getUserProfileImage() {
+        return userProfileImage;
     }
 
-    public void setUserProfileImageId(String userProfileImageId) {
-        this.userProfileImageId = userProfileImageId;
+    public void setUserProfileImage(String userProfileImage) {
+        this.userProfileImage = userProfileImage;
     }
 
     public String getUserCreatedAt() {
@@ -164,7 +162,7 @@ public class User   {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        User user = (User) o;
+        UserResult user = (UserResult) o;
         return Objects.equals(this.userId, user.userId) &&
                 Objects.equals(this.userEmail, user.userEmail) &&
                 Objects.equals(this.userName, user.userName);

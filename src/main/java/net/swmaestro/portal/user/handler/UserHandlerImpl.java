@@ -3,6 +3,7 @@ package net.swmaestro.portal.user.handler;
 
 import net.swmaestro.portal.user.dao.UserDAO;
 import net.swmaestro.portal.user.vo.User;
+import net.swmaestro.portal.user.vo.UserResult;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ public class UserHandlerImpl implements UserHandler {
 	private UserDAO userDAO;
 
     @Override
-    public User selectUser(int userId) throws Exception {
+    public UserResult selectUser(int userId) throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("userId", userId);
 

@@ -8,7 +8,7 @@ import net.swmaestro.portal.comment.vo.CommentResult;
 import net.swmaestro.portal.lecture.service.LectureService;
 import net.swmaestro.portal.lecture.vo.Lecture;
 import net.swmaestro.portal.lecture.vo.LectureResult;
-import net.swmaestro.portal.user.vo.User;
+import net.swmaestro.portal.user.vo.UserResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -40,7 +40,7 @@ public class LectureApiController implements LectureApi {
     ) {
         try {
             JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-            User user = authentication.getUser();
+            UserResult user = authentication.getUser();
             Integer userId = user.getUserId();
             lectureService.removeLecture(userId, lectureId);
         } catch (Exception e) {
@@ -94,7 +94,7 @@ public class LectureApiController implements LectureApi {
     public ResponseEntity<Void> postLecture(@ApiParam(value = "Lecture's articleGenerationId") @RequestBody(required = true) Lecture lecture) {
         try {
             JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-            User user = authentication.getUser();
+            UserResult user = authentication.getUser();
             Integer userId = user.getUserId();
             lectureService.insertLecture(userId, lecture);
         } catch (Exception e) {
@@ -112,7 +112,7 @@ public class LectureApiController implements LectureApi {
 
         try {
             JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-            User user = authentication.getUser();
+            UserResult user = authentication.getUser();
             Integer userId = user.getUserId();
             lectureService.updateLecture(lectureId, userId, lecture);
         } catch (Exception e) {
@@ -140,7 +140,7 @@ public class LectureApiController implements LectureApi {
     public ResponseEntity<Void> postCommentInLecture(@ApiParam(value = "Lecture's ID", required = true) @PathVariable("lecture-id") Integer lectureId, @ApiParam(value = "Comment") @RequestBody(required = true) Comment comment) {
         try {
             JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-            User user = authentication.getUser();
+            UserResult user = authentication.getUser();
             Integer userId = user.getUserId();
             commentService.insertCommentInArticle(lectureId, userId, comment);
         } catch (Exception e) {
@@ -156,7 +156,7 @@ public class LectureApiController implements LectureApi {
     public ResponseEntity<Void> deleteComment(@ApiParam(value = "Comment's ID", required = true) @PathVariable("comment-id") Integer commentId) {
         try {
             JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-            User user = authentication.getUser();
+            UserResult user = authentication.getUser();
             Integer userId = user.getUserId();
             commentService.removeComment(userId, commentId);
         } catch (Exception e) {
@@ -174,7 +174,7 @@ public class LectureApiController implements LectureApi {
 
         try {
             JWTAuthentication authentication = (JWTAuthentication) SecurityContextHolder.getContext().getAuthentication();
-            User user = authentication.getUser();
+            UserResult user = authentication.getUser();
             Integer userId = user.getUserId();
             commentService.updateComment(commentId, userId, comment);
         } catch (Exception e) {

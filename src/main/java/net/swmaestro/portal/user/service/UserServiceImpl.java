@@ -1,11 +1,14 @@
 package net.swmaestro.portal.user.service;
 
 
+import net.swmaestro.portal.attachment.handler.AttachmentHandler;
+import net.swmaestro.portal.attachment.vo.Attachment;
 import net.swmaestro.portal.common.exception.BadRequestException;
 import net.swmaestro.portal.common.util.EmailValidator;
 import net.swmaestro.portal.user.dao.UserDAO;
 import net.swmaestro.portal.user.vo.Group;
 import net.swmaestro.portal.user.vo.User;
+import net.swmaestro.portal.user.vo.UserResult;
 import org.apache.log4j.Logger;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,8 +27,11 @@ public class UserServiceImpl implements UserService {
 	@Resource(name="userDAO")
 	private UserDAO userDAO;
 
+    @Resource(name="attachmentHandler")
+    private AttachmentHandler attachmentHandler;
+
 	@Override
-	public User selectUser(int userId) throws Exception {
+	public UserResult selectUser(int userId) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		map.put("userId", userId);
 		
@@ -33,7 +39,7 @@ public class UserServiceImpl implements UserService {
 	}
 
     @Override
-    public List<User> selectAllUsers() throws Exception {
+    public List<UserResult> selectAllUsers() throws Exception {
         return userDAO.selectAllUsers(new HashMap<>());
     }
 
@@ -79,6 +85,14 @@ public class UserServiceImpl implements UserService {
         }
         if (user.getUserGender() != null) {
             map.put("userGender", user.getUserGender());
+        }
+        if (user.getUserProfileImageId() != null) {
+            Attachment attachment = attachmentHandler.getAttachment(user.getUserProfileImageId());
+            if (attachment == null || attachment.getAttachmentWriterId() != user.getUserId()) {
+                throw new BadRequestException("Requested profile image is not exists.");
+            }
+
+            map.put("userProfileImage", "https://api.swmaestro.net/attachments/" + attachment.getAttachmentId());
         }
 
         List<Group> groups = user.getUserGroups();

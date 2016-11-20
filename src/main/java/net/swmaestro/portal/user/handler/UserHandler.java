@@ -2,11 +2,12 @@ package net.swmaestro.portal.user.handler;
 
 
 import net.swmaestro.portal.user.vo.User;
+import net.swmaestro.portal.user.vo.UserResult;
 
 
 public interface UserHandler {
 
-	User selectUser(int userId) throws Exception;
+	UserResult selectUser(int userId) throws Exception;
 
 	User selectUserByEmail(String userEmail) throws Exception;
 

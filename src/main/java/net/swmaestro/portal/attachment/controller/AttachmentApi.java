@@ -38,7 +38,7 @@ public interface AttachmentApi {
     @RequestMapping(value = "/attachments/{attachment-id}",
             method = RequestMethod.GET)
     ResponseEntity<FileSystemResource> getAttachment(
-            @ApiParam(value = "Attachment ID", required = true) @PathVariable("attachment-id") int attachmentId
-    );
+            @ApiParam(value = "Attachment ID", required = true) @PathVariable("attachment-id") String attachmentId
+    ) throws Exception;
 
 }
