@@ -2,12 +2,10 @@ package net.swmaestro.portal.comment.service;
 
 
 import net.swmaestro.portal.assignment.dao.AssignmentDAO;
-import net.swmaestro.portal.assignment.vo.Assignment;
 import net.swmaestro.portal.assignment.vo.AssignmentResult;
 import net.swmaestro.portal.comment.dao.CommentDAO;
 import net.swmaestro.portal.comment.vo.Comment;
 import net.swmaestro.portal.lecture.dao.LectureDAO;
-import net.swmaestro.portal.lecture.vo.Lecture;
 import net.swmaestro.portal.lecture.vo.LectureResult;
 import net.swmaestro.portal.notification.service.NotificationService;
 import org.apache.log4j.Logger;
@@ -56,24 +54,34 @@ public class CommentServiceImpl implements CommentService {
 
 		Integer targetUserId = null;
 
-		map = new HashMap<>();
-		map.put("lecture_id", articleId);
-		LectureResult lecture = lectureDAO.selectLecture(map);
+		Map<String, Object> lectureMap = new HashMap<>();
+		lectureMap.put("lecture_id", articleId);
+		LectureResult lecture = lectureDAO.selectLecture(lectureMap);
 
-		map = new HashMap<>();
-		map.put("assignment_id", articleId);
-		AssignmentResult assignment = assignmentDAO.selectAssignment(map);
+		Map<String, Object> assignmentMap = new HashMap<>();
+		assignmentMap.put("assignment_id", articleId);
+		AssignmentResult assignment = assignmentDAO.selectAssignment(assignmentMap);
 
+		String type = null;
 		if (lecture != null) {
 			targetUserId = lecture.getArticleWriter().getUserId();
+			type = "lectures";
 		}
 
 		if (assignment != null) {
 			targetUserId = assignment.getArticleWriter().getUserId();
+			type = "assignments";
 		}
 
-		if (targetUserId != null && userId != targetUserId) {
-			notificationService.sendNotification(targetUserId, "회원님의 글에 덧글이 달렸습니다.", "/");
+		if (targetUserId != null && userId.equals(targetUserId)) {
+			if (type == null) {
+				log.error("Invalid article type of comment!");
+			}
+			notificationService.sendNotification(
+					targetUserId,
+					"회원님의 글에 덧글이 달렸습니다.",
+					String.format("/%s/%d#comment-%d", type, articleId, (long)map.get("commentId"))
+			);
 		}
 	}
 

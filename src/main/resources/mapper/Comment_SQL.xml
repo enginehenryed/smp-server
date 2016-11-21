@@ -45,7 +45,7 @@ WHERE soma_comment.comment_id = #{comment_id}
 		]]>
     </select>
 
-    <insert id="insertCommentInArticle" parameterType="hashmap">
+    <insert id="insertCommentInArticle" parameterType="hashmap" useGeneratedKeys="true" keyColumn="comment_id" keyProperty="commentId">
         <![CDATA[
        INSERT INTO soma.soma_comment (comment_content, comment_writer_id, comment_parent_id, comment_created_at,
                  comment_updated_at, comment_status)
