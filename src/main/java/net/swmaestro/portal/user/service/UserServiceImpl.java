@@ -130,6 +130,10 @@ public class UserServiceImpl implements UserService {
             }
         }
 
+        if (user.getUserStatus() != null) {
+            map.put("userStatus", user.getUserStatus());
+        }
+
         userDAO.updateUser(map);
     }
 
