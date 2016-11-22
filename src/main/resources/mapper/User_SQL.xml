@@ -111,6 +111,11 @@
 			FROM
 			    soma.soma_user u
 			    LEFT OUTER JOIN soma.soma_group g ON u.user_id = g.user_id
+        ]]>
+        <if test="only_available">
+            WHERE u.user_status = 'A'
+        </if>
+        <![CDATA[
 			ORDER BY u.user_id DESC
 		]]>
     </select>

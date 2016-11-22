@@ -50,8 +50,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserResult> selectAllUsers(Integer callerId) throws Exception {
-        List<UserResult> userResultList = userDAO.selectAllUsers(new HashMap<>());
-        if (!userHandler.checkIsAdmin(callerId)) {
+        boolean isAdmin = userHandler.checkIsAdmin(callerId);
+
+        Map<String, Object> map = new HashMap<>();
+        if (!isAdmin) {
+            map.put("only_available", true);
+        } else {
+            map.put("only_available", false);
+        }
+
+        List<UserResult> userResultList = userDAO.selectAllUsers(map);
+        if (!isAdmin) {
             userResultList.forEach(UserUtils::makeUserResultSafe);
         }
 
