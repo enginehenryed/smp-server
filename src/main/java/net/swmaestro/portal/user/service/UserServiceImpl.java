@@ -6,6 +6,8 @@ import net.swmaestro.portal.attachment.vo.Attachment;
 import net.swmaestro.portal.common.exception.BadRequestException;
 import net.swmaestro.portal.common.util.EmailValidator;
 import net.swmaestro.portal.user.dao.UserDAO;
+import net.swmaestro.portal.user.handler.UserHandler;
+import net.swmaestro.portal.user.utils.UserUtils;
 import net.swmaestro.portal.user.vo.Group;
 import net.swmaestro.portal.user.vo.User;
 import net.swmaestro.portal.user.vo.UserResult;
@@ -30,17 +32,30 @@ public class UserServiceImpl implements UserService {
     @Resource(name="attachmentHandler")
     private AttachmentHandler attachmentHandler;
 
+    @Resource(name="userHandler")
+    private UserHandler userHandler;
+
 	@Override
-	public UserResult selectUser(int userId) throws Exception {
+	public UserResult selectUser(Integer callerId, int userId) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		map.put("userId", userId);
+        UserResult userResult = userDAO.selectUser(map);
+
+        if (!userHandler.checkIsAdmin(callerId)) {
+            UserUtils.makeUserResultSafe(userResult);
+        }
 		
-		return userDAO.selectUser(map);
+		return userResult;
 	}
 
     @Override
-    public List<UserResult> selectAllUsers() throws Exception {
-        return userDAO.selectAllUsers(new HashMap<>());
+    public List<UserResult> selectAllUsers(Integer callerId) throws Exception {
+        List<UserResult> userResultList = userDAO.selectAllUsers(new HashMap<>());
+        if (!userHandler.checkIsAdmin(callerId)) {
+            userResultList.forEach(UserUtils::makeUserResultSafe);
+        }
+
+        return userResultList;
     }
 
     @Override
@@ -113,6 +128,10 @@ public class UserServiceImpl implements UserService {
             if (groupMapList.size() > 0) {
                 userDAO.insertGroupsList(groupMapList);
             }
+        }
+
+        if (user.getUserStatus() != null) {
+            map.put("userStatus", user.getUserStatus());
         }
 
         userDAO.updateUser(map);
