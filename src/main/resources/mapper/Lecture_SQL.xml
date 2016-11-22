@@ -281,7 +281,7 @@
 		]]>
     </select>
 
-    <insert id="insertLecture" parameterType="hashmap">
+    <insert id="insertLecture" parameterType="hashmap" useGeneratedKeys="true" keyProperty="articleId" keyColumn="article_id">
         <![CDATA[
                  INSERT INTO soma.soma_article (article_writer_id, article_modifier_id, article_generation_id, article_subject, article_content,
                  article_created_at, article_updated_at, article_type, article_status)
