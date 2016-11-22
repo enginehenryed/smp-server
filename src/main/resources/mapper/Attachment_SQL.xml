@@ -56,4 +56,29 @@
         ]]>
     </insert>
 
+    <insert id="insertArticleAttachments" parameterType="java.util.List">
+        <![CDATA[
+            INSERT INTO
+                soma.soma_article_attachment (
+                    article_id,
+                    attachment_id
+                )
+            VALUES
+        ]]>
+        <foreach collection="list" item="item" index="index" separator=", ">
+            <![CDATA[
+                (#{item.articleId}, #{item.attachmentId})
+            ]]>
+        </foreach>
+    </insert>
+
+    <delete id="deleteArticleAttachments" parameterType="hashmap">
+         <![CDATA[
+            DELETE FROM
+                soma.soma_article_attachment
+            WHERE
+                article_id = #{articleId}
+        ]]>
+    </delete>
+
 </mapper>

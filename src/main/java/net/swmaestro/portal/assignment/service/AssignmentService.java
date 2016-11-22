@@ -16,5 +16,5 @@ public interface AssignmentService {
 
 	void removeAssignment(Integer userId, Integer assignmentId) throws Exception;
 
-	void updateAssignment(Integer assignmentId, Integer userId, Assignment assignment);
+	void updateAssignment(Integer assignmentId, Integer userId, Assignment assignment) throws Exception;
 }

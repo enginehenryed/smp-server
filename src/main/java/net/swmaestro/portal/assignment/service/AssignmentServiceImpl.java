@@ -4,6 +4,7 @@ package net.swmaestro.portal.assignment.service;
 import net.swmaestro.portal.assignment.dao.AssignmentDAO;
 import net.swmaestro.portal.assignment.vo.Assignment;
 import net.swmaestro.portal.assignment.vo.AssignmentResult;
+import net.swmaestro.portal.attachment.handler.AttachmentHandler;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,9 @@ public class AssignmentServiceImpl implements AssignmentService {
 
 	@Resource(name="assignmentDAO")
 	private AssignmentDAO assignmentDAO;
+
+	@Resource(name="attachmentHandler")
+	private AttachmentHandler attachmentHandler;
 
 	@Override
 	public AssignmentResult selectAssignment(int assignmentId) throws Exception {
@@ -60,7 +64,12 @@ public class AssignmentServiceImpl implements AssignmentService {
 		map.put("assignment_end_at", assignment.getAssignmentEndAt());
 
 		assignmentDAO.insertAssignment(map);
+		long articleId = (long)map.get("articleId");
 
+		List<String> attachmentIds = assignment.getArticleAttachmentIds();
+		if (attachmentIds != null && attachmentIds.size() > 0) {
+			attachmentHandler.insertArticleAttachments(articleId, attachmentIds);
+		}
 	}
 
 	@Override
@@ -73,7 +82,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 	}
 
 	@Override
-	public void updateAssignment(Integer assignmentId, Integer userId, Assignment assignment) {
+	public void updateAssignment(Integer assignmentId, Integer userId, Assignment assignment) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		map.put("assignment_id", assignmentId);
 
@@ -94,6 +103,17 @@ public class AssignmentServiceImpl implements AssignmentService {
 		}
 
 		assignmentDAO.updateAssignment(map);
+
+		long articleId = assignmentId;
+		attachmentHandler.removeArticleAttachments(articleId);
+
+		List<String> attachmentIds = assignment.getArticleAttachmentIds();
+		if (attachmentIds != null) {
+			attachmentHandler.removeArticleAttachments(articleId);
+			if (attachmentIds.size() > 0) {
+				attachmentHandler.insertArticleAttachments(articleId, attachmentIds);
+			}
+		}
 	}
 
 
