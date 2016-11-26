@@ -31,6 +31,8 @@ public class Assignment {
 
     private String articleContent = null;
 
+    private List<String> articleAttachmentIds = null;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern=DATE_PATTERN, timezone = TIME_ZONE)
     private Date articleCreatedAt = null;
 
@@ -117,6 +119,14 @@ public class Assignment {
 
     public void setArticleContent(String articleContent) {
         this.articleContent = articleContent;
+    }
+
+    public List<String> getArticleAttachmentIds() {
+        return articleAttachmentIds;
+    }
+
+    public void setArticleAttachmentIds(List<String> articleAttachmentIds) {
+        this.articleAttachmentIds = articleAttachmentIds;
     }
 
     /**

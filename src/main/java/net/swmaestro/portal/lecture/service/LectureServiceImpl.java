@@ -1,6 +1,7 @@
 package net.swmaestro.portal.lecture.service;
 
 
+import net.swmaestro.portal.attachment.handler.AttachmentHandler;
 import net.swmaestro.portal.lecture.dao.LectureDAO;
 import net.swmaestro.portal.lecture.vo.Lecture;
 import net.swmaestro.portal.lecture.vo.LectureResult;
@@ -16,6 +17,9 @@ public class LectureServiceImpl implements LectureService {
 
 	@Resource(name="lectureDAO")
 	private LectureDAO lectureDAO;
+
+	@Resource(name="attachmentHandler")
+	private AttachmentHandler attachmentHandler;
 	
 	@Override
 	public LectureResult selectLecture(int lectureId) throws Exception {
@@ -54,8 +58,7 @@ public class LectureServiceImpl implements LectureService {
 
 	@Override
 	public void insertLecture(Integer userId, Lecture lecture) throws Exception {
-
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 
 		map.put("article_writer_id", userId);
 		map.put("article_modifier_id", userId);
@@ -68,7 +71,12 @@ public class LectureServiceImpl implements LectureService {
 		map.put("lecture_end_at", lecture.getLectureEndAt());
 
 		lectureDAO.insertLecture(map);
+		long articleId = (long)map.get("articleId");
 
+		List<String> attachmentIds = lecture.getArticleAttachmentIds();
+		if (attachmentIds != null && attachmentIds.size() > 0) {
+			attachmentHandler.insertArticleAttachments(articleId, attachmentIds);
+		}
 	}
 
 	@Override
@@ -81,7 +89,7 @@ public class LectureServiceImpl implements LectureService {
 	}
 
 	@Override
-	public void updateLecture(Integer lectureId, Integer userId, Lecture lecture) {
+	public void updateLecture(Integer lectureId, Integer userId, Lecture lecture) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("lecture_id", lectureId);
 
@@ -109,6 +117,16 @@ public class LectureServiceImpl implements LectureService {
 		}
 
 		lectureDAO.updateLecture(map);
+
+		long articleId = lectureId;
+
+		List<String> attachmentIds = lecture.getArticleAttachmentIds();
+		if (attachmentIds != null) {
+			attachmentHandler.removeArticleAttachments(articleId);
+			if (attachmentIds.size() > 0) {
+				attachmentHandler.insertArticleAttachments(articleId, attachmentIds);
+			}
+		}
 	}
 
 	@Override

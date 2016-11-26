@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,5 +24,13 @@ public class AssignmentHandlerImpl implements AssignmentHandler {
         map.put("assignment_id", assignmentId);
 
         return assignmentDAO.selectAssignment(map);
+    }
+
+    @Override
+    public List<AssignmentResult> searchAssignments(Integer callerId, String query) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("query", query);
+
+        return assignmentDAO.searchAssignments(map);
     }
 }

@@ -195,7 +195,61 @@
 		]]>
     </select>
 
-    <insert id="insertAssignment" parameterType="hashmap">
+    <select id="searchAssignments" parameterType="hashmap" resultMap="assignmentResultMap">
+        <![CDATA[
+			SELECT
+			    a.article_id AS article_id,
+                a.article_writer_id AS article_writer_id,
+                a.article_modifier_id AS article_modifier_id,
+                a.article_generation_id AS article_generation_id,
+                a.article_subject AS article_subject,
+                a.article_content AS article_content,
+                a.article_created_at AS article_created_at,
+                a.article_updated_at AS article_updated_at,
+                a.article_type AS article_type,
+                a.article_status AS article_status,
+                l.assignment_end_at AS assignment_end_at,
+                writer.user_id AS writer_user_id,
+                writer.user_name AS writer_user_name,
+                writer.user_profile_image AS writer_user_profile_image,
+                modifier.user_id AS modifier_user_id,
+                modifier.user_name AS modifier_user_name,
+                modifier.user_profile_image AS modifier_user_profile_image,
+                att.attachment_id,
+                att.attachment_url,
+                att.attachment_name,
+                att.attachment_extension,
+                att.attachment_size,
+                att.attachment_type,
+                att.attachment_writer_id,
+                att.attachment_modifier_id
+			FROM
+			    soma.soma_assignment l
+			INNER JOIN
+				soma.soma_article a
+			    ON l.article_id = a.article_id
+			JOIN
+			    soma.soma_user writer
+			    ON a.article_writer_id = writer.user_id
+			JOIN
+			    soma.soma_user modifier
+			    ON a.article_modifier_id = modifier.user_id
+            LEFT OUTER JOIN
+                soma.soma_article_attachment aa
+                ON aa.article_id = l.article_id
+            LEFT OUTER JOIN
+                soma.soma_attachment att
+                ON aa.attachment_id = att.attachment_id
+			WHERE
+			    a.article_status <> 'D' AND
+			    a.article_type = 'A' AND (a.article_content LIKE '%${query}%' or a.article_subject LIKE '%${query}%')
+			ORDER BY
+			    a.article_id DESC
+
+		]]>
+    </select>
+
+    <insert id="insertAssignment" parameterType="hashmap" useGeneratedKeys="true" keyProperty="articleId" keyColumn="article_id">
         <![CDATA[
                  INSERT INTO soma.soma_article (article_writer_id, article_modifier_id, article_generation_id, article_subject, article_content,
                  article_created_at, article_updated_at, article_type, article_status)

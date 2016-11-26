@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface UserService {
 
-	UserResult selectUser(int userId) throws Exception;
+	UserResult selectUser(Integer caller, int userId) throws Exception;
 
-	List<UserResult> selectAllUsers() throws Exception;
+	List<UserResult> selectAllUsers(Integer caller) throws Exception;
 
 	int insertUser(User user) throws Exception;
 

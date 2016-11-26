@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -28,6 +29,8 @@ public class Lecture {
     private String articleSubject = null;
 
     private String articleContent = null;
+
+    private List<String> articleAttachmentIds = null;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern=DATE_PATTERN, timezone = TIME_ZONE)
     private Date articleCreatedAt = null;
@@ -119,6 +122,14 @@ public class Lecture {
 
     public void setArticleContent(String articleContent) {
         this.articleContent = articleContent;
+    }
+
+    public List<String> getArticleAttachmentIds() {
+        return articleAttachmentIds;
+    }
+
+    public void setArticleAttachmentIds(List<String> articleAttachmentIds) {
+        this.articleAttachmentIds = articleAttachmentIds;
     }
 
     /**
