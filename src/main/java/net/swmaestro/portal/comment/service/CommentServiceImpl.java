@@ -73,7 +73,7 @@ public class CommentServiceImpl implements CommentService {
 			type = "assignments";
 		}
 
-		if (targetUserId != null && userId.equals(targetUserId)) {
+		if (targetUserId != null && !userId.equals(targetUserId)) {
 			if (type == null) {
 				log.error("Invalid article type of comment!");
 			}
